@@ -1,0 +1,34 @@
+[project]
+name = "expense-tracker"
+version = "1.0.0" 
+description = "AI-powered expense tracker with natural language processing using CrewAI and FastAPI"
+authors = [{ name = "Ping Wu", email = "ping@example.com" }]
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "crewai[tools]>=0.177.0",
+    "fastapi>=0.104.1",
+    "uvicorn[standard]>=0.24.0",
+    "websockets>=12.0",
+    "python-dotenv>=1.0.0",
+    "pydantic>=2.5.0",
+    "requests>=2.31.0",
+    "pandas>=2.0.0"
+]
+
+[project.scripts]
+expense_tracker = "expense_tracker.main:run"
+run_crew = "expense_tracker.main:run"
+web_api = "expense_tracker.web_api:app"
+train = "expense_tracker.main:train"
+replay = "expense_tracker.main:replay"
+test = "expense_tracker.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/expense_tracker"]
+
+[tool.crewai]
+type = "crew"

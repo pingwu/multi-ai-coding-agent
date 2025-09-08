@@ -1,0 +1,42 @@
+research_task:
+  description: >
+    Conduct comprehensive research about {topic}.
+    Find the most current and relevant information including:
+    - Key statistics and data points
+    - Recent trends and developments  
+    - Expert opinions and insights
+    - Real-world examples and case studies
+    Make sure your research is accurate and from credible sources.
+  expected_output: >
+    A detailed research report with 10-15 key findings about {topic}, each with 
+    supporting data, statistics, or examples. Include source references where possible.
+  agent: researcher
+
+strategy_task:
+  description: >
+    Based on the research findings, develop a comprehensive content strategy for {topic}.
+    Create a strategic framework that includes:
+    - Target audience identification
+    - Key messaging and value propositions
+    - Content structure and organization
+    - Engagement tactics and hooks
+    - Call-to-action recommendations
+  expected_output: >
+    A strategic content plan including audience analysis, key messages, content outline,
+    and specific recommendations for maximum engagement and impact.
+  agent: strategist
+
+writing_task:
+  description: >
+    Create high-quality, engaging content about {topic} using the research findings and strategic framework.
+    The content should be:
+    - Well-structured and easy to read
+    - Engaging and valuable to the target audience
+    - Based on the research data and strategic plan
+    - Professional yet accessible in tone
+    - Include compelling headlines and clear sections
+  expected_output: >
+    A complete, polished content piece about {topic} that incorporates all research findings
+    and follows the strategic framework. Format as clean markdown without code blocks.
+    Include engaging headlines, clear sections, and actionable insights.
+  agent: writer

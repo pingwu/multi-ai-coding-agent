@@ -1,0 +1,33 @@
+[project]
+name = "content-generator"
+version = "1.0.0" 
+description = "Multi-agent content generation using CrewAI and FastAPI"
+authors = [{ name = "Ping Wu", email = "ping@example.com" }]
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "crewai[tools]>=0.177.0",
+    "fastapi>=0.104.1",
+    "uvicorn[standard]>=0.24.0",
+    "websockets>=12.0",
+    "python-dotenv>=1.0.0",
+    "pydantic>=2.5.0",
+    "requests>=2.31.0"
+]
+
+[project.scripts]
+content_generator = "my_mas.main:run"
+run_crew = "my_mas.main:run"
+web_api = "my_mas.web_api:app"
+train = "my_mas.main:train"
+replay = "my_mas.main:replay"
+test = "my_mas.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/my_mas"]
+
+[tool.crewai]
+type = "crew"

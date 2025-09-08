@@ -1,0 +1,79 @@
+parse_expense_task:
+  description: >
+    Parse the natural language expense description: "{expense_description}"
+    Extract the following structured information:
+    - Amount: The dollar amount spent (as a float)
+    - Vendor: The business or service where money was spent
+    - Date: The date of the expense (infer if relative like "yesterday")
+    - Description: Clear description of what was purchased
+    - Context: Any additional context about the expense
+    
+    Handle various input formats like:
+    - "I spent $25 at Starbucks yesterday"
+    - "Coffee meeting with client for $6.50"
+    - "Monthly Spotify subscription $12"
+    - "Gas for client visits, $45 at Shell"
+  expected_output: >
+    JSON format with extracted data:
+    {{
+      "amount": 25.00,
+      "vendor": "Starbucks", 
+      "date": "2024-01-15",
+      "description": "Coffee purchase",
+      "context": "Business meeting",
+      "raw_input": "{expense_description}"
+    }}
+  agent: expense_parser
+
+categorize_expense_task:
+  description: >
+    Based on the parsed expense data from the previous task, assign the appropriate IRS business expense category from these options:
+    - MEALS: Business meals (50% deductible)
+    - CAR_TRUCK: Vehicle expenses
+    - OFFICE_EXPENSE: Office supplies and equipment  
+    - SOFTWARE: Software subscriptions and tools
+    - TRAVEL: Business travel expenses
+    - ADVERTISING: Marketing and promotional costs
+    - LEGAL_PROFESSIONAL: Professional services
+    - UTILITIES: Internet, phone, utilities
+    - OTHER: Other legitimate business expenses
+    
+    Also determine the business purpose and tax deductibility.
+  expected_output: >
+    JSON format with categorization:
+    {{
+      "category": "MEALS",
+      "business_purpose": "Client meeting to discuss Q1 campaign",
+      "tax_deductible": true,
+      "deductible_percentage": 50,
+      "reasoning": "Business meal with client qualifies as 50% deductible expense"
+    }}
+  agent: category_specialist
+
+validate_expense_task:
+  description: >
+    Combine the parsed expense data and categorization from the previous tasks to create a complete expense record.
+    Ensure all required fields are present and accurate for business expense documentation:
+    - Date is valid and reasonable
+    - Amount is properly formatted
+    - Vendor is clearly identified  
+    - Category is appropriate
+    - Business purpose is specific and legitimate
+    - All fields needed for tax purposes are complete
+    
+    If any information is missing or unclear, suggest improvements or ask for clarification.
+  expected_output: >
+    Complete CSV-ready expense record in JSON format:
+    {{
+      "date": "2024-01-15",
+      "amount": 25.00,
+      "vendor": "Starbucks",
+      "category": "MEALS", 
+      "description": "Coffee meeting",
+      "business_purpose": "Client discussion for Q1 campaign",
+      "notes": "Meeting with John from ABC Corp",
+      "created_at": "2024-01-15T10:30:00Z",
+      "validation_status": "complete",
+      "recommendations": []
+    }}
+  agent: compliance_validator

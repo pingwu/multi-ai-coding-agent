@@ -1,0 +1,6 @@
+date,amount,vendor,category,description,business_purpose,notes,created_at
+2024-01-15,25.00,Starbucks,MEALS,Coffee meeting,Client discussion for Q1 campaign,Meeting with John from ABC Corp,2024-01-15T10:30:00Z
+2024-01-15,65.00,Shell,CAR_TRUCK,Fuel for business travel,Client site visit,150 miles to client office,2024-01-15T14:20:00Z
+2024-01-16,89.50,Amazon,OFFICE_EXPENSE,Office supplies,New project setup,Notebooks and pens for planning,2024-01-16T09:15:00Z
+2024-01-16,12.00,Spotify,SOFTWARE,Monthly subscription,Background music for focus,Premium subscription,2024-01-16T12:00:00Z
+2024-01-17,120.00,Olive Garden,MEALS,Business dinner,Contract negotiation,Celebration dinner with new client,2024-01-17T19:30:00Z

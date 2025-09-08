@@ -1,0 +1,172 @@
+# Video Script Generation Configuration for Gemini Veo2
+# This configuration defines the parameters for generating video scripts
+
+# Main Configuration
+model:
+  name: "gemini-veo2"
+  version: "2.0"
+  capabilities:
+    - "video generation"
+    - "script writing"
+    - "scene composition"
+    - "character animation"
+
+# Input Parameters
+input_parameters:
+  video_type:
+    - "commercial"
+    - "educational"
+    - "entertainment"
+    - "documentary"
+    - "social_media"
+    - "corporate"
+  
+  style:
+    - "realistic"
+    - "cartoon"
+    - "3d_animation"
+    - "mixed_media"
+    - "stop_motion"
+  
+  duration:
+    min: 15  # seconds
+    max: 300  # seconds
+    default: 60  # seconds
+  
+  aspect_ratio:
+    - "16:9"
+    - "9:16"
+    - "1:1"
+    - "4:3"
+  
+  target_audience:
+    - "general"
+    - "children"
+    - "teenagers"
+    - "adults"
+    - "professionals"
+    - "seniors"
+
+# Scene Parameters
+scene_parameters:
+  location:
+    - "indoor"
+    - "outdoor"
+    - "virtual"
+    - "mixed"
+  
+  lighting:
+    - "natural"
+    - "artificial"
+    - "dramatic"
+    - "soft"
+    - "high_contrast"
+  
+  camera_movement:
+    - "static"
+    - "panning"
+    - "zooming"
+    - "tracking"
+    - "dolly"
+    - "crane"
+
+# Character Parameters
+character_parameters:
+  type:
+    - "human"
+    - "animal"
+    - "cartoon"
+    - "3d_character"
+    - "abstract"
+  
+  emotion:
+    - "happy"
+    - "sad"
+    - "angry"
+    - "surprised"
+    - "neutral"
+    - "excited"
+  
+  interaction:
+    - "solo"
+    - "group"
+    - "audience"
+    - "environment"
+
+# Audio Parameters
+audio_parameters:
+  background_music:
+    - "upbeat"
+    - "calm"
+    - "dramatic"
+    - "corporate"
+    - "none"
+  
+  voice_over:
+    - "male"
+    - "female"
+    - "child"
+    - "multiple"
+    - "none"
+  
+  sound_effects:
+    - "minimal"
+    - "moderate"
+    - "extensive"
+    - "none"
+
+# Output Specifications
+output_specifications:
+  format:
+    - "mp4"
+    - "mov"
+    - "webm"
+  
+  quality:
+    - "low"
+    - "medium"
+    - "high"
+    - "ultra"
+  
+  resolution:
+    - "720p"
+    - "1080p"
+    - "4k"
+    - "8k"
+
+# Prompt Templates
+prompt_templates:
+  commercial:
+    template: |
+      Create a [duration] second commercial video in [style] style.
+      Target audience: [target_audience]
+      Scene: [location] with [lighting] lighting
+      Characters: [character_type] showing [emotion]
+      Audio: [background_music] with [voice_over] voice-over
+      Camera: [camera_movement]
+      Output: [resolution] quality in [format] format
+  
+  educational:
+    template: |
+      Create an educational video lasting [duration] seconds.
+      Style: [style]
+      Target audience: [target_audience]
+      Scene: [location] with [lighting] lighting
+      Characters: [character_type] in [interaction] setting
+      Audio: [background_music] with [voice_over] narration
+      Camera: [camera_movement]
+      Output: [resolution] quality in [format] format
+
+# Constraints and Guidelines
+constraints:
+  max_characters: 5
+  max_scenes: 10
+  max_transitions: 8
+  max_special_effects: 5
+  
+guidelines:
+  - "Maintain consistent style throughout the video"
+  - "Ensure smooth transitions between scenes"
+  - "Keep audio levels balanced"
+  - "Follow brand guidelines if applicable"
+  - "Maintain appropriate pacing for target audience" 

@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  content-generator:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - ./generated_content:/app/generated_content
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-demo-key}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-demo-key}
+    env_file:
+      - .env
+    stdin_open: true
+    tty: true
+    command: python -m uvicorn my_mas.web_api:app --host 0.0.0.0 --port 8000 --reload
+
+  # Frontend service
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+    depends_on:
+      - content-generator
