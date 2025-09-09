@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { ContentRequest } from '../App';
 
 interface ContentFormProps {
@@ -30,15 +31,16 @@ const DEFAULT_TASKS = {
 };
 
 const ContentForm: React.FC<ContentFormProps> = ({ onStartGeneration }) => {
+  const history = useHistory();
   const [topic, setTopic] = useState('');
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [agents, setAgents] = useState(DEFAULT_AGENTS);
   const [tasks, setTasks] = useState(DEFAULT_TASKS);
   const [isLoading, setIsLoading] = useState(false);
-  const [submittedJobId, setSubmittedJobId] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('handleSubmit called');
     if (!topic.trim()) return;
 
     setIsLoading(true);
@@ -59,15 +61,20 @@ const ContentForm: React.FC<ContentFormProps> = ({ onStartGeneration }) => {
         body: JSON.stringify(request),
       });
       
+      console.log('API response:', response);
+
       if (!response.ok) {
         throw new Error(`API Error: ${response.status}`);
       }
       
       const result = await response.json();
-      setSubmittedJobId(result.job_id);
-      // Don't call onStartGeneration since we already made the API call
+      console.log('API response JSON:', result);
+
+      // Immediately redirect to live progress page
+      console.log('Redirecting to:', `/console/${result.job_id}`);
+      history.push(`/console/${result.job_id}`);
     } catch (error) {
-      console.error('Error starting generation:', error);
+      console.error('Error in handleSubmit:', error);
     } finally {
       setIsLoading(false);
     }
@@ -253,40 +260,6 @@ const ContentForm: React.FC<ContentFormProps> = ({ onStartGeneration }) => {
         </div>
       </form>
 
-      {submittedJobId && (
-        <div className="job-submitted">
-          <h3>🚀 Content Generation Started!</h3>
-          <p>Your job has been submitted successfully.</p>
-          <div className="progress-links">
-            <a 
-              href={`/console/${submittedJobId}`} 
-              className="button" 
-              target="_blank" 
-              rel="noopener noreferrer"
-            >
-              🖥️ View Live Progress
-            </a>
-            <a 
-              href={`/api/status/${submittedJobId}`} 
-              className="button secondary" 
-              target="_blank" 
-              rel="noopener noreferrer"
-            >
-              📊 Check Status API
-            </a>
-          </div>
-          <div className="job-info">
-            <p><strong>Job ID:</strong> <code>{submittedJobId}</code></p>
-            <p><em>Bookmark this page or save the Job ID to check progress later!</em></p>
-          </div>
-          <button 
-            onClick={() => setSubmittedJobId(null)} 
-            className="button secondary small"
-          >
-            ✨ Create Another
-          </button>
-        </div>
-      )}
 
       <div className="examples">
         <h3>💡 Example Topics to Try:</h3>

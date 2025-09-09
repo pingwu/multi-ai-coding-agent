@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { JobStatus } from '../App';
-import { useParams, useHistory } from 'react-router-dom'; // Added useParams, useHistory
+import { useParams, useHistory } from 'react-router-dom';
+import ProgressStepper from './ProgressStepper';
 
 interface LiveConsoleProps {
   onBack: () => void;
@@ -16,13 +17,53 @@ const LiveConsole: React.FC<LiveConsoleProps> = ({ onBack }) => {
   const { jobId } = useParams<{ jobId: string }>();
   const history = useHistory();
 
-  console.log('LiveConsole mounted. Job ID:', jobId); // Added log
+  console.log('LiveConsole mounted. Job ID:', jobId);
 
   const [messages, setMessages] = useState<ConsoleMessage[]>([]);
   const [wsStatus, setWsStatus] = useState<'connecting' | 'connected' | 'disconnected'>('connecting');
   const [jobStatus, setJobStatus] = useState<JobStatus | null>(null);
+  const [currentStep, setCurrentStep] = useState(0);
   const wsRef = useRef<WebSocket | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Define the content generation steps
+  const progressSteps = [
+    {
+      id: 'initialize',
+      title: 'Initializing Content Generation',
+      description: 'Setting up AI agents and processing your request...',
+      icon: '🚀',
+      estimatedDuration: 10
+    },
+    {
+      id: 'research',
+      title: 'Research Phase',
+      description: 'AI Research Agent gathering comprehensive information...',
+      icon: '🔍',
+      estimatedDuration: 45
+    },
+    {
+      id: 'strategy',
+      title: 'Strategy Development',
+      description: 'AI Strategy Agent creating content framework and outline...',
+      icon: '🎯',
+      estimatedDuration: 30
+    },
+    {
+      id: 'writing',
+      title: 'Content Creation',
+      description: 'AI Writer Agent crafting engaging, high-quality content...',
+      icon: '📝',
+      estimatedDuration: 60
+    },
+    {
+      id: 'finalize',
+      title: 'Finalizing Results',
+      description: 'Completing generation and preparing your content...',
+      icon: '✨',
+      estimatedDuration: 15
+    }
+  ];
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -30,6 +71,52 @@ const LiveConsole: React.FC<LiveConsoleProps> = ({ onBack }) => {
 
   useEffect(() => {
     scrollToBottom();
+  }, [messages]);
+
+  // Auto-advance progress steps initially
+  useEffect(() => {
+    if (!jobId) return;
+
+    // Start with first step immediately
+    setCurrentStep(0);
+
+    // Auto-advance through steps with realistic timing
+    const timers: NodeJS.Timeout[] = [];
+    
+    // Step 0 -> 1 (Initialize -> Research): 5 seconds
+    timers.push(setTimeout(() => setCurrentStep(1), 5000));
+    
+    // Step 1 -> 2 (Research -> Strategy): 25 seconds
+    timers.push(setTimeout(() => setCurrentStep(2), 30000));
+    
+    // Step 2 -> 3 (Strategy -> Writing): 20 seconds  
+    timers.push(setTimeout(() => setCurrentStep(3), 50000));
+    
+    // Step 3 -> 4 (Writing -> Finalize): 45 seconds
+    timers.push(setTimeout(() => setCurrentStep(4), 95000));
+
+    return () => {
+      timers.forEach(timer => clearTimeout(timer));
+    };
+  }, [jobId]);
+
+  // Update progress step based on WebSocket messages (override auto-advance)
+  useEffect(() => {
+    if (messages.length === 0) return;
+
+    const lastMessage = messages[messages.length - 1];
+    const messageText = lastMessage.message.toLowerCase();
+
+    // Advanced step detection based on message content
+    if (messageText.includes('research') && messageText.includes('starting')) {
+      setCurrentStep(1);
+    } else if (messageText.includes('strategy') || messageText.includes('framework')) {
+      setCurrentStep(2);
+    } else if (messageText.includes('writer') || messageText.includes('creating')) {
+      setCurrentStep(3);
+    } else if (messageText.includes('completed successfully')) {
+      setCurrentStep(4);
+    }
   }, [messages]);
 
   useEffect(() => {
@@ -157,26 +244,37 @@ const LiveConsole: React.FC<LiveConsoleProps> = ({ onBack }) => {
       </div>
 
       <div className="console-body">
-        <div className="console-messages">
-          {messages.length === 0 ? (
-            <div className="no-messages">
-              <p>🔄 Waiting for console output...</p>
-              {wsStatus === 'connected' && <p>WebSocket connected. Messages will appear here.</p>}
-              {wsStatus === 'disconnected' && <p>⚠️ WebSocket disconnected. Trying to reconnect...</p>}
-            </div>
-          ) : (
-            messages.map((message, index) => (
-              <div key={index} className={`console-message ${message.type}`}>
-                <span className="message-icon">{getMessageIcon(message.type)}</span>
-                <span className="message-timestamp">
-                  {new Date(message.timestamp).toLocaleTimeString()}
-                </span>
-                <span className="message-text">{message.message}</span>
+        {/* New Progress Stepper - shows immediately */}
+        <ProgressStepper 
+          steps={progressSteps}
+          currentStep={currentStep}
+          isConnected={wsStatus === 'connected'}
+          hasRealData={messages.length > 0}
+        />
+
+        {/* Enhanced Console Messages - now supplementary */}
+        {messages.length > 0 && (
+          <div className="console-messages-enhanced">
+            <div className="messages-header">
+              <h4>📋 Detailed Console Output</h4>
+              <div className="ws-status-mini">
+                {wsStatus === 'connected' ? '🟢 Live' : '🔴 Offline'}
               </div>
-            ))
-          )}
-          <div ref={messagesEndRef} />
-        </div>
+            </div>
+            <div className="console-messages">
+              {messages.map((message, index) => (
+                <div key={index} className={`console-message ${message.type}`}>
+                  <span className="message-icon">{getMessageIcon(message.type)}</span>
+                  <span className="message-timestamp">
+                    {new Date(message.timestamp).toLocaleTimeString()}
+                  </span>
+                  <span className="message-text">{message.message}</span>
+                </div>
+              ))}
+              <div ref={messagesEndRef} />
+            </div>
+          </div>
+        )}
 
         {jobStatus?.status === 'completed' && (
           <div className="completion-notice">

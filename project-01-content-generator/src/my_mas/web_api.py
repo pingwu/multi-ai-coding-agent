@@ -180,28 +180,47 @@ async def run_content_generation(job_id: str, request: ContentRequest):
     """
     Background task to run the CrewAI content generation
     """
+    # Check for demo mode
+    demo_mode = os.environ.get("DEMO_MODE", "false").lower() in ["true", "1"]
+
     try:
         jobs[job_id]["status"] = "running"
         jobs[job_id]["started_at"] = datetime.now()
         
         await send_console_message(job_id, f"🚀 Starting content generation for: {request.topic}", "info")
         
-        # Initialize the CrewAI crew
-        await send_console_message(job_id, "📋 Initializing Content Generation Crew...", "info")
-        
-        # Create crew instance with topic
-        inputs = {"topic": request.topic}
-        crew = ContentGeneratorCrew()
-        
-        await send_console_message(job_id, "🔍 Research Agent: Starting comprehensive research...", "info")
-        await send_console_message(job_id, f"🔍 Research Agent: Gathering information on '{request.topic}'", "info")
-        
-        # Run the crew (this is synchronous, so we'll simulate async behavior)
-        await send_console_message(job_id, "🎯 Strategy Agent: Developing content framework...", "info")
-        await send_console_message(job_id, "📝 Writer Agent: Creating engaging content...", "info")
-        
-        # Execute the crew
-        result = crew.crew().kickoff(inputs=inputs)
+        if demo_mode:
+            await send_console_message(job_id, "🤖 DEMO MODE ENABLED 🤖", "info")
+            # Simulate the content generation process
+            await asyncio.sleep(2)
+            await send_console_message(job_id, "📋 Initializing Content Generation Crew...", "info")
+            await asyncio.sleep(3)
+            await send_console_message(job_id, "🔍 Research Agent: Starting comprehensive research...", "info")
+            await asyncio.sleep(5)
+            await send_console_message(job_id, f"🔍 Research Agent: Gathering information on '{request.topic}'", "info")
+            await asyncio.sleep(5)
+            await send_console_message(job_id, "🎯 Strategy Agent: Developing content framework...", "info")
+            await asyncio.sleep(5)
+            await send_console_message(job_id, "📝 Writer Agent: Creating engaging content...", "info")
+            await asyncio.sleep(5)
+            result = f"This is a demo result for the topic: {request.topic}"
+        else:
+            # Initialize the CrewAI crew
+            await send_console_message(job_id, "📋 Initializing Content Generation Crew...", "info")
+            
+            # Create crew instance with topic
+            inputs = {"topic": request.topic}
+            crew = ContentGeneratorCrew()
+            
+            await send_console_message(job_id, "🔍 Research Agent: Starting comprehensive research...", "info")
+            await send_console_message(job_id, f"🔍 Research Agent: Gathering information on '{request.topic}'", "info")
+            
+            # Run the crew (this is synchronous, so we'll simulate async behavior)
+            await send_console_message(job_id, "🎯 Strategy Agent: Developing content framework...", "info")
+            await send_console_message(job_id, "📝 Writer Agent: Creating engaging content...", "info")
+            
+            # Execute the crew in a separate thread to avoid blocking the event loop
+            result = await asyncio.to_thread(crew.crew().kickoff, inputs=inputs)
         
         await send_console_message(job_id, "✅ Content generation completed successfully!", "success")
         

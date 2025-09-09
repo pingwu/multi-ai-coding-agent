@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   content-generator:
     build: .
@@ -11,6 +9,7 @@ services:
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY:-demo-key}
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-demo-key}
+      - DEMO_MODE=${DEMO_MODE:-false}
     env_file:
       - .env
     stdin_open: true

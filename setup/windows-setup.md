@@ -1,201 +1,83 @@
-# Windows Setup Testing Guide
+# Windows Setup Guide
 
-## 🎯 Testing Goals
-- Validate 10-minute quick start promise on Windows
-- Identify real-world Windows-specific issues
-- Test student experience end-to-end
-- Refine documentation based on actual usage
+Welcome! This guide will walk you through setting up your Windows computer for our course. We'll install the necessary tools to run the projects.
 
-## 📋 Windows Testing Checklist
+## Prerequisites
 
-### **Phase 1: Clean Environment Simulation (5 minutes)**
-```powershell
-# Check current state (use PowerShell or Command Prompt)
-docker --version
-git --version
-python --version
+- **Windows 10 or 11:** You'll need a recent version of Windows.
+- **Administrator Access:** Some installation steps may require administrator privileges.
 
-# If Docker exists, note version
-# If git missing, we'll test installation
-# If Python missing, note for documentation
-```
+## Step 1: Install Docker Desktop with WSL 2
 
-### **Phase 2: Docker Desktop Installation (5 minutes)**
-1. **Download Docker Desktop for Windows**
-   - Go to [docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop)
-   - Click "Download for Windows"
-   - Requires Windows 10/11 with WSL 2 support
+Docker is a tool that allows us to run our projects in isolated environments called containers. This ensures that the projects work the same for everyone.
 
-2. **Installation Process**
-   ```powershell
-   # After download completes:
-   # 1. Open Downloads folder
-   # 2. Double-click Docker Desktop Installer.exe
-   # 3. Follow setup wizard (may require admin privileges)
-   # 4. Choose "Use WSL 2 instead of Hyper-V" when prompted
-   # 5. Restart computer when prompted
-   ```
+1.  **Download Docker Desktop:**
+    -   Go to the [Docker Desktop website](https://www.docker.com/products/docker-desktop).
+    -   Click the "Download for Windows" button.
 
-3. **WSL 2 Setup (if needed)**
-   ```powershell
-   # If WSL 2 isn't installed, run as Administrator:
-   wsl --install
-   # Restart computer after installation
-   
-   # Check WSL version
-   wsl --list --verbose
-   ```
+2.  **Install Docker Desktop:**
+    -   Once the download is complete, open your `Downloads` folder and double-click the `Docker Desktop Installer.exe` file.
+    -   Follow the on-screen instructions.
+    -   When prompted, make sure the **"Use WSL 2 instead of Hyper-V"** option is selected.
+    -   Your computer may need to restart to complete the installation.
 
-4. **Verification**
-   ```powershell
-   # Wait for Docker Desktop to fully start (whale icon in system tray)
-   docker --version
-   docker run hello-world
-   ```
+3.  **Install WSL 2 (if needed):**
+    -   Docker may prompt you to install the Windows Subsystem for Linux (WSL) 2. If it does, follow the instructions.
+    -   If you need to install it manually, open **PowerShell as an Administrator** and run the following command:
+        ```powershell
+        wsl --install
+        ```
+    -   Restart your computer after the installation is complete.
 
-### **Phase 3: Git Setup Check (2 minutes)**
-```powershell
-# Check if git is installed
-git --version
+4.  **Verify Docker Installation:**
+    -   After your computer restarts, Docker Desktop should start automatically. You'll see a whale icon in your system tray when it's running.
+    -   Open PowerShell or Command Prompt and run the following command to make sure everything is working:
+        ```powershell
+        docker run hello-world
+        ```
+    -   You should see a "Hello from Docker!" message.
 
-# If not installed, download from:
-# https://git-scm.com/download/win
-# Choose "Git for Windows Setup" and run installer
-# Use default settings during installation
-```
+## Step 2: Install Git
 
-### **Phase 4: Course Repository Clone (3 minutes)**
-```powershell
-# Clone the course repository (when ready)
-git clone https://github.com/pingwu/cstu-mas-2025
-cd cstu-mas-2025
+Git is a version control system that we use to manage our code.
 
-# Check structure
-dir
-dir sample-projects\
-```
+1.  **Check if Git is installed:**
+    -   Open PowerShell or Command Prompt and run:
+        ```powershell
+        git --version
+        ```
+    -   If you see a version number, you can skip to the next step.
 
-### **Phase 5: First AI App Test - Expense Tracker (10 minutes)**
-```powershell
-cd sample-projects\expense-tracker
+2.  **Download and Install Git:**
+    -   If Git is not installed, download it from the [official Git website](https://git-scm.com/download/win).
+    -   Run the installer and use the default settings.
 
-# Check if all required files exist
-dir
-type docker-compose.yml
-type .env.example
+## Step 3: Clone the Course Repository
 
-# Copy environment template
-copy .env.example .env
+Now that you have the necessary tools, you can download the course projects.
 
-# Edit .env file with your API keys
-# (We'll create a test version that works without real keys)
+1.  **Open PowerShell or Command Prompt.**
+2.  **Navigate to the directory where you want to store the projects.**
+3.  **Clone the repository:**
+    ```powershell
+    git clone https://github.com/pingwu/multi-ai-coding-agent.git
+    ```
+4.  **Navigate into the project directory:**
+    ```powershell
+    cd <repository-name>
+    ```
 
-# Start the application
-docker-compose up --build
+## Next Steps
 
-# Test in browser
-start http://localhost:8000
-```
+You now have all the necessary tools installed on your system.
 
-## 🧪 **Testing Scenarios**
+For an overview of all the projects and the general workflow, please see the [main project README file](../README.md).
 
-### **Success Criteria**
-- [ ] Docker Desktop installs without issues
-- [ ] WSL 2 is properly configured
-- [ ] Git works or installs easily  
-- [ ] Repository clones successfully
-- [ ] Expense tracker builds without errors
-- [ ] Web interface loads at localhost:8000
-- [ ] Sample expense input works
-- [ ] Total time under 20 minutes (with buffer)
+When you are ready to run a specific project, navigate to its directory (e.g., `project-01-content-generator/`) and follow the instructions in its local `README.md` file.
 
-### **Common Issues to Watch For**
-- Windows version compatibility (Windows 10 vs 11)
-- WSL 2 requirement and setup complexity
-- Admin permissions for Docker installation
-- Windows Defender or antivirus interference
-- Port conflicts (8000 already in use)
-- API key configuration issues
-- PowerShell vs Command Prompt differences
+For advanced setup, see the [Advanced Setup Guide](./advanced-setup.md).
 
-### **Testing Notes Template**
-```
-Testing Date: ___________
-Windows Version: ___________
-System Type: 64-bit / 32-bit ___________
-WSL 2 Pre-installed: Y/N ___________
+### Troubleshooting
 
-Phase 1 - Environment Check:
-- Docker installed: Y/N, Version: _____
-- Git installed: Y/N, Version: _____
-- Python installed: Y/N, Version: _____
-
-Phase 2 - Docker Installation:
-- Download time: _____ minutes
-- Installation time: _____ minutes
-- WSL 2 setup needed: Y/N
-- Restart required: Y/N
-- Issues encountered: _________________
-
-Phase 3 - Git Setup:
-- Already installed: Y/N
-- Installation time: _____ minutes
-- Issues: _____________________
-
-Phase 4 - Repository Clone:
-- Clone successful: Y/N
-- Issues: _____________________
-
-Phase 5 - First App:
-- Build successful: Y/N
-- App loads: Y/N
-- Sample works: Y/N
-- Total time: _____ minutes
-- Issues: _____________________
-
-Overall Experience:
-- Would a student succeed: Y/N
-- Confidence level after: ___/10
-- Major pain points: _______________
-- Windows-specific issues: _______________
-- Documentation improvements needed: _______________
-```
-
-## 🔧 **Setup Refinements Based on Testing**
-
-After your testing, we'll update:
-
-1. **quick-start.md** - Based on real timing and Windows issues
-2. **troubleshooting.md** - Add Windows-specific solutions
-3. **docker-essentials.md** - Include Windows-specific Docker tips
-4. **WSL 2 guide** - If needed for complex setups
-
-## 💡 **Windows-Specific Considerations**
-
-### **WSL 2 vs Hyper-V**
-- **WSL 2** (Recommended): Better performance, lighter resource usage
-- **Hyper-V**: Legacy option, requires Windows Pro/Enterprise
-
-### **PowerShell vs Command Prompt**
-- Use **PowerShell** for better compatibility with modern tools
-- Most students will use PowerShell by default
-
-### **Antivirus Considerations**
-- Windows Defender may slow Docker builds
-- Corporate antivirus can block container operations
-
-## 📊 **Success Metrics**
-- **Time Goal**: Under 15 minutes total (including buffer)
-- **Confidence Goal**: Student feels "I did it!" not "That was complicated"  
-- **Error Rate**: Zero critical failures
-- **Documentation Gap**: Nothing major missing
-- **Cross-Windows Compatibility**: Works on Windows 10 and 11
-
-## 🚀 **Ready to Test?**
-
-Follow this guide step-by-step on your Windows system and document any issues, timing, or improvements needed. This real-world testing will ensure our students have a smooth experience across all Windows versions!
-
-## 🔗 **Additional Windows Resources**
-- [WSL 2 Installation Guide](https://docs.microsoft.com/en-us/windows/wsl/install)
-- [Docker Desktop Windows Requirements](https://docs.docker.com/desktop/windows/install/)
-- [Git for Windows](https://git-scm.com/download/win)
+-   If you have any issues with the Docker installation, please refer to the official [Docker Desktop Windows installation guide](https://docs.docker.com/desktop/windows/install/).
+-   For WSL 2 issues, see the [Microsoft WSL installation guide](https://docs.microsoft.com/en-us/windows/wsl/install).

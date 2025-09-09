@@ -1,165 +1,77 @@
-# Mac Setup Testing Guide
+# macOS Setup Guide
 
-## 🎯 Testing Goals
-- Validate 10-minute quick start promise
-- Identify real-world Mac-specific issues
-- Test student experience end-to-end
-- Refine documentation based on actual usage
+Welcome! This guide will walk you through setting up your Mac for our course. We'll install the necessary tools to run the projects.
 
-## 📋 Mac Testing Checklist
+## Prerequisites
 
-### **Phase 1: Clean Environment Simulation (5 minutes)**
-```bash
-# Check current state
-docker --version
-git --version
-python3 --version
+- **macOS:** A recent version of macOS.
+- **Administrator Access:** Some installation steps may require your administrator password.
 
-# If Docker exists, note version
-# If git missing, we'll test installation
-# If Python missing, note for documentation
-```
+## Step 1: Install Docker Desktop
 
-### **Phase 2: Docker Desktop Installation (5 minutes)**
-1. **Download Docker Desktop for Mac**
-   - Go to [docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop)
-   - Click "Download for Mac"
-   - Choose Apple Chip (M1/M2/M3) or Intel depending on your Mac
+Docker is a tool that allows us to run our projects in isolated environments called containers. This ensures that the projects work the same for everyone.
 
-2. **Installation Process**
-   ```bash
-   # After download completes:
-   # 1. Open Downloads folder
-   # 2. Double-click Docker.dmg
-   # 3. Drag Docker to Applications folder
-   # 4. Launch Docker from Applications
-   # 5. Follow setup wizard (may require admin password)
-   ```
+1.  **Download Docker Desktop:**
+    -   Go to the [Docker Desktop website](https://www.docker.com/products/docker-desktop).
+    -   Click the "Download for Mac" button, choosing the correct version for your Mac's chip (Apple Silicon or Intel).
 
-3. **Verification**
-   ```bash
-   # Wait for Docker Desktop to fully start (whale icon in menu bar)
-   docker --version
-   docker run hello-world
-   ```
+2.  **Install Docker Desktop:**
+    -   Once the download is complete, open your `Downloads` folder and double-click the `Docker.dmg` file.
+    -   Drag the Docker icon into your `Applications` folder.
+    -   Open Docker from your `Applications` folder and follow the on-screen setup instructions.
 
-### **Phase 3: Git Setup Check (2 minutes)**
-```bash
-# Check if git is installed
-git --version
+3.  **Verify Docker Installation:**
+    -   After Docker starts, you'll see a whale icon in your menu bar.
+    -   Open the **Terminal** app and run the following command to make sure everything is working:
+        ```bash
+        docker run hello-world
+        ```
+    -   You should see a "Hello from Docker!" message.
 
-# If not installed, install Xcode command line tools:
-xcode-select --install
-# Follow the installation prompts
-```
+## Step 2: Install Git
 
-### **Phase 4: Course Repository Clone (3 minutes)**
-```bash
-# Clone the course repository (when ready)
-git clone https://github.com/pingwu/cstu-mas-2025
-cd cstu-mas-2025
+Git is a version control system that we use to manage our code. It often comes pre-installed on macOS.
 
-# Check structure
-ls -la
-ls sample-projects/
-```
+1.  **Check if Git is installed:**
+    -   Open the **Terminal** app and run:
+        ```bash
+        git --version
+        ```
+    -   If you see a version number, you can skip to the next step.
 
-### **Phase 5: First AI App Test - Expense Tracker (10 minutes)**
-```bash
-cd sample-projects/expense-tracker
+2.  **Install Git (if needed):**
+    -   If Git is not installed, you can install it with the Xcode Command Line Tools. Run the following command in your terminal and follow the prompts:
+        ```bash
+        xcode-select --install
+        ```
 
-# Check if all required files exist
-ls -la
-cat docker-compose.yml
-cat .env.example
+## Step 3: Clone the Course Repository
 
-# Copy environment template
-cp .env.example .env
+Now that you have the necessary tools, you can download the course projects.
 
-# Edit .env file with your API keys
-# (We'll create a test version that works without real keys)
+1.  **Open the Terminal app.**
+2.  **Navigate to the directory where you want to store the projects.**
+3.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/pingwu/multi-ai-coding-agent.git
+    ```
+4.  **Navigate into the project directory:**
+    ```bash
+    cd <repository-name>
+    ```
 
-# Start the application
-docker-compose up --build
 
-# Test in browser
-open http://localhost:8000
-```
 
-## 🧪 **Testing Scenarios**
+## Next Steps
 
-### **Success Criteria**
-- [ ] Docker Desktop installs without issues
-- [ ] Git works or installs easily  
-- [ ] Repository clones successfully
-- [ ] Expense tracker builds without errors
-- [ ] Web interface loads at localhost:8000
-- [ ] Sample expense input works
-- [ ] Total time under 20 minutes (with buffer)
+You now have all the necessary tools installed on your system.
 
-### **Common Issues to Watch For**
-- Mac chip compatibility (Apple Silicon M1/M2/M3 vs Intel)
-- Admin permissions for Docker installation
-- Xcode command line tools requirements
-- Port conflicts (8000 already in use)
-- API key configuration issues
+For an overview of all the projects and the general workflow, please see the [main project README file](../README.md).
 
-### **Testing Notes Template**
-```
-Testing Date: ___________
-Mac Model: ___________
-macOS Version: ___________
-Chip: Apple Silicon (M1/M2/M3) / Intel ___________
+When you are ready to run a specific project, navigate to its directory (e.g., `project-01-content-generator/`) and follow the instructions in its local `README.md` file.
 
-Phase 1 - Environment Check:
-- Docker installed: Y/N, Version: _____
-- Git installed: Y/N, Version: _____
-- Python installed: Y/N, Version: _____
+For advanced setup (e.g., GitHub CLI), see the [Advanced Setup Guide](./advanced-setup.md).
 
-Phase 2 - Docker Installation:
-- Download time: _____ minutes
-- Installation time: _____ minutes
-- Issues encountered: _________________
+## Troubleshooting
 
-Phase 3 - Git Setup:
-- Already installed: Y/N
-- Xcode tools needed: Y/N
-- Installation time: _____ minutes
-
-Phase 4 - Repository Clone:
-- Clone successful: Y/N
-- Issues: _____________________
-
-Phase 5 - First App:
-- Build successful: Y/N
-- App loads: Y/N
-- Sample works: Y/N
-- Total time: _____ minutes
-- Issues: _____________________
-
-Overall Experience:
-- Would a student succeed: Y/N
-- Confidence level after: ___/10
-- Major pain points: _______________
-- Mac-specific issues: _______________
-- Documentation improvements needed: _______________
-```
-
-## 🔧 **Setup Refinements Based on Testing**
-
-After your testing, we'll update:
-
-1. **quick-start.md** - Based on real timing and issues
-2. **troubleshooting.md** - Add Mac Mini specific solutions
-3. **docker-essentials.md** - Include Mac-specific Docker tips
-
-## 📊 **Success Metrics**
-- **Time Goal**: Under 15 minutes total (including buffer)
-- **Confidence Goal**: Student feels "I did it!" not "That was hard"  
-- **Error Rate**: Zero critical failures
-- **Documentation Gap**: Nothing major missing
-- **Cross-Mac Compatibility**: Works on both Apple Silicon and Intel Macs
-
-## 🚀 **Ready to Test?**
-
-Follow this guide step-by-step on your Mac and document any issues, timing, or improvements needed. This real-world testing will ensure our students have a smooth experience across all Mac models!
+-   If you have any issues with the Docker installation, please refer to the official [Docker Desktop Mac installation guide](https://docs.docker.com/desktop/mac/install/).
