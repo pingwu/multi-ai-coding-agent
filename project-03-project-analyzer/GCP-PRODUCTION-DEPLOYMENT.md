@@ -318,7 +318,7 @@ gcloud alpha monitoring policies create \
 **Docker Compose for local development:**
 ```bash
 # Start local development
-docker-compose up --build
+docker compose up --build
 
 # Test with local Google Sheets
 curl http://localhost:8000/api/capture \

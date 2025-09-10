@@ -164,14 +164,34 @@ Each project is **completely self-contained** with:
 
 ### **Starting a Project**
 ```bash
-# Full stack (backend + frontend)
-docker-compose up --build
+# Recommended (Makefile)
+make up
+
+# Alternative (Compose v2)
+docker compose up --build
 
 # Backend only (for API testing)
-docker-compose up content-generator
+docker compose up content-generator
 
-# View logs for debugging
-docker-compose logs -f content-generator
+# Logs
+docker compose logs -f content-generator
+```
+
+### **Makefile Targets (per project)**
+- `up` — start backend + frontend
+- `logs` — follow logs for both services
+- `test-backend` — run pytest in backend container
+- `test-frontend` — run CRA/Jest tests in frontend container
+- `down` — stop and remove containers
+- `rebuild` — rebuild images without cache
+- `sh-backend` / `sh-frontend` — open interactive shells
+
+Examples:
+```bash
+make up
+make logs
+make test-backend
+make down
 ```
 
 ### **Modifying CrewAI Agents**
@@ -191,8 +211,8 @@ researcher = Agent(
 
 ### **Environment Configuration**
 ```bash
-# Copy and customize environment
-cp .env.example .env
+# Copy and customize environment (no overwrite)
+[ -f .env ] || cp .env.example .env
 
 # Key variables to configure:
 OPENAI_API_KEY=your-key-here
@@ -242,7 +262,7 @@ SERPER_API_KEY=your-search-key
 - **Troubleshooting guides** for common issues
 
 ### **Testing Approach**
-- **Docker validation**: Projects run with `docker-compose up`
+- **Docker validation**: Projects run with `docker compose up` or `make up`
 - **API testing**: Key endpoints work as documented
 - **UI testing**: Frontend loads and functions properly
 - **Error scenarios**: Graceful handling of missing keys/network issues

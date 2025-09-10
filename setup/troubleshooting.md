@@ -18,9 +18,9 @@
 **Solution**: 
 ```bash
 # Stop other containers
-docker-compose down
+docker compose down
 # Or use different port
-docker-compose up --scale web=1:8001
+docker compose up --scale web=1:8001
 ```
 
 ## Issue #4: Permission Denied
@@ -33,7 +33,7 @@ docker-compose up --scale web=1:8001
 **Solution**: 
 1. Check `.env` file exists
 2. Verify API key format: `OPENAI_API_KEY=sk-...`
-3. Restart container: `docker-compose restart`
+3. Restart container: `docker compose restart`
 
 ## Still Stuck? 
 **During Class**: Ask instructor or classmates  

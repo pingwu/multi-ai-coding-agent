@@ -10,21 +10,21 @@ Think of Docker like **shipping containers** for software:
 
 ### 1. Start Your App
 ```bash
-docker-compose up
+docker compose up
 ```
 **What it does**: Starts all your AI services  
 **When to use**: Every time you want to run your project
 
 ### 2. Stop Your App  
 ```bash
-docker-compose down
+docker compose down
 ```
 **What it does**: Cleanly stops all services  
 **When to use**: When you're done working
 
 ### 3. Rebuild After Changes
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 **What it does**: Rebuilds containers with your latest code changes  
 **When to use**: After you modify code

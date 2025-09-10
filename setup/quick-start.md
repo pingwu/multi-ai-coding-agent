@@ -20,13 +20,22 @@ git clone https://github.com/pingwu/multi-ai-coding-agent.git
 cd multi-ai-coding-agent/project-02-expense-tracker
 
 # Setup environment
-cp .env.example .env
+[ -f .env ] || cp .env.example .env
 # Edit .env file and add your OpenAI API key:
 # OPENAI_API_KEY=your_key_here
 
-# Start the application
-docker-compose up --build
+# Start the application (Compose v2)
+docker compose up --build
 ```
+
+Tip: Prefer Makefile shortcuts if available (WSL/macOS/Linux):
+
+```bash
+cd multi-ai-coding-agent
+make -C project-02-expense-tracker up
+```
+
+See also: [Makefile Essentials](./makefile-essentials.md)
 
 ### Step 3: See Your AI App Working (10 minutes)
 - Open browser to `http://localhost:8000`

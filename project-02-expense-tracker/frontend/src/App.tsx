@@ -3,6 +3,7 @@ import './App.css';
 import ExpenseForm from './components/ExpenseForm';
 import ExpenseList from './components/ExpenseList';
 import ExpenseSummary from './components/ExpenseSummary';
+import SampleDataHint from './components/SampleDataHint';
 
 export interface ExpenseRecord {
   date: string;
@@ -27,18 +28,25 @@ export interface ExpenseResponse {
   processing_time?: number;
 }
 
+const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:8001';
+
 function App() {
   const [expenses, setExpenses] = useState<ExpenseRecord[]>([]);
+  const [suppressSampleHint, setSuppressSampleHint] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
 
-  // Load expenses on component mount
+  // Load preferences + expenses on mount
   useEffect(() => {
+    try {
+      const flag = localStorage.getItem('suppress_sample_hint');
+      setSuppressSampleHint(flag === '1');
+    } catch {}
     loadExpenses();
   }, []);
 
   const loadExpenses = async () => {
     try {
-      const response = await fetch('http://localhost:8000/expenses');
+      const response = await fetch(`${API_BASE}/expenses`);
       const data = await response.json();
       setExpenses(data.expenses || []);
     } catch (error) {
@@ -49,7 +57,7 @@ function App() {
   const handleAddExpense = async (request: ExpenseRequest) => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8000/expenses', {
+      const response = await fetch(`${API_BASE}/expenses`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -83,6 +91,9 @@ function App() {
       <main className="App-main">
         <div className="expense-container">
           <div className="expense-input">
+            {expenses.length === 0 && !suppressSampleHint && (
+              <SampleDataHint onDismissForever={() => setSuppressSampleHint(true)} />
+            )}
             <ExpenseForm 
               onAddExpense={handleAddExpense}
               isLoading={loading}

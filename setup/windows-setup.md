@@ -1,6 +1,30 @@
 # Windows Setup Guide
 
-Welcome! This guide will walk you through setting up your Windows computer for our course. We'll install the necessary tools to run the projects.
+Quick Start (10 minutes, WSL2)
+1) Install Docker Desktop and enable WSL integration (Settings → Resources → WSL Integration)
+2) Open Ubuntu (WSL), install Make:
+   ```bash
+   sudo apt update && sudo apt install -y make
+   ```
+3) Clone and run Project 01 from your Windows drive:
+   ```bash
+   cd /mnt/c/MASProjects
+   git clone https://github.com/pingwu/multi-ai-coding-agent.git
+   cd multi-ai-coding-agent
+   make -C project-01-content-generator up
+   ```
+4) Open: http://localhost:3000 and http://localhost:8000
+5) If you see API key errors: `cd project-01-content-generator && [ -f .env ] || cp .env.example .env`
+
+See detailed steps below if needed.
+
+Agent vs Commands (from local-dev)
+
+| Task | Natural Language (Claude/agents) | Manual Command (Make) |
+| --- | --- | --- |
+| Start Project 1 | "Bring up Project 1 environment." | `make -C project-01-content-generator up` |
+| Stop Project 2 | "Shut down the expense tracker project." | `make -C project-02-expense-tracker down` |
+| Fix API keys | "Create .env from .env.example in Project 1." | `cd project-01-content-generator && [ -f .env ] || cp .env.example .env` |
 
 ## Prerequisites
 
@@ -29,13 +53,18 @@ Docker is a tool that allows us to run our projects in isolated environments cal
         ```
     -   Restart your computer after the installation is complete.
 
-4.  **Verify Docker Installation:**
-    -   After your computer restarts, Docker Desktop should start automatically. You'll see a whale icon in your system tray when it's running.
-    -   Open PowerShell or Command Prompt and run the following command to make sure everything is working:
+4.  **Enable WSL Integration in Docker Desktop:**
+    -   Open Docker Desktop → Settings → Resources → WSL Integration.
+    -   Enable integration for your Linux distro (e.g., Ubuntu).
+
+5.  **Verify Docker Installation:**
+    -   After restart, Docker Desktop should start automatically (whale icon in tray).
+    -   In a terminal (PowerShell or Ubuntu), run:
         ```powershell
         docker run hello-world
+        docker compose version
         ```
-    -   You should see a "Hello from Docker!" message.
+    -   You should see "Hello from Docker!" and a Compose version.
 
 ## Step 2: Install Git
 
@@ -52,32 +81,64 @@ Git is a version control system that we use to manage our code.
     -   If Git is not installed, download it from the [official Git website](https://git-scm.com/download/win).
     -   Run the installer and use the default settings.
 
-## Step 3: Clone the Course Repository
+## Step 3: Install Make inside WSL (Ubuntu)
+
+We recommend running commands from the Ubuntu (WSL) terminal.
+
+1. Open Ubuntu (WSL) from the Start menu.
+2. Install Make:
+   ```bash
+   sudo apt update && sudo apt install -y make
+   make -v
+   ```
+
+## Step 4: Clone the Course Repository
 
 Now that you have the necessary tools, you can download the course projects.
 
-1.  **Open PowerShell or Command Prompt.**
-2.  **Navigate to the directory where you want to store the projects.**
-3.  **Clone the repository:**
-    ```powershell
+1.  Open Ubuntu (WSL) terminal.
+2.  Navigate to your Windows drive (example path shown):
+    ```bash
+    cd /mnt/c/MASProjects
+    ```
+3.  Clone the repository:
+    ```bash
     git clone https://github.com/pingwu/multi-ai-coding-agent.git
     ```
-4.  **Navigate into the project directory:**
-    ```powershell
-    cd <repository-name>
+4.  Go to the repository root:
+    ```bash
+    cd multi-ai-coding-agent
     ```
+
+## 10‑Minute First Run (Project 01)
+
+1) Ensure Docker Desktop is running and WSL integration is enabled.
+2) Start services with Make from local-dev:
+   ```bash
+   make -C project-01-content-generator up
+   ```
+3) If API keys are required, create `.env` inside the project (see `.env.example`).
+4) Verify:
+   - Backend: http://localhost:8000
+   - Frontend: http://localhost:3000
+5) Tests (optional):
+   ```bash
+   make -C project-01-content-generator test-backend
+   make -C project-01-content-generator test-frontend
+   ```
 
 ## Next Steps
 
 You now have all the necessary tools installed on your system.
 
-For an overview of all the projects and the general workflow, please see the [main project README file](../README.md).
-
-When you are ready to run a specific project, navigate to its directory (e.g., `project-01-content-generator/`) and follow the instructions in its local `README.md` file.
+For an overview and commands, see the [local-dev README](../README.md) and [Makefile Essentials](./makefile-essentials.md).
 
 For advanced setup, see the [Advanced Setup Guide](./advanced-setup.md).
 
 ### Troubleshooting
 
--   If you have any issues with the Docker installation, please refer to the official [Docker Desktop Windows installation guide](https://docs.docker.com/desktop/windows/install/).
--   For WSL 2 issues, see the [Microsoft WSL installation guide](https://docs.microsoft.com/en-us/windows/wsl/install).
+- "make: command not found" in Ubuntu: `sudo apt install make`.
+- Docker not visible inside WSL: enable WSL integration in Docker Desktop, then restart Docker and WSL (`wsl --shutdown`).
+- Slow file IO: using `/mnt/c` is acceptable for class; for speed, you can clone into your WSL home and still access via Windows.
+- Port conflicts (3000/8000): stop other apps or adjust ports in `docker-compose.yml`.
+- Install issues: see [Docker Desktop Windows guide](https://docs.docker.com/desktop/windows/install/) and [Microsoft WSL guide](https://learn.microsoft.com/windows/wsl/install).

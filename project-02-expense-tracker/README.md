@@ -1,6 +1,17 @@
-# 🤖 AI Content Generator - Multi-Agent System
+# 💸 AI Expense Tracker - Multi-Agent System
 
-**Professional content creation using CrewAI 0.177.0 + FastAPI + TypeScript**
+> Start Here (2 minutes)
+> - Prereqs: Docker Desktop running (verify with `docker info`); `make` installed (see ../setup/makefile-essentials.md)
+> - Commands:
+>   ```bash
+>   # from this folder
+>   [ -f .env ] || cp .env.example .env   # add keys if needed
+>   make up                # starts backend (expense-tracker) + frontend
+>   ```
+> - Open: http://localhost:3001 (frontend) and http://localhost:8001 (backend)
+> - Common targets: `make logs`, `make test-backend`, `make test-frontend`, `make down`
+
+**Professional expense tracking using CrewAI + FastAPI + TypeScript**
 
 [![CrewAI](https://img.shields.io/badge/CrewAI-0.177.0-blue)](https://crewai.com/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104.1-green)](https://fastapi.tiangolo.com/)
@@ -21,6 +32,15 @@ This project demonstrates a production-ready multi-agent AI content generation s
 
 ## 🚀 Quick Start (10 minutes)
 
+### Workflow (Choose One)
+
+| Step                  | 🤖 AI-Powered (Recommended)                                                 | 💻 Manual Command Line                                                                                                   |     |                                        |
+| --------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | --- | -------------------------------------- |
+| 1. Clone the Repo     | Tell your agent: “Clone the multi-ai-coding-agent repo and open Project 2.” | `git clone https://github.com/pingwu/multi-ai-coding-agent.git`<br>`cd multi-ai-coding-agent/project-02-expense-tracker` |     |                                        |
+| 2. Launch Project     | “Bring up Project 2” or “Start the expense tracker project.”                | From repo root: `make -C project-02-expense-tracker up`<br>From this folder: `make up`                                   |     |                                        |
+| 3. Configure API Keys | “Help me set up my API keys.”                                               | `[ -f .env ]                                                                                                             |     | cp .env.example .env` then edit `.env` |
+| Result                | App at `http://localhost:3001` (UI) and `http://localhost:8001` (API).      | App at `http://localhost:3001` (UI) and `http://localhost:8001` (API).                                                   |     |                                        |
+
 ### Prerequisites
 - **Docker Desktop** installed and running
 - **OpenAI API Key** for AI models ([Get it here](https://platform.openai.com/api-keys))
@@ -28,46 +48,92 @@ This project demonstrates a production-ready multi-agent AI content generation s
 - **Git** for cloning
 - **8GB+ RAM** recommended
 
-### 1. Clone and Setup
+### 1. Clone and Setup (manual, detailed)
 ```bash
-git clone <repository-url>
-cd content-generator
+git clone https://github.com/pingwu/multi-ai-coding-agent.git
+cd multi-ai-coding-agent/project-02-expense-tracker
 
-# Copy environment template
-# skip the cp and echo if .env file already exists
-cp .env.example .env
+# Copy environment template (skip if .env already exists)
+[ -f .env ] || cp .env.example .env
 
-# Add your API keys to .env file
+# Add your API keys to .env file (or edit with your editor)
 echo "OPENAI_API_KEY=your-openai-key-here" >> .env
 echo "SERPER_API_KEY=your-serper-key-here" >> .env
 ```
 
 ### 2. Start the Application
 ```bash
-# Start both backend and frontend together
-docker-compose up --build
+# Recommended (Makefile)
+make up
 
-# All development commands (e.g., npm install, pip install) should be run inside the respective Docker containers.
+# Alternative (Compose v2)
+docker compose up --build
 
-# Backend will be available at: http://localhost:8000
-# API docs available at: http://localhost:8000/docs
-# Frontend will be available at: http://localhost:3000
+# Backend: http://localhost:8001 (docs at /docs)
+# Frontend: http://localhost:3001
 ```
 
 ### 3. Test the API
 ```bash
 # Test with curl
-curl -X POST "http://localhost:8000/api/generate" \
+curl -X POST "http://localhost:8001/api/generate" \
   -H "Content-Type: application/json" \
   -d '{"topic": "AI in Healthcare 2025"}'
 ```
 
 ### 4. Use the Web Interface
-Open your browser to http://localhost:3000 to use the web interface for content generation.
+Open your browser to http://localhost:3001 to use the web interface for content generation.
 
 **🎉 Success!** You now have a professional AI content generation system running locally.
 
 ---
+
+## 📊 Sample Data (Expenses)
+
+This project ships with a sample dataset you can use to explore features quickly.
+
+- Sample file: `data/expenses_sample.csv`
+- Production file used by the app: `data/expenses.csv`
+
+To replace your current dataset with the sample data:
+
+```bash
+cd project-02-expense-tracker
+# Option A: Replace entirely (overwrites your current data)
+cp data/expenses_sample.csv data/expenses.csv
+
+# Option B: Append sample rows (skip header)
+tail -n +2 data/expenses_sample.csv >> data/expenses.csv
+```
+
+If containers are already running, you typically don't need to restart. If needed:
+
+```bash
+docker compose down && docker compose up -d
+```
+
+Because `./data` is bind-mounted into the container (`/app/data`), CSV edits are picked up immediately — no container restart needed. Use the "Refresh" button in the UI or reload the page to see updates. If you still don't see changes, restart Project 2 containers.
+
+Now refresh the UI and you should see the sample expenses reflected.
+
+---
+
+## ⚡ Agent vs Commands Cheatsheet
+
+| Task | Natural Language (Claude/agents) | Manual Command |
+| --- | --- | --- |
+| Start Project 2 | "Start the expense tracker project." | `docker compose -f project-02-expense-tracker/docker-compose.yml up -d` |
+| Stop Project 2 | "Shut down the expense tracker project." | `docker compose -f project-02-expense-tracker/docker-compose.yml down` |
+| Logs (follow) | "Show logs for Project 2 until I say stop." | `docker compose -f project-02-expense-tracker/docker-compose.yml logs -f` |
+| Status | "Show running containers for Project 2." | `docker compose -f project-02-expense-tracker/docker-compose.yml ps` |
+| Backend tests | "Run backend tests for Project 2." | `docker compose -f project-02-expense-tracker/docker-compose.yml run --rm expense-tracker pytest -q` |
+| Frontend tests | "Run frontend tests for Project 2." | `docker compose -f project-02-expense-tracker/docker-compose.yml run --rm frontend npm test -- --watchAll=false` |
+| Rebuild images | "Rebuild Project 2 images from scratch." | `docker compose -f project-02-expense-tracker/docker-compose.yml build --no-cache` |
+
+Ports (when running alongside Project 1):
+- Frontend: http://localhost:3001
+- Backend: http://localhost:8001
+
 
 ## 🏗️ Architecture Overview
 
@@ -141,28 +207,29 @@ content-generator/
 
 ---
 
-## 🎓 Learning Objectives
+<details>
+<summary><strong>For Course Participants: Learning Objectives</strong></summary>
 
-### **Session 1-2: Multi-Agent Foundations**
-- ✅ Understand CrewAI agent coordination patterns
-- ✅ Learn agent role definition and task assignment
-- ✅ Master Docker-based development workflow
-- ✅ Build professional API endpoints with FastAPI
+### Session 1-2: Multi-Agent Foundations
+- Understand CrewAI agent coordination patterns
+- Learn agent role definition and task assignment
+- Master Docker-based development workflow
+- Build professional API endpoints with FastAPI
 
-### **Session 3-4: Frontend Integration** 
-- ✅ Create TypeScript React applications
-- ✅ Implement real-time WebSocket communication
-- ✅ Design responsive, professional user interfaces
-- ✅ Handle asynchronous API interactions
+### Session 3-4: Frontend Integration
+- Create TypeScript React applications
+- Implement real-time WebSocket communication
+- Design responsive, professional user interfaces
+- Handle asynchronous API interactions
 
-### **Skills You'll Gain**
-- **Multi-Agent AI Systems**: Design and coordinate specialized AI agents
-- **Full-Stack Development**: Python backend + TypeScript frontend
-- **API Design**: RESTful services with WebSocket real-time updates
-- **Professional Deployment**: Docker containerization and orchestration
-- **Production Patterns**: Error handling, logging, and monitoring
+### Skills You'll Gain
+- Multi-Agent AI Systems: Design and coordinate specialized AI agents
+- Full-Stack Development: Python backend + TypeScript frontend
+- API Design: RESTful services with WebSocket real-time updates
+- Professional Deployment: Docker containerization and orchestration
+- Production Patterns: Error handling, logging, and monitoring
 
----
+</details>
 
 ## 🔧 Customization Guide
 
@@ -236,7 +303,7 @@ Response: {
 ### **Real-time Console** 
 ```javascript
 // WebSocket connection for live updates
-const ws = new WebSocket('ws://localhost:8000/ws/console/{job_id}');
+const ws = new WebSocket('ws://localhost:8001/ws/console/{job_id}');
 ws.onmessage = (event) => {
   const message = JSON.parse(event.data);
   console.log(message.message); // Agent progress updates
@@ -250,19 +317,19 @@ ws.onmessage = (event) => {
 ### **Local Development**
 ```bash
 # Full stack (backend + frontend) - DEFAULT
-docker-compose up --build
+docker compose up --build
 
 # Backend only (if you only need the API)
-docker-compose up content-generator
+docker compose up expense-tracker
 
 # Frontend only (requires backend running separately)
-docker-compose up frontend
+docker compose up frontend
 ```
 
 ### **Production Deployment**
 ```bash
 # Build production images
-docker-compose -f docker-compose.prod.yml build
+docker compose -f docker-compose.prod.yml build
 
 # Deploy to cloud (Google Cloud Run example)
 gcloud run deploy content-generator \
@@ -280,7 +347,7 @@ SERPER_API_KEY=your-serper-api-key      # Get FREE key from https://serper.dev/
 # Optional
 ANTHROPIC_API_KEY=your-anthropic-key    # Alternative AI model
 DEBUG=true                              # Development mode
-CORS_ORIGINS=http://localhost:3000      # Frontend URL
+CORS_ORIGINS=http://localhost:3001      # Frontend URL
 ```
 
 ---
@@ -288,18 +355,6 @@ CORS_ORIGINS=http://localhost:3000      # Frontend URL
 ## 🔍 Troubleshooting
 
 ### **Common Issues**
-
-**Problem**: `ImportError: No module named 'crewai'`  
-**Solution**: Ensure you're using the latest version:
-```bash
-pip install --upgrade crewai[tools]>=0.177.0
-```
-
-**Problem**: `WebSocket connection failed`  
-**Solution**: Check that backend is running on port 8000:
-```bash
-curl http://localhost:8000/  # Should return API info
-```
 
 **Problem**: `Agent execution timeout` or `Search failed`  
 **Solution**: Check API key configuration:
@@ -320,7 +375,7 @@ cat .env | grep SERPER_API_KEY
 **Solution**: Clean Docker cache and rebuild:
 ```bash
 docker system prune -f
-docker-compose build --no-cache
+docker compose build --no-cache
 ```
 
 ### **Performance Optimization**
@@ -335,12 +390,12 @@ docker-compose build --no-cache
 
 *   **Asynchronous API**: The content generation process is asynchronous.
     1.  A `POST` request to `/api/generate` starts the job and returns a `job_id`.
-    2.  The status can be monitored via `docker-compose logs`.
+    2.  The status can be monitored via `docker compose logs`.
     3.  The final article must be retrieved with a `GET` request to `/api/result/{job_id}`.
 
 *   **Content Storage**: The generated content is **not** automatically saved to the filesystem in the `generated_content/` directory. It is only available via the API endpoint. The content was manually saved to `generated_content/AI_in_Healthcare_2025.md` after being retrieved from the API.
 
-*   **Initial Build Time**: The first time you run `docker-compose up --build`, it can take a significant amount of time (several minutes) to download and install all the Python dependencies. Subsequent builds are much faster.
+*   **Initial Build Time**: The first time you run `docker compose up --build`, it can take a significant amount of time (several minutes) to download and install all the Python dependencies. Subsequent builds are much faster.
 
 *   **Environment Variables**: Ensure your `.env` file is correctly set up with valid `OPENAI_API_KEY` and `SERPER_API_KEY` before starting the services.
 

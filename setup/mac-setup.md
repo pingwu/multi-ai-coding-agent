@@ -1,11 +1,33 @@
 # macOS Setup Guide
 
-Welcome! This guide will walk you through setting up your Mac for our course. We'll install the necessary tools to run the projects.
+Quick Start (10 minutes)
+- Install Docker Desktop and start it
+- Install Git and Make (Xcode CLT): `xcode-select --install`
+- Clone and run Project 01:
+  ```bash
+  git clone https://github.com/pingwu/multi-ai-coding-agent.git
+  cd multi-ai-coding-agent
+  make -C project-01-content-generator up
+  ```
+- Open: http://localhost:3000 and http://localhost:8000
+- If you see API key errors: `cd project-01-content-generator && [ -f .env ] || cp .env.example .env`
+
+Agent vs Commands (from local-dev)
+
+| Task | Natural Language (Claude/agents) | Manual Command (Make) |
+| --- | --- | --- |
+| Start Project 1 | "Bring up Project 1 environment." | `make -C project-01-content-generator up` |
+| Stop Project 2 | "Shut down the expense tracker project." | `make -C project-02-expense-tracker down` |
+| Fix API keys | "Create .env from .env.example in Project 1." | `cd project-01-content-generator && [ -f .env ] || cp .env.example .env` |
+
+Details below if you prefer step‑by‑step.
 
 ## Prerequisites
 
-- **macOS:** A recent version of macOS.
-- **Administrator Access:** Some installation steps may require your administrator password.
+- **macOS:** Recent version (Intel or Apple Silicon).
+- **Administrator Access:** For installs.
+- **Docker Desktop** and **Git** (installed below).
+- **Make (GNU Make):** via Xcode CLT or Homebrew.
 
 ## Step 1: Install Docker Desktop
 
@@ -45,7 +67,20 @@ Git is a version control system that we use to manage our code. It often comes p
         xcode-select --install
         ```
 
-## Step 3: Clone the Course Repository
+## Step 3: Install Make (if missing)
+
+- Make is used for simple, consistent commands.
+- If you installed Xcode Command Line Tools, `make` is included. Verify:
+  ```bash
+  make -v
+  ```
+- If not found, install via Homebrew:
+  ```bash
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  brew install make
+  ```
+
+## Step 4: Clone the Course Repository
 
 Now that you have the necessary tools, you can download the course projects.
 
@@ -57,8 +92,29 @@ Now that you have the necessary tools, you can download the course projects.
     ```
 4.  **Navigate into the project directory:**
     ```bash
-    cd <repository-name>
+    cd multi-ai-coding-agent
     ```
+
+## 10‑Minute First Run (Project 01)
+
+1) Ensure Docker Desktop is running.
+2) From the local-dev folder, start services with Make:
+   ```bash
+   make -C project-01-content-generator up
+   ```
+3) If API keys are required, create `.env` inside the project (see its README or `.env.example`).
+4) Verify:
+   - Backend: http://localhost:8000
+   - Frontend: http://localhost:3000
+5) Run tests (optional):
+   ```bash
+   make -C project-01-content-generator test-backend
+   make -C project-01-content-generator test-frontend
+   ```
+
+Notes
+- Always run via Docker containers (don’t run Python on the host).
+- Check Compose version if needed: `docker compose version`
 
 
 
@@ -68,7 +124,10 @@ You now have all the necessary tools installed on your system.
 
 For an overview of all the projects and the general workflow, please see the [main project README file](../README.md).
 
-When you are ready to run a specific project, navigate to its directory (e.g., `project-01-content-generator/`) and follow the instructions in its local `README.md` file.
+When you are ready to run a specific project, use Make from the repository root:
+```bash
+make -C project-01-content-generator up
+```
 
 For advanced setup (e.g., GitHub CLI), see the [Advanced Setup Guide](./advanced-setup.md).
 

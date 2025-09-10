@@ -4,13 +4,14 @@ services:
   expense-tracker:
     build: .
     ports:
-      - "8000:8000"
+      - "8001:8000"
     volumes:
       - .:/app
       - ./data:/app/data
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY:-demo-key}
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-demo-key}
+      - DEMO_MODE=${DEMO_MODE:-true}
     env_file:
       - .env
     stdin_open: true
@@ -21,11 +22,11 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - "3000:3000"
+      - "3001:3000"
     volumes:
       - ./frontend:/app
       - /app/node_modules
     environment:
-      - REACT_APP_API_URL=http://localhost:8000
+      - REACT_APP_API_URL=http://localhost:8001
     depends_on:
       - expense-tracker

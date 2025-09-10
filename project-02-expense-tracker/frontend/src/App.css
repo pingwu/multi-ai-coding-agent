@@ -158,6 +158,48 @@
   font-size: 1rem;
 }
 
+/* Sample Data Hint */
+.sample-data-hint {
+  background: #fff8e1;
+  border: 1px solid #ffe082;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.sample-toggle {
+  background: #ffca28;
+  color: #4e342e;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.sample-toggle.dismiss {
+  background: #eceff1;
+  color: #37474f;
+}
+
+.sample-instructions {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.sample-instructions pre {
+  background: #fffde7;
+  border: 1px solid #fff59d;
+  border-radius: 6px;
+  padding: 0.75rem;
+  overflow-x: auto;
+}
+
+.sample-note {
+  color: #6d4c41;
+  margin-top: 0.5rem;
+}
+
 .examples-list {
   display: flex;
   flex-direction: column;

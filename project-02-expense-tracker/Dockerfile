@@ -21,10 +21,10 @@ COPY . .
 RUN pip install -e .
 
 # Create output directories
-RUN mkdir -p generated_content
+RUN mkdir -p data
 
 # Expose port for web API
 EXPOSE 8000
 
 # Default command - run the web API
-CMD ["python", "-m", "uvicorn", "my_mas.web_api:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+CMD ["python", "-m", "uvicorn", "expense_tracker.web_api:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

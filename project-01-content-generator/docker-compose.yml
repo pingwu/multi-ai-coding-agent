@@ -9,7 +9,7 @@ services:
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY:-demo-key}
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-demo-key}
-      - DEMO_MODE=${DEMO_MODE:-false}
+      - DEMO_MODE=${DEMO_MODE:-true}
     env_file:
       - .env
     stdin_open: true
