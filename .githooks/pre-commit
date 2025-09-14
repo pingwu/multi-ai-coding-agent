@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+# Pre-commit guardrails for multi-ai-coding-agent (local-dev)
+# Blocks common secret leaks and unsafe files from being committed.
+
+set -euo pipefail
+
+if [[ "${HOOK_BYPASS:-}" == "1" ]]; then
+  echo "[pre-commit] HOOK_BYPASS=1 set; skipping checks"
+  exit 0
+fi
+
+fail() { echo "[pre-commit] ERROR: $*" >&2; exit 1; }
+
+# Collect staged files
+mapfile -t files < <(git diff --cached --name-only)
+
+# No files staged
+[[ ${#files[@]} -eq 0 ]] && exit 0
+
+# Filename-based blocks
+blocked_patterns=(
+  # env files
+  '^.*(/|^)\.env(\..*)?$'
+  # credentials json in any project
+  '^.*(/|^)credentials/[^/]+\.json$'
+  # private keys
+  '^.*\.(pem|key)$'
+)
+
+for f in "${files[@]}"; do
+  for pat in "${blocked_patterns[@]}"; do
+    if [[ "$f" =~ $pat ]]; then
+      fail "Refusing to commit blocked file path: $f"
+    fi
+  done
+done
+
+# Content-based scans (lightweight)
+content_markers=(
+  'OPENAI_API_KEY='
+  'ANTHROPIC_API_KEY='
+  'AWS_SECRET_ACCESS_KEY='
+  '-----BEGIN PRIVATE KEY-----'
+  '"type": "service_account"'
+  '"private_key":'
+)
+
+for f in "${files[@]}"; do
+  # Skip deleted files
+  if ! git cat-file -e ":$f" 2>/dev/null; then continue; fi
+  blob="$(git show ":$f" || true)"
+  for marker in "${content_markers[@]}"; do
+    if grep -q "$marker" <<<"$blob"; then
+      fail "Potential secret in $f (matched: $marker). Remove or use env vars/.gitignore."
+    fi
+  done
+done
+
+echo "[pre-commit] All checks passed"
+exit 0
+

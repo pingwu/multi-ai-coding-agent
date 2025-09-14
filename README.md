@@ -144,6 +144,16 @@ For a deeper dive into the architecture and development patterns, see our [**Dev
 - For larger changes, open an issue first to discuss direction.
 - Code of Conduct: contact ping@ping-ai.com for any concerns.
 
+### Git Hooks (Secret Guardrails)
+- Enable repo-managed hooks to prevent accidental secret commits:
+  - `git config core.hooksPath .githooks`
+- What it blocks by default:
+  - Any `.env` files (`.env`, `.env.*`)
+  - Any `credentials/*.json` (e.g., Google service accounts)
+  - Private key files (`*.pem`, `*.key`)
+  - Staged content containing markers like `OPENAI_API_KEY=`, `service_account`, or `private_key`
+- To bypass (not recommended), set `HOOK_BYPASS=1` for a single commit.
+
 ## 📄 License
 
 Licensed under the MIT License — see `LICENSE` for details.
