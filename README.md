@@ -76,14 +76,13 @@ Once your environment is ready, launch a project:
 
 Each project is a complete, standalone application.
 
-| Project                               | Description                                       | Status          |
-| ------------------------------------- | ------------------------------------------------- | --------------- |
-| **01-content-generator**              | Multi-agent content creation with a real-time UI. | ✅ **Ready**    |
-| **02-expense-tracker**                | Automates business expense categorization.        | ✅ **Ready**    |
-| **03-task-tracker**                   | Natural-language task logging to Google Sheets.    | ✅ Demo-Ready |
-| **03-project-analyzer**               | Assesses project risk from Google Sheets data.    | 🗓️ Nov 2025 Release |
-| **04-rental-analyzer**                | Analyzes real estate investment opportunities.    | 🗓️ Nov 2025 Release |
-| **05-cloud-deployment**               | Guides for deploying these projects to the cloud. | 🗓️ Nov 2025 Release |
+| Project                  | Description                                       | Status               |
+| ------------------------ | ------------------------------------------------- | -------------------- |
+| **01-content-generator** | Multi-agent content creation with a real-time UI. | ✅ **Ready**          |
+| **02-expense-tracker**   | Automates business expense categorization.        | ✅ **Ready**          |
+| **03-task-tracker**      | Natural-language task logging to Google Sheets.   | ✅ Demo-Ready         |
+| **04-rental-analyzer**   | Analyzes real estate investment opportunities.    | 🗓️ Nov 2025 Release |
+| **05-cloud-deployment**  | Guides for deploying these projects to the cloud. | 🗓️ Nov 2025 Release |
 
 ---
 
@@ -92,23 +91,6 @@ Each project is a complete, standalone application.
 - Project 01 — Content Generator: [project-01-content-generator/README.md](project-01-content-generator/README.md)
 - Project 02 — Expense Tracker: [project-02-expense-tracker/README.md](CSTU%20Course/MAS/2025%20Nov%20Class/local-dev/project-02-expense-tracker/README.md)
 - Project 03 — Task Tracker: [project-03-task-tracker/README.md](project-03-task-tracker/README.md)
-
-### Project 03 — Task Tracker (Business & Technical Overview)
-
-Business features (for users):
-- Enter plain English updates like “Working on login system, high priority”.
-- Creates/updates tasks in a shared Google Sheet (team-visible, simple, low-friction).
-- Automatic detection: status (started/updated/completed), priority (LOW→URGENT), and category (Development/Meeting/etc.).
-- Quick report with totals, priority/status breakdown, and simple recommendations.
-
-Technical implementation (high level):
-- Microservices with Docker Compose:
-  - Frontend: React + TypeScript (port 3000)
-  - API Gateway: FastAPI (port 8000) — forwards requests, CORS, error handling
-  - Crew Service: FastAPI + CrewAI (port 8001) — intent parsing and Google Sheets tools
-- Google Sheets integration via `gspread` + Service Account (read/write/update).
-- Security defaults: non-root containers, env-driven CORS, log redaction.
-- `.env.example` guides configuration; credentials mounted read-only.
 
 ## 🗂️ Repo Structure
 
@@ -125,7 +107,7 @@ multi-ai-coding-agent/
 │   └── troubleshooting.md
 ├── project-01-content-generator/
 ├── project-02-expense-tracker/
-├── project-03-project-analyzer/
+├── project-03-task-tracker/
 ├── project-04-rental-analyzer/
 └── project-05-cloud-deployment/
 ```
