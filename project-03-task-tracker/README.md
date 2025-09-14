@@ -6,6 +6,25 @@ Transform natural language into organized task management using modern microserv
 
 ---
 
+## 📌 Business & Technical Overview
+
+### What users get (Business features)
+- Enter plain English updates like “Working on login system, high priority”.
+- Creates/updates tasks in a shared Google Sheet (team-visible, low-friction).
+- Automatic detection: status (start/update/complete), priority (LOW→URGENT), category (Development/Meeting/etc.).
+- Simple report with totals, priority/status breakdown, and recommendations.
+
+### How it works (Technical overview)
+- Microservices with Docker Compose:
+  - Frontend: React + TypeScript (port 3000)
+  - API Gateway: FastAPI (port 8000) — request validation, CORS, proxy to Crew
+  - Crew Service: FastAPI + CrewAI (port 8001) — intent parsing + Google Sheets tools
+- Google Sheets via `gspread` + Service Account (read/write/update).
+- Security defaults: non-root containers, env-driven CORS, log redaction by default.
+- Configure with `.env.example`; credentials mounted read-only at runtime.
+
+---
+
 ## 🎯 **What Makes This Different**
 
 ### Traditional Enterprise vs AI-Powered SMB Approach
