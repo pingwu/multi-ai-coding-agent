@@ -78,3 +78,9 @@ session-summary*.md
 
 # Internal development projects (not for GitHub publishing)
 *-INTERNAL/
+
+# Project-specific (keep analyzer out of OSS for now)
+project-03-project-analyzer/
+
+# Safety: never commit credentials JSON files in any project
+**/credentials/*.json
