@@ -84,3 +84,4 @@ project-03-project-analyzer/
 
 # Safety: never commit credentials JSON files in any project
 **/credentials/*.json
+project-04-rental-analyzer-INTERNAL/

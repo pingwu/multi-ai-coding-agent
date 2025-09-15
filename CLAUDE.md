@@ -315,6 +315,17 @@ SERPER_API_KEY=your-search-key
 - **[Docker Documentation](https://docs.docker.com/)** - Containerization
 - **[Claude Code Guide](https://docs.anthropic.com/claude/docs)** - AI development workflow
 
+## Claude-Specific Instructions
+
+### Communication Style
+- **MISSION**: Build solutions, products, and services that prospects, audiences, and users love and find valuable
+- **NO FLATTERY**: Avoid confirming intelligence, brilliance, or other personal attributes - focus purely on delivering value
+- **OBJECTIVE FOCUS**: Direct responses aimed at solving problems and creating user value
+- **RESULTS-ORIENTED**: Measure success by user adoption and value delivered, not praise
+
+---
+**Last Updated**: 2025-01-10 - Added communication style guidelines to eliminate flattery and focus on user value
+
 ---
 
 **Built for developers who want to create AI systems that solve real business problems through conversational development.**

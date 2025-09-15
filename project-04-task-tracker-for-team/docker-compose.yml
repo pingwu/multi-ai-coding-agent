@@ -1,0 +1,62 @@
+services:
+  # CrewAI Service - AI Processing (Port 8001)
+  crew-service:
+    build: ./crew-service
+    ports:
+      - "8001:8001"
+    environment:
+      - GOOGLE_SHEETS_ID=${GOOGLE_SHEETS_ID}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/gcp-service-account.json
+    volumes:
+      - ./credentials:/app/credentials:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  # API Gateway Service - HTTP API (Port 8000)
+  api-service:
+    build: ./api-service
+    ports:
+      - "8000:8000"
+    environment:
+      - CREW_SERVICE_URL=http://crew-service:8001
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - LOG_REDACT_INPUTS=${LOG_REDACT_INPUTS}
+    depends_on:
+      crew-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  # Frontend Service - React UI (Port 3000)
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+      # Disable file-watcher polling for faster startup on WSL/volume mounts.
+      # CRA + polling can slow cold start significantly; hot reload still works.
+      - CHOKIDAR_USEPOLLING=false
+      - REACT_APP_ENABLE_BREAKDOWN=false
+    depends_on:
+      api-service:
+        condition: service_healthy
+    volumes:
+      - ./frontend/src:/app/src:ro
+      - ./frontend/public:/app/public:ro
+    restart: unless-stopped
+
+# Create networks for service communication
+networks:
+  default:
+    driver: bridge

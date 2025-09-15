@@ -8,7 +8,13 @@
 
 Start Here (2 minutes)
 
-Prerequisite: Start Docker Desktop (verify with `docker info`).
+Prerequisite: 
+1. Docker Desktop (verify with `docker info`).
+2. Coding Agents (highly recommended for AI-Powered) Your choice of
+	1. Open AI's Codex CLI
+	2. Aptronics's Claude Code
+	3. Google's Gemini CLI
+	4. Others like ByteDance Trae etc...
 
 | Task                     | 🤖 AI-Powered                                         | 💻 Manual Command Line                          |
 | ------------------------ | ----------------------------------------------------- | ----------------------------------------------- |
@@ -26,22 +32,43 @@ Workflow Options:
 1. 🤖 AI-Powered (Recommended: using coding agents like Claude code, Codex, or Gemini cli )
 2. Or 💻 Manual Command Line:
 
+## 🎯 Core Objectives
+
+**Target Audiences**: AI engineering students, aspiring AI developers, product leaders, process leaders, and entrepreneurs seeking to build production-ready AI solutions.
+
+### Three Key Benefits:
+
+1. **Natural Language AI Development**: Extend and customize AI projects through conversational development using Multi-AI coding agents. Perfect for **entrepreneurs** and **product leaders** who want to prototype rapidly without deep technical expertise.
+
+2. **Enterprise-Grade Foundation**: Focus purely on business logic with production-ready infrastructure stack (Docker, FastAPI, React) handling all technical complexity. Ideal for **process leaders** implementing AI automation and **aspiring developers** learning professional patterns.
+
+3. **Scalable Enterprise Architecture**: Built from day one for enterprise scaling with containerized deployment, API-first design, and cloud-ready patterns. Essential for **product leaders** planning market-ready solutions and **entrepreneurs** building investable AI companies.
+
+### 🎓 Perfect for AI Engineering Capstone Projects
+
+Transform theory into practice with complete project lifecycle support:
+- **Customer Identification** → Build AI solutions for real user problems
+- **Pain Point Clarification** → Validate market needs through working prototypes
+- **Technical Feasibility Study** → Prove concepts with enterprise-grade implementations
+- **Requirement Collection & Refining** → Iterate rapidly using natural language development
+
+**Join the November 2025 Multi-Agent Systems Course at CSTU.edu** - Learn AI theory-to-production, Multi-AI Coding Agents (MACA), and Software Development Life Cycle (SDLC) deployment for AI systems.
 
 ---
 
 ## 🚀 Getting Started
 
-First, ensure you have Docker and Git installed by following the setup guide for your OS:
+First, ensure you have Docker Desktop and Git installed by following the setup guide for your OS:
 - [**macOS Setup**](./setup/mac-setup.md)
 - [**Windows Setup**](./setup/windows-setup.md)
 - [**Makefile Essentials**](./setup/makefile-essentials.md)
 
 Once your environment is ready, launch a project:
 
-| Workflow (Choose One)       | 🤖 AI-Powered (Recommended)                                                                                        | 💻 Manual Command Line                                                                                              |     |                       |
+| Workflow (Choose One)       | 🤖 AI-Powered (Recommended) (use Claude Code, Gemini CLI, or Codex CLI)                                            | 💻 Manual Command Line                                                                                              |     |                       |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- | --- | --------------------- |
 | **1. Clone the Repository** | `git clone https://github.com/pingwu/multi-ai-coding-agent.git`<br>`cd multi-ai-coding-agent`                      | `git clone https://github.com/pingwu/multi-ai-coding-agent.git`<br>`cd multi-ai-coding-agent`                       |     |                       |
-| **2. Launch a Project**     | In Claude/agent, say:<br>`Bring up Project 1` or `Start the content generator project`                             | From the repo root: `make -C project-01-content-generator up`                                                       |     |                       |
+| **2. Launch a Project**     | In Coding Agent, say:<br>`Bring up Project 1` or `Start the content generator project`                             | From the repo root: `make -C project-01-content-generator up`                                                       |     |                       |
 | **3. Configure API Keys**   | Ask:<br>`Help me set up my API keys`                                                                               | If missing, create `.env` in the project:<br>`cd project-01-content-generator && [ -f .env ]                        |     | cp .env.example .env` |
 | **Result**                  | App at `http://localhost:3000` (frontend) and `http://localhost:8000` (backend), typically in **under 5 minutes**. | App at `http://localhost:3000` (frontend) and `http://localhost:8000` (backend), typically in **under 15 minutes**. |     |                       |
 
@@ -65,12 +92,13 @@ Once your environment is ready, launch a project:
 | ----------------------- | -------------------------------------------------- | ---------------------------------------------------- |
 | Start Project 1         | "Bring up Project 1 environment."                  | `make -C project-01-content-generator up`            |
 | Start Project 2         | "Start the expense tracker project."               | `make -C project-02-expense-tracker up`              |
+| Start Project 3         | "Start the task tracker project."                  | `make -C project-03-task-tracker up`                 |
+| Start Project 4         | "Start the team task tracker with OAuth."          | `make -C project-04-task-tracker-for-team up`        |
 | Stop Project 1          | "Shut down Project 1."                             | `make -C project-01-content-generator down`          |
-| Stop Project 2          | "Shut down the expense tracker project."           | `make -C project-02-expense-tracker down`            |
+| Stop Project 4          | "Shut down the team task tracker."                 | `make -C project-04-task-tracker-for-team down`      |
+| Setup OAuth (Proj 4)    | "Help me set up Google OAuth for Project 4."       | `make -C project-04-task-tracker-for-team setup-oauth` |
 | Backend tests (Proj 1)  | "Run backend tests for Project 1."                 | `make -C project-01-content-generator test-backend`  |
-| Frontend tests (Proj 1) | "Run frontend tests for Project 1."                | `make -C project-01-content-generator test-frontend` |
-| Rebuild images (Proj 2) | "Rebuild images in Project 2."                     | `make -C project-02-expense-tracker rebuild`         |
-| Follow logs (Proj 1)    | "Show logs for Project 1 until I say stop."        | `make -C project-01-content-generator logs`          |
+| Follow logs (Proj 4)    | "Show team task tracker logs until I say stop."    | `make -C project-04-task-tracker-for-team logs`      |
 
 ## 📂 The Projects
 
@@ -80,8 +108,8 @@ Each project is a complete, standalone application.
 | ------------------------ | ------------------------------------------------- | -------------------- |
 | **01-content-generator** | Multi-agent content creation with a real-time UI. | ✅ **Ready**          |
 | **02-expense-tracker**   | Automates business expense categorization.        | ✅ **Ready**          |
-| **03-task-tracker**      | Natural-language task logging to Google Sheets.   | ✅ Demo-Ready         |
-| **04-rental-analyzer**   | Analyzes real estate investment opportunities.    | 🗓️ Nov 2025 Release |
+| **03-task-tracker**      | Natural-language task logging to Google Sheets.   | ✅ **Ready**         |
+| **04-task-tracker-for-team** | Team collaboration with OAuth & audit trails. | ✅ **Documentation Complete** |
 | **05-cloud-deployment**  | Guides for deploying these projects to the cloud. | 🗓️ Nov 2025 Release |
 
 ---
@@ -89,8 +117,9 @@ Each project is a complete, standalone application.
 ### Project READMEs
 
 - Project 01 — Content Generator: [project-01-content-generator/README.md](project-01-content-generator/README.md)
-- Project 02 — Expense Tracker: [project-02-expense-tracker/README.md](CSTU%20Course/MAS/2025%20Nov%20Class/local-dev/project-02-expense-tracker/README.md)
+- Project 02 — Expense Tracker: [project-02-expense-tracker/README.md](project-02-expense-tracker/README.md)
 - Project 03 — Task Tracker: [project-03-task-tracker/README.md](project-03-task-tracker/README.md)
+- Project 04 — Team Task Tracker: [project-04-task-tracker-for-team/README.md](project-04-task-tracker-for-team/README.md)
 
 ## 🗂️ Repo Structure
 
@@ -108,7 +137,7 @@ multi-ai-coding-agent/
 ├── project-01-content-generator/
 ├── project-02-expense-tracker/
 ├── project-03-task-tracker/
-├── project-04-rental-analyzer/
+├── project-04-task-tracker-for-team/
 └── project-05-cloud-deployment/
 ```
 
