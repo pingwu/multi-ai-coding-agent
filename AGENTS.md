@@ -47,3 +47,21 @@
 ## Secrets & Agents
 - Use sample `.env` files in each project; do not commit real keys.
 - Coding agents (Codex CLI, Claude, Gemini, etc.) should use Makefile targets and Docker commands for deterministic runs.
+
+## Privacy & Publishing (local-dev)
+- Public-safe only: keep sensitive/internal materials out of `local-dev/` (no `/issues/`, raw notes, credentials, pricing/strategy).
+- Document examples using placeholders only. Provide `.env.example` templates; never commit live secrets or service account files.
+
+## Security & Compliance Baseline
+- Secrets hygiene: store real credentials locally only; prefer env vars loaded via Docker Compose. Rotate keys if accidentally exposed.
+- Containers: prefer non-root users via `USER` in each service image; include healthchecks in Compose for basic liveness.
+- Dependency governance: pin versions. Python via `pyproject.toml` constraints; JS with a lockfile committed.
+- Network/CORS: make allowed origins configurable via env; default to `http://localhost` for dev.
+- Logging: avoid logging raw user inputs by default; add an explicit redaction/verbose flag for debugging.
+- Data handling: avoid storing or displaying PII in demos. If unavoidable, sanitize/redact before persisting or rendering.
+
+## Collaboration Between Agents
+- Roles: Codex (code/diffs, automation, security hardening), Claude (course/docs scaffolding; Docker-first flows), Gemini (cross-checks, alternatives, perf).
+- Identity: when updating shared files or docs, sign as your agent name (e.g., "Codex Agent", "Claude", "Gemini Agent").
+- Alignment: follow this AGENTS guide plus `local-dev/CLAUDE.md` and `local-dev/GEMINI.md`. Prefer Makefile targets and containerized tests. Keep diffs minimal.
+- Public boundary: do not mirror internal `/issues/` or private context into `local-dev/`.

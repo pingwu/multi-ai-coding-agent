@@ -15,9 +15,11 @@ This file provides Claude Code-specific instructions for developing and customiz
 ### **Tech Stack Standards**
 - **Backend**: CrewAI + FastAPI + Python 3.10-3.12
 - **Frontend**: React + TypeScript + WebSocket integration
+- **Authentication**: Google OAuth 2.0 + JWT tokens + session management
+- **Data Storage**: Google Sheets API + CSV/JSON + audit trails
 - **Deployment**: Docker + Docker Compose
 - **Architecture**: Multi-agent coordination with professional web UI
-- **Progressive Complexity**: Simple → Data Storage → API Integration → Cloud Deployment
+- **Progressive Complexity**: Simple → Data Storage → Team Collaboration → Cloud Deployment
 
 ---
 
@@ -27,8 +29,9 @@ This file provides Claude Code-specific instructions for developing and customiz
 Each project follows a consistent pattern:
 - **Backend**: CrewAI + FastAPI (Python 3.10-3.12)
 - **Frontend**: React + TypeScript + WebSocket integration
+- **Authentication**: Google OAuth 2.0 + JWT + secure sessions (Project 4+)
 - **Orchestration**: Docker Compose with service dependencies
-- **Data**: Local file storage (CSV, JSON) with Docker volume mounts
+- **Data**: Google Sheets API + Local file storage (CSV, JSON) + audit trails
 
 ### **CrewAI Agent Patterns**
 All projects use standardized agent configurations:
@@ -70,6 +73,19 @@ Use these conversational patterns with Claude Code:
 - **"Fix the Docker setup issue"**
 - **"Deploy this project to Google Cloud"**
 - **"Add authentication to the web interface"**
+- **"Set up Google OAuth for team collaboration"**
+- **"Create audit trail for task accountability"**
+- **"Add team member management to Project 4"**
+
+### **Team Development Workflows (Project 4+)**
+Use these patterns for multi-user and team collaboration projects:
+
+- **"Help me set up Google OAuth for my team"**
+- **"Configure team roles and permissions"**
+- **"Show me the audit trail for task changes"**
+- **"Add a new team member with guest access"**
+- **"Create a team productivity dashboard"**
+- **"Set up JWT token management"**
 
 ### **Container-First Development**
 All development happens in Docker containers:
@@ -85,13 +101,14 @@ All development happens in Docker containers:
 multi-ai-coding-agent/
 ├── README.md                         # Main documentation
 ├── CLAUDE.md                         # This file - development guide
+├── GEMINI.md                         # Gemini AI agent instructions
 ├── LICENSE                           # MIT License
 ├── .gitignore                        # Privacy protection
 │
 ├── project-01-content-generator/     # Multi-agent content creation
 ├── project-02-expense-tracker/       # Business expense automation
-├── project-03-project-analyzer/      # Risk assessment (Under Development)
-├── project-04-rental-analyzer/       # Investment analysis (Under Development)
+├── project-03-task-tracker/          # Natural language task logging to Google Sheets
+├── project-04-task-tracker-for-team/ # Team collaboration with OAuth & audit trails
 └── project-05-cloud-deployment/      # Production deployment (Under Development)
 ```
 
@@ -134,21 +151,37 @@ Each project is **completely self-contained** with:
 - Build monthly/quarterly reports
 - Integrate with accounting software APIs
 
-### **Project 3: Project Analyzer** *(Under Development)*
-**Focus**: Risk assessment with Google Sheets integration
+### **Project 3: Task Tracker**
+**Focus**: Natural language task logging to Google Sheets with AI agents
 **Key Features**:
-- Google Sheets API integration
-- Multi-agent risk analysis
-- Executive dashboard reporting
-- Actionable recommendations
+- Google Sheets API integration for task storage
+- Natural language input processing with CrewAI agents
+- Automatic task categorization and priority detection
+- Microservices architecture with Docker Compose
+- Real-time task updates and reporting
 
-### **Project 4: Rental Property Analyzer** *(Under Development)*
-**Focus**: Investment analysis with synthetic data
+**Customization Examples**:
+- Add custom task categories for your business
+- Integrate with project management tools
+- Create automated task reminders
+- Build team productivity reports
+
+### **Project 4: AI Task Tracker for Teams**
+**Focus**: Team collaboration with Google OAuth authentication and audit trails
 **Key Features**:
-- Financial modeling (ROI, cash flow, cap rate)
-- Multi-agent market analysis
-- Professional financial reports
-- Investment decision support
+- Google OAuth 2.0 SSO authentication
+- Complete audit trail system (who, what, when, why)
+- Enhanced Google Sheets with user attribution
+- Role-based access control (team_lead, member, guest)
+- Two-pizza team coordination (5-8 people)
+- JWT token management and secure sessions
+
+**Customization Examples**:
+- Configure team roles and permissions
+- Set up OAuth with Google Cloud Console
+- Create team productivity dashboards
+- Add real-time collaboration features
+- Integrate with team communication tools
 
 ### **Project 5: Cloud Deployment Guide** *(Under Development)*
 **Focus**: Production deployment patterns
@@ -218,6 +251,15 @@ researcher = Agent(
 OPENAI_API_KEY=your-key-here
 ANTHROPIC_API_KEY=your-key-here
 SERPER_API_KEY=your-search-key
+
+# Google Sheets integration (Project 3+):
+GOOGLE_SHEETS_ID=your_sheet_id_here
+GOOGLE_APPLICATION_CREDENTIALS=credentials/gcp-service-account.json
+
+# Team collaboration (Project 4+):
+GOOGLE_CLIENT_ID=your_oauth_client_id.googleusercontent.com
+GOOGLE_CLIENT_SECRET=your_oauth_client_secret
+JWT_SECRET_KEY=your_super_secret_jwt_key
 ```
 
 ---
@@ -244,6 +286,46 @@ SERPER_API_KEY=your-search-key
 3. **Create API client** in backend
 4. **Integrate with agents** as tools
 5. **Handle errors gracefully** in UI
+
+---
+
+## 🔐 **Authentication Setup Guide (Project 4)**
+
+### **Google Cloud Console Setup**
+1. **Create OAuth Application**
+   - Go to Google Cloud Console
+   - Create new project or use existing
+   - Enable Google+ API, Google Sheets API
+   - Create OAuth 2.0 credentials
+   - Configure authorized redirect URIs
+
+2. **Service Account Setup**
+   - Create service account for Sheets access
+   - Download JSON credentials
+   - Share Google Sheet with service account email
+
+### **Team Authentication Workflow**
+```bash
+# 1. Configure OAuth in .env
+GOOGLE_CLIENT_ID=your_oauth_app.googleusercontent.com
+GOOGLE_CLIENT_SECRET=your_oauth_secret
+
+# 2. Set up JWT tokens
+JWT_SECRET_KEY=$(openssl rand -hex 32)
+
+# 3. Test authentication flow
+"Help me test Google OAuth login"
+
+# 4. Verify team features
+"Show me the audit trail for my team"
+```
+
+### **Learning Objectives**
+- **OAuth 2.0 flow implementation** from scratch
+- **JWT token management** and security
+- **Audit trail design** for business accountability
+- **Role-based access control** patterns
+- **Team coordination** in collaborative environments
 
 ---
 
