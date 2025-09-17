@@ -1,0 +1,65 @@
+*** api-service/src/routes/auth.py.orig	2025-02-15
+--- api-service/src/routes/auth.py	2025-02-15
+***************
+*** 288,295 ****
+          "email": info.get("email", ""),
+          "name": info.get("name", info.get("given_name", "User")),
+      }
+  
+!     # Set session cookie and redirect back to frontend root
+!     response = RedirectResponse(url=f"{FRONTEND_URL}")
+      if should_redact():
+          logger.debug("About to set session cookie for user (email redacted)")
+      else:
+          logger.debug(f"About to set session cookie for user: {user.get('email','')}")
+--- 288,295 ----
+          "email": info.get("email", ""),
+          "name": info.get("name", info.get("given_name", "User")),
+      }
+  
+!     # Set session cookie and redirect back to frontend welcome view
+!     frontend_base = FRONTEND_URL.rstrip("/") if FRONTEND_URL else "http://localhost:3000"
+!     response = RedirectResponse(url=f"{frontend_base}/welcome")
+      if should_redact():
+          logger.debug("About to set session cookie for user (email redacted)")
+      else:
+          logger.debug(f"About to set session cookie for user: {user.get('email','')}")
+***************
+*** 300,303 ****
+--- 301,310 ----
+*** frontend/src/services/AuthContext.tsx.orig	2025-02-15
+--- frontend/src/services/AuthContext.tsx	2025-02-15
+***************
+*** 12,21 ****
+  
+  interface AuthContextType {
+      isAuthenticated: boolean;
+      checkAuth: () => Promise<void>;
+  }
+--- 12,30 ----
+  
++ interface AuthUser {
++     id: string;
++     email: string;
++     name: string;
++ }
++ 
+  interface AuthContextType {
+      isAuthenticated: boolean;
++     user: AuthUser | null;
++     isLoading: boolean;
+      checkAuth: () => Promise<void>;
+  }
+***************
+*** 25,28 ****
+--- 34,39 ----
+  
+  export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+      const [isAuthenticated, setIsAuthenticated] = useState(false);
++     const [user, setUser] = useState<AuthUser | null>(null);
++     const [isLoading, setIsLoading] = useState(true);
+  
+      const checkAuth = async () => {
+          try {
+---
+*** End Patch

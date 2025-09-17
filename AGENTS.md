@@ -1,67 +1,21 @@
-# Local-Dev Repository Guidelines
+# Repository Guidelines
 
-## Scope & Structure
-- This folder is the classroom workspace for new projects. Existing examples: `project-01-content-generator/`, `project-02-expense-tracker/`.
-- New projects should follow: `project-<nn>-<slug>/` (e.g., `project-03-project-analyzer`).
+## Project Structure & Module Organization
+Keep each project in its own `project-<nn>-<slug>/` directory; examples include `project-01-content-generator/` and `project-03-task-tracker/`. Backend and frontend code live inside those project folders following the starter layout (backend `app/` or `src/`, frontend `frontend/` when present). Tests sit alongside their services (`backend/tests/`, `frontend/src/__tests__/`). Shared setup utilities and agent docs (`setup/`, `CLAUDE.md`, `GEMINI.md`) remain at the repo root; avoid editing the `*-INTERNAL/` references unless instructed.
 
-## Docker-First Quickstart
-- Enter a project and use Makefile shortcuts (WSL/macOS/Linux):
-  - Content Generator: `cd project-01-content-generator && make up`
-  - Expense Tracker: `cd project-02-expense-tracker && make up`
-- Common targets: `make logs`, `make test-backend`, `make test-frontend`, `make down`, `make rebuild`.
-- Never run Python on the host; use containers for everything.
+## Build, Test, and Development Commands
+Development happens in Docker via the top-level `Makefile`. Typical flows: `make -C project-01-content-generator up` to start services, `make -C project-02-expense-tracker logs` to tail containers, and `make -C project-03-project-analyzer down` to stop everything. Use `make rebuild` inside a project when dependencies change. Never run Python or Node commands directly on the host—run them through these Make targets so environments stay consistent.
 
-### From the Parent Folder (recommended)
-- You can run targets without `cd` using `make -C <project> <target>`:
-  - Start services: `make -C project-01-content-generator up`
-  - Run tests: `make -C project-02-expense-tracker test-backend`
-  - View logs: `make -C project-01-content-generator logs`
+## Coding Style & Naming Conventions
+Follow expressive, intention-revealing names. Python modules use 4-space indentation, `snake_case` functions, `PascalCase` classes, and type hints where practical; format with Black/Ruff when configured. JavaScript/TypeScript files use 2 spaces, `camelCase` symbols, `PascalCase` React components, and Prettier/ESLint defaults from each project. Keep new files ASCII unless a project already uses Unicode.
 
-### Prerequisites
-- Windows (WSL2), macOS, or Linux with Docker Desktop/Engine installed.
-- `make` available in your shell (WSL has it via Ubuntu; macOS via Xcode CLT or Homebrew).
+## Testing Guidelines
+Adopt TDD: add a failing test before implementation, commit once it passes. Run backend suites with `make -C <project> test-backend`, frontend checks with `make -C <project> test-frontend`. Name tests to describe behaviour (e.g., `test_generates_content_preview`). Target the existing coverage gate in each project and add fixtures beside the tests that use them.
 
-## Start a New Project
-- Copy a starter (01 or 02), rename folder to `project-<nn>-<slug>/`.
-- Update Docker Compose service names (`<backend>`, `frontend`) and ports if needed.
-- Backend: edit `pyproject.toml` `[project]` and `[project.scripts]` to match your module/package name.
-- Frontend: keep CRA structure; update API URL in compose or `.env`.
-- Copy the `Makefile` and set `BACKEND := <your-backend-service>`.
-- Verify: `make up` then open logs and hit the API/UI.
+## Commit & Pull Request Guidelines
+Use Conventional Commits such as `feat: add expense aggregation API` or `fix: correct generator prompt`. Keep PRs focused, include context, logs or screenshots when UI changes, and link to tracking issues where available. Rebase or merge from `main` frequently to avoid drift and ensure CI stays green before requesting review.
 
-## TDD, Testing, and Tools
-- TDD: write a failing test, implement, refactor.
-- Backend: pytest via `make test-backend`. Frontend: CRA/Jest via `make test-frontend`.
-- Formatting/Linting (when configured): Python (Black/Ruff), JS/TS (Prettier/ESLint).
+## Security & Configuration Tips
+Copy `.env.example` files before running services, keep real credentials out of version control, and rotate secrets immediately if exposed. Default CORS targets `http://localhost`; adjust only through Compose or env vars. Prefer non-root containers, redact user input from logs unless a debug flag is set, and sanitise any sample data before sharing.
 
-## Style & Naming
-- Expressive, intention-revealing names; avoid single-letter variables except indices. Code should read like prose.
-- Python: 4 spaces, `snake_case` functions, `PascalCase` classes; type hints where practical.
-- JS/TS: 2 spaces, `camelCase` for vars/functions, `PascalCase` components.
-
-## Commits, PRs, Branching
-- Conventional Commits: `feat:`, `fix:`, `docs:`, etc.
-- PRs: small, focused, include brief context/screenshots/logs when helpful.
-- Branch from `main`, keep merges frequent.
-
-## Secrets & Agents
-- Use sample `.env` files in each project; do not commit real keys.
-- Coding agents (Codex CLI, Claude, Gemini, etc.) should use Makefile targets and Docker commands for deterministic runs.
-
-## Privacy & Publishing (local-dev)
-- Public-safe only: keep sensitive/internal materials out of `local-dev/` (no `/issues/`, raw notes, credentials, pricing/strategy).
-- Document examples using placeholders only. Provide `.env.example` templates; never commit live secrets or service account files.
-
-## Security & Compliance Baseline
-- Secrets hygiene: store real credentials locally only; prefer env vars loaded via Docker Compose. Rotate keys if accidentally exposed.
-- Containers: prefer non-root users via `USER` in each service image; include healthchecks in Compose for basic liveness.
-- Dependency governance: pin versions. Python via `pyproject.toml` constraints; JS with a lockfile committed.
-- Network/CORS: make allowed origins configurable via env; default to `http://localhost` for dev.
-- Logging: avoid logging raw user inputs by default; add an explicit redaction/verbose flag for debugging.
-- Data handling: avoid storing or displaying PII in demos. If unavoidable, sanitize/redact before persisting or rendering.
-
-## Collaboration Between Agents
-- Roles: Codex (code/diffs, automation, security hardening), Claude (course/docs scaffolding; Docker-first flows), Gemini (cross-checks, alternatives, perf).
-- Identity: when updating shared files or docs, sign as your agent name (e.g., "Codex Agent", "Claude", "Gemini Agent").
-- Alignment: follow this AGENTS guide plus `local-dev/CLAUDE.md` and `local-dev/GEMINI.md`. Prefer Makefile targets and containerized tests. Keep diffs minimal.
-- Public boundary: do not mirror internal `/issues/` or private context into `local-dev/`.
+— Codex Agent

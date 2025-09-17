@@ -93,12 +93,12 @@ Once your environment is ready, launch a project:
 | Start Project 1         | "Bring up Project 1 environment."                  | `make -C project-01-content-generator up`            |
 | Start Project 2         | "Start the expense tracker project."               | `make -C project-02-expense-tracker up`              |
 | Start Project 3         | "Start the task tracker project."                  | `make -C project-03-task-tracker up`                 |
-| Start Project 4         | "Start the team task tracker with OAuth."          | `make -C project-04-task-tracker-for-team up`        |
+| Start Project 4         | "Start the Google OAuth task tracker."             | `make -C project-04-Google-OAuth up`                 |
 | Stop Project 1          | "Shut down Project 1."                             | `make -C project-01-content-generator down`          |
-| Stop Project 4          | "Shut down the team task tracker."                 | `make -C project-04-task-tracker-for-team down`      |
-| Setup OAuth (Proj 4)    | "Help me set up Google OAuth for Project 4."       | `make -C project-04-task-tracker-for-team setup-oauth` |
+| Stop Project 4          | "Shut down the Google OAuth task tracker."         | `make -C project-04-Google-OAuth down`               |
+| Setup OAuth (Proj 4)    | "Help me set up Google OAuth for Project 4."       | `make -C project-04-Google-OAuth setup-oauth`        |
 | Backend tests (Proj 1)  | "Run backend tests for Project 1."                 | `make -C project-01-content-generator test-backend`  |
-| Follow logs (Proj 4)    | "Show team task tracker logs until I say stop."    | `make -C project-04-task-tracker-for-team logs`      |
+| Follow logs (Proj 4)    | "Show Google OAuth task tracker logs."             | `make -C project-04-Google-OAuth logs`               |
 
 ## 📂 The Projects
 
@@ -109,7 +109,7 @@ Each project is a complete, standalone application.
 | **01-content-generator** | Multi-agent content creation with a real-time UI. | ✅ **Ready**          |
 | **02-expense-tracker**   | Automates business expense categorization.        | ✅ **Ready**          |
 | **03-task-tracker**      | Natural-language task logging to Google Sheets.   | ✅ **Ready**         |
-| **04-task-tracker-for-team** | Team collaboration with OAuth & audit trails. | ✅ **Documentation Complete** |
+| **04-Google-OAuth**      | Team task tracker with Google OAuth integration.  | ✅ **Ready** |
 | **05-cloud-deployment**  | Guides for deploying these projects to the cloud. | 🗓️ Nov 2025 Release |
 
 ---
@@ -119,7 +119,7 @@ Each project is a complete, standalone application.
 - Project 01 — Content Generator: [project-01-content-generator/README.md](project-01-content-generator/README.md)
 - Project 02 — Expense Tracker: [project-02-expense-tracker/README.md](project-02-expense-tracker/README.md)
 - Project 03 — Task Tracker: [project-03-task-tracker/README.md](project-03-task-tracker/README.md)
-- Project 04 — Team Task Tracker: [project-04-task-tracker-for-team/README.md](project-04-task-tracker-for-team/README.md)
+- Project 04 — Google OAuth Task Tracker: [project-04-Google-OAuth/README.md](project-04-Google-OAuth/README.md)
 
 ## 🗂️ Repo Structure
 
@@ -137,7 +137,7 @@ multi-ai-coding-agent/
 ├── project-01-content-generator/
 ├── project-02-expense-tracker/
 ├── project-03-task-tracker/
-├── project-04-task-tracker-for-team/
+├── project-04-Google-OAuth/
 └── project-05-cloud-deployment/
 ```
 
