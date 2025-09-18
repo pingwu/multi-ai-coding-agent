@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    environment:
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-http://localhost:3000}
+      - SIMULATION_DELAY_SECONDS=${SIMULATION_DELAY_SECONDS:-0.6}
+      - MAX_CONCURRENT_SESSIONS=${MAX_CONCURRENT_SESSIONS:-25}
+      - ENABLE_REAL_ADK=${ENABLE_REAL_ADK:-false}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY:-}
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/app:/app/app
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - REACT_APP_BACKEND_BASE_URL=${REACT_APP_BACKEND_BASE_URL:-}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./frontend/public:/usr/src/app/public
+      - ./frontend/src:/usr/src/app/src
+      - ./frontend/tsconfig.json:/usr/src/app/tsconfig.json
+      - ./frontend/package.json:/usr/src/app/package.json

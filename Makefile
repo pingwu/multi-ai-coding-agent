@@ -1,4 +1,4 @@
-.PHONY: help doctor up1 down1 logs1 testb1 testf1 up2 down2 logs2 testb2 testf2
+.PHONY: help doctor up1 down1 logs1 testb1 testf1 up2 down2 logs2 testb2 testf2 up-adk down-adk logs-adk rebuild-adk
 
 help:
 	@echo "Repo-level helpers:"
@@ -13,6 +13,10 @@ help:
 	@echo "  make logs2       - logs for Project 02"
 	@echo "  make testb2      - backend tests for Project 02"
 	@echo "  make testf2      - frontend tests for Project 02"
+	@echo "  make up-adk      - start adk-quickstart (frontend + backend)"
+	@echo "  make down-adk    - stop adk-quickstart"
+	@echo "  make logs-adk    - tail logs for adk-quickstart"
+	@echo "  make rebuild-adk - rebuild adk-quickstart images"
 
 doctor:
 	@$(MAKE) -C project-01-content-generator doctor
@@ -48,3 +52,14 @@ testb2:
 testf2:
 	@$(MAKE) -C project-02-expense-tracker test-frontend
 
+up-adk:
+	@$(MAKE) -C adk-quickstart up
+
+down-adk:
+	@$(MAKE) -C adk-quickstart stop
+
+logs-adk:
+	@$(MAKE) -C adk-quickstart logs
+
+rebuild-adk:
+	@$(MAKE) -C adk-quickstart rebuild

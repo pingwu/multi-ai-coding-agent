@@ -94,11 +94,14 @@ Once your environment is ready, launch a project:
 | Start Project 2         | "Start the expense tracker project."               | `make -C project-02-expense-tracker up`              |
 | Start Project 3         | "Start the task tracker project."                  | `make -C project-03-task-tracker up`                 |
 | Start Project 4         | "Start the Google OAuth task tracker."             | `make -C project-04-Google-OAuth up`                 |
+| Start ADK Chat          | "Start the ADK quickstart demo."                   | `make up-adk`                                         |
 | Stop Project 1          | "Shut down Project 1."                             | `make -C project-01-content-generator down`          |
 | Stop Project 4          | "Shut down the Google OAuth task tracker."         | `make -C project-04-Google-OAuth down`               |
+| Stop ADK Chat           | "Stop the ADK quickstart."                         | `make down-adk`                                       |
 | Setup OAuth (Proj 4)    | "Help me set up Google OAuth for Project 4."       | `make -C project-04-Google-OAuth setup-oauth`        |
 | Backend tests (Proj 1)  | "Run backend tests for Project 1."                 | `make -C project-01-content-generator test-backend`  |
 | Follow logs (Proj 4)    | "Show Google OAuth task tracker logs."             | `make -C project-04-Google-OAuth logs`               |
+| Follow ADK logs         | "Show ADK chat logs."                              | `make logs-adk`                                       |
 
 ## 📂 The Projects
 
@@ -110,6 +113,7 @@ Each project is a complete, standalone application.
 | **02-expense-tracker**   | Automates business expense categorization.        | ✅ **Ready**          |
 | **03-task-tracker**      | Natural-language task logging to Google Sheets.   | ✅ **Ready**         |
 | **04-Google-OAuth**      | Team task tracker with Google OAuth integration.  | ✅ **Ready** |
+| **adk-quickstart**       | Containerized Google ADK with custom chat frontend. | ✅ **Ready** |
 | **05-cloud-deployment**  | Guides for deploying these projects to the cloud. | 🗓️ Nov 2025 Release |
 
 ---
@@ -120,6 +124,7 @@ Each project is a complete, standalone application.
 - Project 02 — Expense Tracker: [project-02-expense-tracker/README.md](project-02-expense-tracker/README.md)
 - Project 03 — Task Tracker: [project-03-task-tracker/README.md](project-03-task-tracker/README.md)
 - Project 04 — Google OAuth Task Tracker: [project-04-Google-OAuth/README.md](project-04-Google-OAuth/README.md)
+- ADK Quickstart — Google ADK Chat Demo: [adk-quickstart/README.md](adk-quickstart/README.md)
 
 ## 🗂️ Repo Structure
 
@@ -138,6 +143,7 @@ multi-ai-coding-agent/
 ├── project-02-expense-tracker/
 ├── project-03-task-tracker/
 ├── project-04-Google-OAuth/
+├── adk-quickstart/
 └── project-05-cloud-deployment/
 ```
 

@@ -1,0 +1,9 @@
+{
+  "short_name": "ADK Demo",
+  "name": "ADK Quickstart Demo",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#0d6efd",
+  "background_color": "#ffffff"
+}

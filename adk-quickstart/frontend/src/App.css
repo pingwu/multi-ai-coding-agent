@@ -1,0 +1,90 @@
+.App {
+  background: radial-gradient(circle at top left, #eef5ff, #ffffff 60%);
+  height: 100vh;
+}
+
+.App .card {
+  border-radius: 16px;
+  border: 1px solid #e1e7ef;
+}
+
+.App-footer {
+  background-color: #f1f4f9;
+}
+
+.progress-stepper {
+  position: relative;
+}
+
+.console-output {
+  height: 400px;
+  overflow-y: auto;
+  background-color: #0f172a;
+  color: #f1f5f9;
+  padding: 1rem;
+  font-family: 'Source Code Pro', monospace;
+  border-radius: 0.5rem;
+}
+
+.console-line {
+  margin-bottom: 0.5rem;
+  white-space: pre-wrap;
+}
+
+.result-content h1,
+.result-content h2,
+.result-content h3 {
+  margin-top: 1.5rem;
+}
+
+.result-content pre {
+  background-color: #0f172a;
+  color: #e2e8f0;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+}
+
+.result-content code {
+  background-color: rgba(15, 23, 42, 0.1);
+  padding: 0.1rem 0.25rem;
+  border-radius: 0.25rem;
+}
+
+/* Chat-specific styles */
+.typing-animation {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.typing-animation span {
+  width: 4px;
+  height: 4px;
+  background-color: #6c757d;
+  border-radius: 50%;
+  animation: typing-dot 1.4s infinite;
+}
+
+.typing-animation span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-animation span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typing-dot {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
+}
+
+.resize-none {
+  resize: none !important;
+}

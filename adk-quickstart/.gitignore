@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Environment files
+.env
+.env.*
+
+# Node artifacts
+frontend/node_modules/
+frontend/build/
+
+# Editor cruft
+.DS_Store
+.idea/
+.vscode/
