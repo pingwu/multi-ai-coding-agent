@@ -13,6 +13,7 @@
   - [Professional Setup](#professional-setup)
 - [Step 3: Clone & Run](#step-3-clone-and-run-your-first-ai-app-15-minutes)
 - [Step 4: Success!](#step-4-experience-your-ai-app-working-5-minutes)
+- [Agent vs Commands Cheatsheet](#agent-vs-commands-cheatsheet)
 - [Optional: GitHub CLI](#optional-github-cli-setup)
 - [Need Help?](#need-help)
 
@@ -178,32 +179,19 @@ npm install -g @google/gemini-cli
 ```bash
 # Clone the course repository
 git clone https://github.com/pingwu/multi-ai-coding-agent.git
-cd multi-ai-coding-agent/project-02-expense-tracker
-
-# Setup environment
-[ -f .env ] || cp .env.example .env
-```
-
-#### **Configure Your API Keys:**
-Edit the `.env` file and add your OpenAI API key:
-```bash
-# Required: Add your OpenAI API key
-OPENAI_API_KEY=your_key_here
-
-# Optional: For enhanced search capabilities
-SERPER_API_KEY=your_serper_key_here
+cd multi-ai-coding-agent/local-dev
 ```
 
 #### **Start Your AI Application:**
-```bash
-# Using Docker Compose (Universal)
-docker compose up --build
 
-# Using Makefile (WSL/macOS/Linux) - Preferred
-make up
-```
+| Task                                                                                                | 🤖 AI-Powered                                         | 💻 Manual Command Line                          |
+| --------------------------------------------------------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------- |
+| Start Project 1 (** make sure you have all prerequisites installed and docker desktop is tarted **) | "Bring up Project 1 (content generator) environment." | `make -C project-01-content-generator up`       |
+| Fix API keys (if errors)                                                                            | "Create .env from .env.example in Project 1."         | `cd project-01-content-generator && [ -f .env ] |
+| Stop Expense Tracker                                                                                | "Shut down the expense tracker project."              | `make -C project-02-expense-tracker down`       |
 
-**Tip**: If you have a Makefile available, use `make up` for the best experience. See [Makefile Essentials](./makefile-essentials.md) for more commands.
+Then open: http://localhost:3000 (frontend) and http://localhost:8000 (backend)
+
 
 ### Step 4: Experience Your AI App Working (5 minutes)
 1. **Open browser** to `http://localhost:8000`
@@ -216,6 +204,24 @@ make up
 ✅ **AI-powered coding assistant** ready for natural language development
 ✅ **Multi-agent AI system** processing real business expenses
 ✅ **Production-ready containerized application** running locally
+
+## ⚡ Agent vs Commands Cheatsheet
+
+| Task                    | 🤖 AI-Powered Natural Language (via Coding agents) | 💻 Manual Command Line                               |
+| ----------------------- | -------------------------------------------------- | ---------------------------------------------------- |
+| Start Project 1         | "Bring up Project 1 environment."                  | `make -C project-01-content-generator up`            |
+| Start Project 2         | "Start the expense tracker project."               | `make -C project-02-expense-tracker up`              |
+| Start Project 3         | "Start the task tracker project."                  | `make -C project-03-task-tracker up`                 |
+| Start Project 4         | "Start the Google OAuth task tracker."             | `make -C project-04-Google-OAuth up`                 |
+| Start ADK Chat          | "Start the ADK quickstart demo."                   | `make up-adk`                                         |
+| Stop Project 1          | "Shut down Project 1."                             | `make -C project-01-content-generator down`          |
+| Stop Project 4          | "Shut down the Google OAuth task tracker."         | `make -C project-04-Google-OAuth down`               |
+| Stop ADK Chat           | "Stop the ADK quickstart."                         | `make down-adk`                                       |
+| Setup OAuth (Proj 4)    | "Help me set up Google OAuth for Project 4."       | `make -C project-04-Google-OAuth setup-oauth`        |
+| Backend tests (Proj 1)  | "Run backend tests for Project 1."                 | `make -C project-01-content-generator test-backend`  |
+| Follow logs (Proj 4)    | "Show Google OAuth task tracker logs."             | `make -C project-04-Google-OAuth logs`               |
+| Follow ADK logs         | "Show ADK chat logs."                              | `make logs-adk`                                       |
+Note: the application ports number are the same across many applications.  Change to different port number if you want multiple project running simultaneously.  Use coding agent to change it or guide you through it. 
 
 ## Next Steps with Claude Code
 Try these natural language commands with Claude Code:
