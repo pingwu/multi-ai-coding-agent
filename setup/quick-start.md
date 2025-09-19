@@ -1,62 +1,284 @@
 # Quick Start - Get Your First AI App Running in 30 Minutes
 
-## 3 Simple Steps to Success
+## Table of Contents
+- [Prerequisites](#prerequisites-complete-these-first)
+  - [Windows: WSL Installation](#windows-users-install-wsl-windows-subsystem-for-linux)
+  - [All Platforms: Node.js & Git](#all-platforms-install-nodejs-and-npm)
+- [Step 1: Docker Desktop](#step-1-install-docker-desktop-5-minutes)
+- [Step 2: AI Coding Agents](#step-2-install-ai-coding-agents-highly-recommended-10-minutes)
+  - [Quick Start Options](#high-level-overview---choose-your-path)
+  - [Claude Code](#claude-code-installation)
+  - [OpenAI Codex](#openai-codex-installation)
+  - [Gemini CLI](#gemini-cli-installation)
+  - [Professional Setup](#professional-setup)
+- [Step 3: Clone & Run](#step-3-clone-and-run-your-first-ai-app-15-minutes)
+- [Step 4: Success!](#step-4-experience-your-ai-app-working-5-minutes)
+- [Optional: GitHub CLI](#optional-github-cli-setup)
+- [Need Help?](#need-help)
+
+---
+
+## Prerequisites (Complete These First)
+
+### Step 0: System Prerequisites
+
+#### **Windows Users: Install WSL (Windows Subsystem for Linux)**
+**Required for professional development environment**
+- **Install**: Open PowerShell as Administrator and run:
+  ```powershell
+  wsl --install -d Ubuntu
+  ```
+- **Restart** your computer when prompted
+- **Setup**: Follow the Ubuntu setup wizard after restart
+- **Details**: Visit [Microsoft WSL Documentation](https://docs.microsoft.com/en-us/windows/wsl/install) for troubleshooting
+- **Troubleshooting**: If you encounter issues, search on Google AI mode or Perplexity, describe the problem you are encounter.  It would give you good instructions.
+
+#### **All Platforms: Install Node.js and npm**
+**Required for most coding agents and development tools**
+- **Download**: Visit [nodejs.org](https://nodejs.org) and install the LTS version
+- **Verify**: Open terminal and run:
+  ```bash
+  node --version
+  npm --version
+  ```
+- **Note**: Most coding agents (Claude Code, GitHub Copilot CLI, etc.) use npm for installation
+
+#### **All Platforms: Install Git**
+**Required for cloning course projects**
+- **Download**: Visit [git-scm.com](https://git-scm.com/downloads)
+- **Verify**: Open terminal and run:
+  ```bash
+  git --version
+  ```
+
+## 4 Essential Steps to Success
 
 ### Step 1: Install Docker Desktop (5 minutes)
 - **Mac**: Download from [docker.com](https://docker.com) → Install → Start
 - **Windows**: Download from [docker.com](https://docker.com) → Install → Restart → Start
-- **Verify**: Open terminal, type `docker --version`
+- **Linux**: Follow Docker Engine installation guide at [docs.docker.com](https://docs.docker.com/engine/install/)
+- **Verify**: Open terminal and run:
+  ```bash
+  docker --version
+  docker compose version
+  ```
 
-### Optional: Install Claude Code (2 minutes)
-- **Enhanced AI Development**: Get Claude Code CLI for advanced AI-assisted coding
-- **Installation**: Visit [claude.ai/code](https://claude.ai/code) and follow platform-specific instructions
-- **Verify**: Type `claude --version` in terminal
-- **Benefits**: Real-time AI assistance, code generation, and debugging help during development
-- **Note**: Not required for course projects, but highly recommended for professional development
+### Step 2: Install AI Coding Agents (HIGHLY RECOMMENDED) (10 minutes)
 
-### Step 2: Clone and Run (15 minutes)
+#### **High-Level Overview - Choose Your Path**
+
+This course was developed using **three primary coding agents** in rotation. Choose based on your needs:
+
+**Quick Start (Choose One):**
+- **[Install Claude Code Only](#claude-code-installation)** - Best for beginners, excellent Docker integration
+- **[Install All Three Agents](#professional-setup)** - Professional approach, maximum flexibility
+
+**The Three-Agent System:**
+- **Claude Code**: Architecture, Docker, complex refactoring ([Install Guide](#claude-code-installation))
+- **OpenAI Codex CLI**: Rapid prototyping, debugging ([Install Guide](#openai-codex-installation))
+- **Gemini CLI**: Code review, optimization ([Install Guide](#gemini-cli-installation))
+
+---
+All following session are assume to be running in WSL (Windows Subsystem for Linux) or Linux/Mac terminal.
+---
+#### **Claude Code Installation**
+**Best for**: Beginners, system architecture, containerized development, project planning, PRD - product requirement documentation.
+
+1. **Visit**: [claude.ai/code](https://claude.ai/code)
+2. **Install via npm**:
+   ```bash
+   npm install -g @anthropic-ai/claude-code
+   ```
+3. **Setup**: Follow authentication process
+4. **Verify**:
+   ```bash
+   claude --version
+   ```
+5. **Start Claude Code**:
+   ```bash
+   claude
+   ```
+
+**You're Ready!** Skip to [Step 3: Clone and Run](#step-3-clone-and-run) or continue for additional agents.
+
+---
+
+#### **OpenAI Codex Installation**
+**Best for**: Quick prototyping, debugging, API integrations
+
+1. **Install via npm**:
+   ```bash
+   npm install -g openai-cli
+   ```
+2. **Setup API key**:
+   ```bash
+   export OPENAI_API_KEY=your_key_here
+   # Add to your shell profile (.bashrc, .zshrc)
+   ```
+3. **Verify**:
+   ```bash
+   openai --version
+   ```
+4. **Start OpenAI Codex**:
+   ```bash
+   codex
+   ```
+
+---
+
+#### **Gemini CLI Installation**
+**Best for**: Code review, performance optimization, alternative solutions
+
+1. **Install via npm**:
+   ```bash
+   npm install -g @google-ai/generative-ai-cli
+   ```
+2. **Get API key**: Visit [Google AI Studio](https://aistudio.google.com)
+3. **Configure**:
+   ```bash
+   export GEMINI_API_KEY=your_key_here
+   ```
+4. **Verify**:
+   ```bash
+   gemini --version
+   ```
+5. **Start Gemini CLI**:
+   ```bash
+   gemini
+   ```
+
+---
+
+#### **Professional Setup**
+**Install all three for maximum flexibility:**
 ```bash
+# Professional multi-agent setup
+npm install -g @anthropic-ai/claude-code
+npm install -g openai-cli
+npm install -g @google-ai/generative-ai-cli
+```
+
+**Why Multi-Agent Approach:**
+- **Different Strengths**: Each agent excels in different areas
+- **Redundancy**: If one agent is down, others keep you productive
+- **Real-World Practice**: Enterprise teams use multiple AI tools
+
+**Usage Note**: Detailed coding agent usage, software development architecture, principles and concepts will be covered in the November class sessions.
+
+---
+
+#### **Additional Options (Optional)**
+- **GitHub Copilot CLI**: `npm install -g @githubnext/github-copilot-cli`
+- **Cursor IDE**: Download from [cursor.sh](https://cursor.sh)
+- **Codeium**: Visit [codeium.com](https://codeium.com)
+
+### Step 3: Clone and Run Your First AI App (15 minutes)
+
+#### **For Windows (WSL) and Linux/Mac:**
+```bash
+# Clone the course repository
 git clone https://github.com/pingwu/multi-ai-coding-agent.git
 cd multi-ai-coding-agent/project-02-expense-tracker
 
 # Setup environment
 [ -f .env ] || cp .env.example .env
-# Edit .env file and add your OpenAI API key:
-# OPENAI_API_KEY=your_key_here
-
-# Start the application (Compose v2)
-docker compose up --build
 ```
 
-Tip: Prefer Makefile shortcuts if available (WSL/macOS/Linux):
-
+#### **Configure Your API Keys:**
+Edit the `.env` file and add your OpenAI API key:
 ```bash
-cd multi-ai-coding-agent
-make -C project-02-expense-tracker up
+# Required: Add your OpenAI API key
+OPENAI_API_KEY=your_key_here
+
+# Optional: For enhanced search capabilities
+SERPER_API_KEY=your_serper_key_here
 ```
 
-See also: [Makefile Essentials](./makefile-essentials.md)
+#### **Start Your AI Application:**
+```bash
+# Using Docker Compose (Universal)
+docker compose up --build
 
-### Step 3: See Your AI App Working (10 minutes)
-- Open browser to `http://localhost:8000`
-- Type: "I spent $25 on lunch at McDonald's"
-- Watch AI automatically categorize and save to CSV file
-- **SUCCESS!** 🎉 You just ran your first multi-agent AI system!
+# Using Makefile (WSL/macOS/Linux) - Preferred
+make up
+```
+
+**Tip**: If you have a Makefile available, use `make up` for the best experience. See [Makefile Essentials](./makefile-essentials.md) for more commands.
+
+### Step 4: Experience Your AI App Working (5 minutes)
+1. **Open browser** to `http://localhost:8000`
+2. **Type**: "I spent $25 on lunch at McDonald's"
+3. **Watch** AI automatically categorize and save to CSV file
+4. **SUCCESS!** 🎉 You just ran your first multi-agent AI system!
 
 ## What You Just Accomplished
-✅ Local AI development environment  
-✅ Multi-agent AI system running  
-✅ Real business expense processing with NLP
-✅ Production-ready containerized app  
+✅ **Professional development environment** with Docker + WSL (Windows)
+✅ **AI-powered coding assistant** ready for natural language development
+✅ **Multi-agent AI system** processing real business expenses
+✅ **Production-ready containerized application** running locally
 
-## Next Steps
-- **Session 1**: We'll explore what you just built
-- **Session 2**: You'll customize it for your needs
-- **Session 3**: You'll deploy it to the cloud
+## Next Steps with Claude Code
+Try these natural language commands with Claude Code:
+```
+"Show me how this expense tracker works"
+"Add a monthly report feature to this project"
+"Help me deploy this to Google Cloud"
+"Create a copy of this project for demo purposes"
+```
+
+## Course Progression
+- **Session 1**: Explore and understand your working AI system
+- **Session 2**: Customize and extend using natural language development
+- **Session 3**: Deploy to production with professional patterns
+- **Session 4**: Build team collaboration features
 
 ## Need Help?
-- **Can't install Docker?** → See `troubleshooting.md`
+
+### **Installation Issues:**
+- **Docker problems?** → See `troubleshooting.md`
+- **WSL not working?** → Visit [Microsoft WSL Troubleshooting](https://docs.microsoft.com/en-us/windows/wsl/troubleshooting)
+- **Node.js/npm issues?** → Visit [Node.js Documentation](https://nodejs.org/en/docs/)
+
+### **Development Issues:**
 - **Commands not working?** → See `troubleshooting.md`
 - **Want to understand Docker?** → See `docker-essentials.md`
+- **Claude Code not responding?** → Check authentication and internet connection
 
-**Remember**: The goal is to get working quickly, then understand deeply. You're already succeeding! 🚀
+### **Course Support:**
+- **GitHub Issues**: Report technical problems
+- **Discord/Slack**: Real-time help from instructors and peers
+- **Office Hours**: Weekly Q&A sessions
+
+---
+
+## Optional: GitHub CLI Setup
+
+### **Install GitHub CLI (Recommended for Smoother Experience)**
+
+The GitHub CLI simplifies authentication and repository management.
+
+#### **Installation:**
+- **macOS (with Homebrew)**:
+  ```bash
+  brew install gh
+  ```
+- **Other platforms**: Download from [cli.github.com](https://cli.github.com)
+- **npm alternative**:
+  ```bash
+  npm install -g @github/gh
+  ```
+
+#### **Setup:**
+```bash
+gh auth login
+# Follow prompts to authenticate
+```
+
+#### **Benefits:**
+- Clone repositories without credential management
+- Create pull requests from command line
+- Seamless integration with course projects
+
+---
+
+**Remember**: Professional AI development starts with proper tooling. You're building enterprise-grade skills from day one! 🚀
