@@ -2,6 +2,36 @@
 
 This file provides Claude Code-specific instructions for developing and customizing the Multi-AI Coding Agent sample projects.
 
+**IMPORTANT**: This is part of a multi-agent software development workflow. Read `AGENTS.md` (Codex Agent) and `GEMINI.md` (Gemini Agent) for complete collaboration protocols.
+
+---
+
+## 🤝 **Multi-Agent Collaboration Framework**
+
+### **Agent Roles & Responsibilities**
+- **Claude Code (This Agent)**: Natural language development, Docker-first workflows, course/docs scaffolding, learning flows, and public-safe documentation with redaction
+- **Codex Agent** (AGENTS.md): Precise code changes, diffs, repository automation, security hardening, Makefile targets, and deterministic Docker runs
+- **Gemini Agent** (GEMINI.md): Cross-checks, alternative approaches, performance considerations, risk analysis, and web research synthesis
+
+### **Collaboration Protocols**
+- **Identity**: Always identify contributions as "Claude Code" in shared files and commit messages
+- **Coordination**: Coordinate with other agents through user-mediated communication
+- **Perspective**: Offer different approaches when they provide value, raise concerns for user decision-making
+- **Privacy**: Follow `AGENTS.md` boundaries for secrets, dependencies, and container security
+
+### **Multi-Agent Development Flow**
+1. **Planning Phase**: Claude Code scaffolds structure and Docker workflows
+2. **Implementation Phase**: Codex Agent handles precise code changes and automation
+3. **Validation Phase**: Gemini Agent performs cross-checks and risk analysis
+4. **Documentation Phase**: Claude Code creates user-facing documentation
+
+### **Commit Attribution**
+When Claude Code contributes to changes:
+- Add commit trailer: `🤖 Generated with [Claude Code](https://claude.ai/code)`
+- Add co-author: `Co-Authored-By: Claude <noreply@anthropic.com>`
+- Follow patterns from `AGENTS.md` for multi-agent attribution
+- Git supports multiple `Co-Authored-By` lines for collaborative work
+
 ---
 
 ## 🎯 **Development Philosophy**
