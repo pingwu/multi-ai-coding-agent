@@ -1,5 +1,11 @@
 # Repository Guidelines
 
+## Multi-Agent Collaboration
+- Coordinate with Claude and Gemini by reading `CLAUDE.md` and `GEMINI.md`; these files describe how our roles complement one another in the multi-AI workflow.
+- Identify your contributions as the "Codex Agent" in shared artifacts, reviews, and commit messages so teammates can trace authorship.
+- When reviewing or checking code, follow the collaboration protocol documented in `CLAUDE.md`, mirror its review etiquette, and call out that feedback originates from the Codex Agent.
+- Surface alternative approaches or risks for the user to decide, and leave space for Claude and Gemini to add perspective during later passes.
+
 ## Project Structure & Module Organization
 Keep each project in its own `project-<nn>-<slug>/` directory; examples include `project-01-content-generator/` and `project-03-task-tracker/`. Backend and frontend code live inside those project folders following the starter layout (backend `app/` or `src/`, frontend `frontend/` when present). Tests sit alongside their services (`backend/tests/`, `frontend/src/__tests__/`). Shared setup utilities and agent docs (`setup/`, `CLAUDE.md`, `GEMINI.md`) remain at the repo root; avoid editing the `*-INTERNAL/` references unless instructed.
 
@@ -16,10 +22,11 @@ Adopt TDD: add a failing test before implementation, commit once it passes. Run 
 Use Conventional Commits such as `feat: add expense aggregation API` or `fix: correct generator prompt`. Keep PRs focused, include context, logs or screenshots when UI changes, and link to tracking issues where available. Rebase or merge from `main` frequently to avoid drift and ensure CI stays green before requesting review.
 
 ## Commit Attribution
+- Follow GitHub's co-author best practices by using commit trailers for every AI collaborator.
 - When Codex Agent contributes materially to a change that lands in this open-source workspace, append two trailers to the commit message footer:
   - `🤖 Generated with [Codex CLI](https://platform.openai.com/)`
   - `Co-Authored-By: Codex Agent <noreply@openai.com>`
-- If other agents assisted (e.g., Claude Code), keep their trailers too—Git supports multiple `Co-Authored-By` lines.
+- Preserve trailers for Claude (`Co-Authored-By: Claude <noreply@anthropic.com>`) and Gemini (`Co-Authored-By: Gemini Agent <noreply@google.com>`) or any others that participated so history reflects the full multi-agent team.
 - Skip commit templates for this; add or amend the trailers only on the commits Codex actually touched.
 
 ## Security & Configuration Tips
