@@ -15,6 +15,13 @@ Adopt TDD: add a failing test before implementation, commit once it passes. Run 
 ## Commit & Pull Request Guidelines
 Use Conventional Commits such as `feat: add expense aggregation API` or `fix: correct generator prompt`. Keep PRs focused, include context, logs or screenshots when UI changes, and link to tracking issues where available. Rebase or merge from `main` frequently to avoid drift and ensure CI stays green before requesting review.
 
+## Commit Attribution
+- When Codex Agent contributes materially to a change that lands in this open-source workspace, append two trailers to the commit message footer:
+  - `🤖 Generated with [Codex CLI](https://platform.openai.com/)`
+  - `Co-Authored-By: Codex Agent <noreply@openai.com>`
+- If other agents assisted (e.g., Claude Code), keep their trailers too—Git supports multiple `Co-Authored-By` lines.
+- Skip commit templates for this; add or amend the trailers only on the commits Codex actually touched.
+
 ## Security & Configuration Tips
 Copy `.env.example` files before running services, keep real credentials out of version control, and rotate secrets immediately if exposed. Default CORS targets `http://localhost`; adjust only through Compose or env vars. Prefer non-root containers, redact user input from logs unless a debug flag is set, and sanitise any sample data before sharing.
 
