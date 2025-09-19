@@ -108,7 +108,7 @@ All following session are assume to be running in WSL (Windows Subsystem for Lin
 
 1. **Install via npm**:
    ```bash
-   npm install -g openai-cli
+   npm install -g @openai/codex
    ```
 2. **Setup API key**:
    ```bash
@@ -131,7 +131,7 @@ All following session are assume to be running in WSL (Windows Subsystem for Lin
 
 1. **Install via npm**:
    ```bash
-   npm install -g @google-ai/generative-ai-cli
+   npm install -g @google/gemini-cli
    ```
 2. **Get API key**: Visit [Google AI Studio](https://aistudio.google.com)
 3. **Configure**:
@@ -154,8 +154,8 @@ All following session are assume to be running in WSL (Windows Subsystem for Lin
 ```bash
 # Professional multi-agent setup
 npm install -g @anthropic-ai/claude-code
-npm install -g openai-cli
-npm install -g @google-ai/generative-ai-cli
+npm install -g @openai/codex
+npm install -g @google/gemini-cli
 ```
 
 **Why Multi-Agent Approach:**
