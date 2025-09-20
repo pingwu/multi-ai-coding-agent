@@ -25,7 +25,7 @@ The diagram below illustrates the development workflow, from initial setup to ru
 ```mermaid
 graph TD
     subgraph "Setup"
-        A[Start Here] --> B["<a href='./setup/quick-start.md'>Install Tools (Docker, AI Agents)</a>"];
+        A[Start Here] --> B["<a href='./setup/quick-start.md'>Install AI Coding Agent tools</a>"];
     end
 
     subgraph "Project Initiation"
