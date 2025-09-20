@@ -15,8 +15,8 @@ For a complete setup guide, please see the **[Quick Start Guide](./setup/quick-s
 ## 🎯 Core Objectives
 
 *   **Natural Language AI Development**: Extend and customize AI projects through conversational development.
-*   **Enterprise-Grade Foundation**: Focus on business logic with a production-ready infrastructure stack.
-*   **Scalable Enterprise Architecture**: Built for scaling with containerized deployment and API-first design.
+*   **Enterprise-Ready & Developer-Friendly**: Built with a vendor-agnostic, enterprise architecture from day one, ensuring no lock-in and a developer-friendly experience.
+*   **Business Value-Driven Workflow**: Enables a forward-deployed engineer workflow, allowing for rapid prototyping and iteration to solve real-world business problems.
 
 ## Workflow Overview
 
