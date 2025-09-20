@@ -1,11 +1,11 @@
-# Task Tracker - Development Commands
-# Simplified microservices development with AI coding agent assistance
+# Google OAuth Task Tracker - Development Commands
+# Team collaboration with Google OAuth authentication and audit trails
 
 .PHONY: help up down logs clean rebuild test health status services
 
 # Default target
 help:
-	@echo "🏗️  Task Tracker - Microservices Development"
+	@echo "🏗️  Google OAuth Task Tracker - Team Collaboration Platform"
 	@echo ""
 	@echo "📋 Available commands:"
 	@echo "  make up          - Start all services (frontend + api + crew)"
@@ -44,8 +44,10 @@ up:
 	@echo "  Crew Service: http://localhost:8001"
 	@echo ""
 	@echo "📋 Next steps:"
-	@echo "  1. Configure Google Sheets (see setup/google-sheets-setup-guide.md)"
-	@echo "  2. Test with: make status"
+	@echo "  1. Configure Google OAuth (see README.md for setup)"
+	@echo "  2. Configure Google Sheets (see setup/google-sheets-setup-guide.md)"
+	@echo "  3. Verify OAuth config: make check-oauth"
+	@echo "  4. Test with: make status"
 
 down:
 	@echo "🛑 Stopping all services..."

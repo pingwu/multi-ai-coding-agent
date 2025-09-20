@@ -12,7 +12,7 @@ Quick Start (10 minutes)
 - Open: http://localhost:3000 and http://localhost:8000
 - If you see API key errors: `cd project-01-content-generator && [ -f .env ] || cp .env.example .env`
 
-Agent vs Commands (from local-dev)
+Agent vs Commands
 
 | Task | Natural Language (Claude/agents) | Manual Command (Make) |
 | --- | --- | --- |
@@ -98,7 +98,7 @@ Now that you have the necessary tools, you can download the course projects.
 ## 10‑Minute First Run (Project 01)
 
 1) Ensure Docker Desktop is running.
-2) From the local-dev folder, start services with Make:
+2) From the repository root, start services with Make:
    ```bash
    make -C project-01-content-generator up
    ```

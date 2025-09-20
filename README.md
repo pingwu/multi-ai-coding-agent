@@ -64,11 +64,11 @@ Each project is a complete, standalone application.
 
 | Project                  | Description                                       | Status               |
 | ------------------------ | ------------------------------------------------- | -------------------- |
-| **01-content-generator** | Multi-agent content creation with a real-time UI. | ✅ **Ready**          |
-| **02-expense-tracker**   | Automates business expense categorization.        | ✅ **Ready**          |
-| **03-task-tracker**      | Natural-language task logging to Google Sheets.   | ✅ **Ready**         |
-| **04-Google-OAuth**      | Team task tracker with Google OAuth integration.  | ✅ **Ready** |
-| **adk-quickstart**       | Containerized Google ADK with custom chat frontend. | ✅ **Ready** |
+| **[01-content-generator](./project-01-content-generator/)** | Multi-agent content creation with a real-time UI. | ✅ **Ready**          |
+| **[02-expense-tracker](./project-02-expense-tracker/)**   | Automates business expense categorization.        | ✅ **Ready**          |
+| **[03-task-tracker](./project-03-task-tracker/)**      | Natural-language task logging to Google Sheets.   | ✅ **Ready**         |
+| **[04-Google-OAuth](./project-04-Google-OAuth/)**      | Team task tracker with Google OAuth integration.  | ✅ **Ready** |
+| **[adk-quickstart](./adk-quickstart/)**       | Containerized Google ADK with custom chat frontend. | ✅ **Ready** |
 | **05-cloud-deployment**  | Guides for deploying these projects to the cloud. | 🗓️ Nov 2025 Release |
 
 For more details, see the README file within each project folder.

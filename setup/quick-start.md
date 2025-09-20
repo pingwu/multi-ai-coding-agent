@@ -179,7 +179,7 @@ npm install -g @google/gemini-cli
 ```bash
 # Clone the course repository
 git clone https://github.com/pingwu/multi-ai-coding-agent.git
-cd multi-ai-coding-agent/local-dev
+cd multi-ai-coding-agent
 ```
 
 #### **Start Your AI Application:**

@@ -18,7 +18,7 @@ Quick Start (10 minutes, WSL2)
 
 See detailed steps below if needed.
 
-Agent vs Commands (from local-dev)
+Agent vs Commands
 
 | Task | Natural Language (Claude/agents) | Manual Command (Make) |
 | --- | --- | --- |
@@ -113,7 +113,7 @@ Now that you have the necessary tools, you can download the course projects.
 ## 10‑Minute First Run (Project 01)
 
 1) Ensure Docker Desktop is running and WSL integration is enabled.
-2) Start services with Make from local-dev:
+2) Start services with Make from the repository root:
    ```bash
    make -C project-01-content-generator up
    ```
@@ -131,7 +131,7 @@ Now that you have the necessary tools, you can download the course projects.
 
 You now have all the necessary tools installed on your system.
 
-For an overview and commands, see the [local-dev README](../README.md) and [Makefile Essentials](./makefile-essentials.md).
+For an overview and commands, see the [README](../README.md) and [Makefile Essentials](./makefile-essentials.md).
 
 For advanced setup, see the [Advanced Setup Guide](./advanced-setup.md).
 

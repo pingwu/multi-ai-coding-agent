@@ -1,6 +1,6 @@
 # Makefile Essentials (WSL/macOS/Linux)
 
-This guide shows how to use Makefiles in `local-dev` to run Docker tasks quickly and consistently.
+This guide shows how to use Makefiles in the multi-ai-coding-agent repository to run Docker tasks quickly and consistently.
 
 ## Why Makefiles?
 - Shortcuts for common Docker workflows: `make up`, `make logs`, `make test-backend`.
