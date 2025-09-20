@@ -24,8 +24,9 @@ COPY . .
 # Install the package in development mode
 RUN pip install -e .
 
-# Create output directories and CrewAI directories
+# Create output directories and CrewAI directories with proper structure
 RUN mkdir -p generated_content
+RUN mkdir -p /app/.local/share/app
 RUN mkdir -p /app/.local/share/crewai/credentials
 
 # Expose port for web API
