@@ -1,8 +1,13 @@
-from crewai import Agent, Crew, Process, Task
+from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from crewai_tools import SerperDevTool
 from typing import List
+import os
+from dotenv import load_dotenv
+
+# Load .env file first, then fall back to environment variables
+load_dotenv(override=False)  # override=False means .env takes priority over existing env vars
 # If you want to run a snippet of code before or after the crew starts,
 # you can use the @before_kickoff and @after_kickoff decorators
 # https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
@@ -13,6 +18,38 @@ class ContentGeneratorCrew():
 
     agents: List[BaseAgent]
     tasks: List[Task]
+
+    def get_llm(self):
+        """Get the configured LLM with improved validation and fallback logic"""
+        # Check for demo mode first
+        demo_mode = os.environ.get("DEMO_MODE", "false").lower() in ["true", "1"]
+
+        if demo_mode:
+            return None  # CrewAI will use default behavior in demo mode
+
+        # Validate and configure OpenAI
+        openai_key = os.environ.get("OPENAI_API_KEY")
+        if openai_key and openai_key not in ["demo-key", "your-openai-api-key-here"]:
+            try:
+                model_name = os.environ.get("LLM_MODEL", "gpt-4o-mini")
+                llm = LLM(model=model_name, api_key=openai_key)
+                return llm
+            except Exception as e:
+                print(f"Warning: OpenAI LLM configuration failed: {e}")
+
+        # Validate and configure Anthropic as fallback
+        anthropic_key = os.environ.get("ANTHROPIC_API_KEY")
+        if anthropic_key and anthropic_key not in ["demo-key", "your-anthropic-api-key-here"]:
+            try:
+                anthropic_model = os.environ.get("ANTHROPIC_MODEL", "claude-3-haiku-20240307")
+                llm = LLM(model=anthropic_model, api_key=anthropic_key)
+                return llm
+            except Exception as e:
+                print(f"Warning: Anthropic LLM configuration failed: {e}")
+
+        # If no valid API keys, return None for demo mode behavior
+        print("Warning: No valid API keys found, using demo mode")
+        return None
 
     # Learn more about YAML configuration files here:
     # Agents: https://docs.crewai.com/concepts/agents#yaml-configuration-recommended
@@ -25,21 +62,24 @@ class ContentGeneratorCrew():
         return Agent(
             config=self.agents_config['researcher'], # type: ignore[index]
             tools=[SerperDevTool()],
-            verbose=True
+            verbose=True,
+            llm=self.get_llm()
         )
 
     @agent
     def strategist(self) -> Agent:
         return Agent(
             config=self.agents_config['strategist'], # type: ignore[index]
-            verbose=True
+            verbose=True,
+            llm=self.get_llm()
         )
 
     @agent
     def writer(self) -> Agent:
         return Agent(
             config=self.agents_config['writer'], # type: ignore[index]
-            verbose=True
+            verbose=True,
+            llm=self.get_llm()
         )
 
     # To learn more about structured task outputs,

@@ -24,8 +24,9 @@ COPY . .
 # Install the package in development mode
 RUN pip install -e .
 
-# Create output directories
+# Create output directories and CrewAI directories
 RUN mkdir -p generated_content
+RUN mkdir -p /app/.local/share/crewai/credentials
 
 # Expose port for web API
 EXPOSE 8000
@@ -34,7 +35,7 @@ EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
     CMD curl -f http://localhost:8000/docs || curl -f http://localhost:8000/health || exit 1
 
-# Drop privileges
+# Drop privileges - change ownership after creating directories
 RUN chown -R app:app /app
 USER app
 

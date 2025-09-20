@@ -7,15 +7,44 @@ Provides REST API and WebSocket endpoints for the CrewAI content generation syst
 from fastapi import FastAPI, WebSocket, HTTPException, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import Dict, Optional
+from typing import Dict, List, Optional
 import asyncio
 import uuid
 import json
 from datetime import datetime
 import os
 from pathlib import Path
+from urllib.parse import urlparse
+from dotenv import load_dotenv
 
 from my_mas.crew import ContentGeneratorCrew
+import httpx
+
+# Load .env file first, then fall back to environment variables
+load_dotenv(override=False)  # override=False means .env takes priority over existing env vars
+
+# Default CORS origin keeps the local dev UI working without exposing wildcard access
+DEFAULT_ALLOWED_ORIGINS: List[str] = ["http://localhost:3000"]
+
+
+def _parse_allowed_origins(raw_origins: str) -> List[str]:
+    """Return a sanitized list of allowed origins from env configuration."""
+    if not raw_origins:
+        return DEFAULT_ALLOWED_ORIGINS
+
+    cleaned: List[str] = []
+    for candidate in (origin.strip() for origin in raw_origins.split(",")):
+        if not candidate:
+            continue
+        if candidate == "*":
+            return ["*"]
+
+        parsed = urlparse(candidate)
+        if parsed.scheme in {"http", "https"} and parsed.netloc:
+            normalized = f"{parsed.scheme}://{parsed.netloc}"
+            cleaned.append(normalized)
+
+    return cleaned or DEFAULT_ALLOWED_ORIGINS
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -25,10 +54,17 @@ app = FastAPI(
 )
 
 # Enable CORS for frontend integration
+raw_cors_origins = os.environ.get("CORS_ALLOW_ORIGINS")
+if raw_cors_origins is None:
+    raw_cors_origins = os.environ.get("CORS_ORIGINS", "")
+
+allowed_origins = _parse_allowed_origins(raw_cors_origins)
+allow_all_origins = allowed_origins == ["*"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Configure appropriately for production
-    allow_credentials=True,
+    allow_origins=["*"] if allow_all_origins else allowed_origins,
+    allow_credentials=not allow_all_origins,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -36,6 +72,55 @@ app.add_middleware(
 # In-memory storage for job status and results
 jobs: Dict[str, Dict] = {}
 active_connections: Dict[str, WebSocket] = {}
+
+async def validate_api_keys() -> Dict[str, bool]:
+    """Validate available API keys and return their status"""
+    validation_results = {
+        "openai_valid": False,
+        "anthropic_valid": False,
+        "demo_mode": False
+    }
+
+    # Check OpenAI API key
+    openai_key = os.environ.get("OPENAI_API_KEY")
+    if openai_key and openai_key != "demo-key" and openai_key != "your-openai-api-key-here":
+        try:
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                response = await client.get(
+                    "https://api.openai.com/v1/models",
+                    headers={"Authorization": f"Bearer {openai_key}"}
+                )
+                validation_results["openai_valid"] = response.status_code == 200
+        except Exception:
+            validation_results["openai_valid"] = False
+
+    # Check Anthropic API key
+    anthropic_key = os.environ.get("ANTHROPIC_API_KEY")
+    if anthropic_key and anthropic_key != "demo-key" and anthropic_key != "your-anthropic-api-key-here":
+        try:
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                response = await client.post(
+                    "https://api.anthropic.com/v1/messages",
+                    headers={
+                        "Authorization": f"Bearer {anthropic_key}",
+                        "Content-Type": "application/json",
+                        "anthropic-version": "2023-06-01"
+                    },
+                    json={
+                        "model": "claude-3-haiku-20240307",
+                        "max_tokens": 1,
+                        "messages": [{"role": "user", "content": "test"}]
+                    }
+                )
+                validation_results["anthropic_valid"] = response.status_code in [200, 400]  # 400 is expected for this test
+        except Exception:
+            validation_results["anthropic_valid"] = False
+
+    # Enable demo mode if no valid API keys
+    demo_mode_env = os.environ.get("DEMO_MODE", "false").lower() in ["true", "1"]
+    validation_results["demo_mode"] = demo_mode_env or (not validation_results["openai_valid"] and not validation_results["anthropic_valid"])
+
+    return validation_results
 
 class ContentRequest(BaseModel):
     topic: str
@@ -67,7 +152,10 @@ async def generate_content(request: ContentRequest, background_tasks: Background
     Returns job_id for tracking progress
     """
     job_id = str(uuid.uuid4())
-    
+
+    # Validate API keys first
+    api_validation = await validate_api_keys()
+
     # Initialize job record
     jobs[job_id] = {
         "job_id": job_id,
@@ -78,12 +166,14 @@ async def generate_content(request: ContentRequest, background_tasks: Background
         "tasks": request.tasks,
         "result": None,
         "error": None,
-        "console_output": []
+        "console_output": [],
+        "demo_mode": api_validation["demo_mode"],
+        "api_status": api_validation
     }
-    
+
     # Start background task
-    background_tasks.add_task(run_content_generation, job_id, request)
-    
+    background_tasks.add_task(run_content_generation, job_id, request, api_validation)
+
     return {"job_id": job_id, "status": "pending"}
 
 @app.get("/api/status/{job_id}", response_model=JobStatus)
@@ -176,68 +266,125 @@ async def send_console_message(job_id: str, message: str, message_type: str = "i
             if job_id in active_connections:
                 del active_connections[job_id]
 
-async def run_content_generation(job_id: str, request: ContentRequest):
+async def run_content_generation(job_id: str, request: ContentRequest, api_validation: Dict[str, bool]):
     """
-    Background task to run the CrewAI content generation
+    Background task to run the CrewAI content generation with improved error handling
     """
-    # Check for demo mode
-    demo_mode = os.environ.get("DEMO_MODE", "false").lower() in ["true", "1"]
-
     try:
         jobs[job_id]["status"] = "running"
         jobs[job_id]["started_at"] = datetime.now()
-        
+
         await send_console_message(job_id, f"🚀 Starting content generation for: {request.topic}", "info")
-        
+
+        # Determine mode based on API validation
+        demo_mode = api_validation["demo_mode"]
+
         if demo_mode:
             await send_console_message(job_id, "🤖 DEMO MODE ENABLED 🤖", "info")
-            # Simulate the content generation process
-            await asyncio.sleep(2)
-            await send_console_message(job_id, "📋 Initializing Content Generation Crew...", "info")
-            await asyncio.sleep(3)
-            await send_console_message(job_id, "🔍 Research Agent: Starting comprehensive research...", "info")
-            await asyncio.sleep(5)
-            await send_console_message(job_id, f"🔍 Research Agent: Gathering information on '{request.topic}'", "info")
-            await asyncio.sleep(5)
-            await send_console_message(job_id, "🎯 Strategy Agent: Developing content framework...", "info")
-            await asyncio.sleep(5)
-            await send_console_message(job_id, "📝 Writer Agent: Creating engaging content...", "info")
-            await asyncio.sleep(5)
-            result = f"This is a demo result for the topic: {request.topic}"
+            if not api_validation["openai_valid"] and not api_validation["anthropic_valid"]:
+                await send_console_message(job_id, "ℹ️ No valid API keys detected - using demo mode", "warning")
+            await run_demo_generation(job_id, request)
         else:
-            # Initialize the CrewAI crew
-            await send_console_message(job_id, "📋 Initializing Content Generation Crew...", "info")
-            
-            # Create crew instance with topic
-            inputs = {"topic": request.topic}
-            crew = ContentGeneratorCrew()
-            
-            await send_console_message(job_id, "🔍 Research Agent: Starting comprehensive research...", "info")
-            await send_console_message(job_id, f"🔍 Research Agent: Gathering information on '{request.topic}'", "info")
-            
-            # Run the crew (this is synchronous, so we'll simulate async behavior)
-            await send_console_message(job_id, "🎯 Strategy Agent: Developing content framework...", "info")
-            await send_console_message(job_id, "📝 Writer Agent: Creating engaging content...", "info")
-            
-            # Execute the crew in a separate thread to avoid blocking the event loop
-            result = await asyncio.to_thread(crew.crew().kickoff, inputs=inputs)
-        
-        await send_console_message(job_id, "✅ Content generation completed successfully!", "success")
-        
-        # Update job status
-        jobs[job_id]["status"] = "completed"
-        jobs[job_id]["completed_at"] = datetime.now()
-        jobs[job_id]["result"] = str(result)
-        
-        await send_console_message(job_id, "📄 Generated content is ready for review!", "success")
-        
+            # Check which API is available
+            if api_validation["openai_valid"]:
+                await send_console_message(job_id, "✅ OpenAI API key validated - using GPT-4o mini", "info")
+            elif api_validation["anthropic_valid"]:
+                await send_console_message(job_id, "✅ Anthropic API key validated - using Claude", "info")
+
+            await run_real_generation(job_id, request)
+
     except Exception as e:
-        error_msg = f"Error during content generation: {str(e)}"
+        error_msg = f"Content generation failed: {str(e)}"
         jobs[job_id]["status"] = "error"
         jobs[job_id]["error"] = error_msg
         jobs[job_id]["completed_at"] = datetime.now()
-        
-        await send_console_message(job_id, f"❌ {error_msg}", "error")
+
+        # Provide helpful error messages
+        if "AuthenticationError" in str(e):
+            await send_console_message(job_id, "❌ API Authentication Failed", "error")
+            await send_console_message(job_id, "💡 Solution: Check your API key or enable demo mode", "warning")
+        elif "timeout" in str(e).lower():
+            await send_console_message(job_id, "❌ Request Timeout", "error")
+            await send_console_message(job_id, "💡 Solution: Try again or check your internet connection", "warning")
+        else:
+            await send_console_message(job_id, f"❌ {error_msg}", "error")
+
+async def run_demo_generation(job_id: str, request: ContentRequest):
+    """Run demo content generation with realistic simulation"""
+    await asyncio.sleep(2)
+    await send_console_message(job_id, "📋 Initializing Content Generation Crew...", "info")
+    await asyncio.sleep(2)
+
+    await send_console_message(job_id, "🔍 Research Agent: Starting comprehensive research...", "info")
+    await asyncio.sleep(3)
+    await send_console_message(job_id, f"🔍 Research Agent: Gathering information on '{request.topic}'", "info")
+    await asyncio.sleep(3)
+
+    await send_console_message(job_id, "🎯 Strategy Agent: Developing content framework...", "info")
+    await asyncio.sleep(3)
+
+    await send_console_message(job_id, "📝 Writer Agent: Creating engaging content...", "info")
+    await asyncio.sleep(4)
+
+    # Generate realistic demo content
+    result = f"""# {request.topic}: A Comprehensive Overview
+
+## Introduction
+This is a demonstration of the AI Content Generator system. In actual operation with valid API keys, this would contain comprehensive, research-backed content about {request.topic}.
+
+## Key Points
+- Professional content generation using CrewAI multi-agent system
+- Powered by GPT-4o mini (latest, cost-effective OpenAI model)
+- Research → Strategy → Writing workflow
+- Real-time progress tracking via WebSocket
+
+## Next Steps
+To enable full functionality:
+1. Add valid OpenAI API key to .env file
+2. Or add valid Anthropic API key for Claude integration
+3. Restart the application
+4. Generate real AI-powered content!
+
+---
+*Generated in Demo Mode - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}*"""
+
+    jobs[job_id]["status"] = "completed"
+    jobs[job_id]["completed_at"] = datetime.now()
+    jobs[job_id]["result"] = result
+
+    await send_console_message(job_id, "✅ Demo content generation completed!", "success")
+    await send_console_message(job_id, "📄 Demo content is ready for review!", "success")
+
+async def run_real_generation(job_id: str, request: ContentRequest):
+    """Run real content generation with CrewAI"""
+    await send_console_message(job_id, "📋 Initializing Content Generation Crew...", "info")
+
+    # Create crew instance with topic
+    inputs = {"topic": request.topic}
+    crew = ContentGeneratorCrew()
+
+    await send_console_message(job_id, "🔍 Research Agent: Starting comprehensive research...", "info")
+    await send_console_message(job_id, f"🔍 Research Agent: Gathering information on '{request.topic}'", "info")
+
+    await send_console_message(job_id, "🎯 Strategy Agent: Developing content framework...", "info")
+    await send_console_message(job_id, "📝 Writer Agent: Creating engaging content...", "info")
+
+    # Execute the crew with timeout
+    try:
+        result = await asyncio.wait_for(
+            asyncio.to_thread(crew.crew().kickoff, inputs=inputs),
+            timeout=300  # 5 minute timeout
+        )
+
+        jobs[job_id]["status"] = "completed"
+        jobs[job_id]["completed_at"] = datetime.now()
+        jobs[job_id]["result"] = str(result)
+
+        await send_console_message(job_id, "✅ Content generation completed successfully!", "success")
+        await send_console_message(job_id, "📄 Generated content is ready for review!", "success")
+
+    except asyncio.TimeoutError:
+        raise Exception("Content generation timed out after 5 minutes")
 
 if __name__ == "__main__":
     import uvicorn
