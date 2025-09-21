@@ -20,8 +20,8 @@ from dotenv import load_dotenv
 from my_mas.crew import ContentGeneratorCrew
 import httpx
 
-# Load .env file first, then fall back to environment variables
-load_dotenv(override=False)  # override=False means .env takes priority over existing env vars
+# Load .env file without overriding existing environment variables
+load_dotenv(override=False)
 
 # Default CORS origin keeps the local dev UI working without exposing wildcard access
 DEFAULT_ALLOWED_ORIGINS: List[str] = ["http://localhost:3000"]
@@ -78,12 +78,15 @@ async def validate_api_keys() -> Dict[str, bool]:
     validation_results = {
         "openai_valid": False,
         "anthropic_valid": False,
-        "demo_mode": False
+        "demo_mode": False,
     }
 
-    # Check OpenAI API key
+    # Refresh environment (without overriding variables that are already set)
+    load_dotenv(override=False)
     openai_key = os.environ.get("OPENAI_API_KEY")
-    if openai_key and openai_key != "demo-key" and openai_key != "your-openai-api-key-here":
+    print("DEBUG: OpenAI API key detected" if openai_key else "DEBUG: No OpenAI API key found")
+
+    if openai_key and openai_key not in {"demo-key", "your-openai-api-key-here"}:
         try:
             async with httpx.AsyncClient(timeout=10.0) as client:
                 response = await client.get(
@@ -91,12 +94,16 @@ async def validate_api_keys() -> Dict[str, bool]:
                     headers={"Authorization": f"Bearer {openai_key}"}
                 )
                 validation_results["openai_valid"] = response.status_code == 200
-        except Exception:
+                print(f"DEBUG: OpenAI API validation - Status: {response.status_code}, Valid: {validation_results['openai_valid']}")
+        except Exception as e:
             validation_results["openai_valid"] = False
+            print(f"DEBUG: OpenAI API validation failed with exception: {e}")
+    else:
+        print(f"DEBUG: OpenAI API key not provided or invalid format")
 
     # Check Anthropic API key
     anthropic_key = os.environ.get("ANTHROPIC_API_KEY")
-    if anthropic_key and anthropic_key != "demo-key" and anthropic_key != "your-anthropic-api-key-here":
+    if anthropic_key and anthropic_key not in {"demo-key", "your-anthropic-api-key-here"}:
         try:
             async with httpx.AsyncClient(timeout=10.0) as client:
                 response = await client.post(
@@ -116,9 +123,13 @@ async def validate_api_keys() -> Dict[str, bool]:
         except Exception:
             validation_results["anthropic_valid"] = False
 
-    # Enable demo mode if no valid API keys
-    demo_mode_env = os.environ.get("DEMO_MODE", "false").lower() in ["true", "1"]
-    validation_results["demo_mode"] = demo_mode_env or (not validation_results["openai_valid"] and not validation_results["anthropic_valid"])
+    # Simple demo mode logic: Use demo content only when no valid API keys exist
+    validation_results["demo_mode"] = not (validation_results["openai_valid"] or validation_results["anthropic_valid"])
+
+    if validation_results["demo_mode"]:
+        print(f"DEBUG: Using demo content - No valid API keys found (OpenAI: {validation_results['openai_valid']}, Anthropic: {validation_results['anthropic_valid']})")
+    else:
+        print(f"DEBUG: Using live AI - Valid API keys found (OpenAI: {validation_results['openai_valid']}, Anthropic: {validation_results['anthropic_valid']})")
 
     return validation_results
 
@@ -143,6 +154,17 @@ async def root():
         "message": "Content Generator API",
         "version": "1.0.0",
         "status": "healthy"
+    }
+
+@app.get("/api/status")
+async def api_status():
+    """Get API key validation status"""
+    validation = await validate_api_keys()
+    return {
+        "openai_connected": validation["openai_valid"],
+        "anthropic_connected": validation["anthropic_valid"],
+        "demo_mode": validation["demo_mode"],
+        "timestamp": datetime.now().isoformat()
     }
 
 @app.post("/api/generate", response_model=Dict[str, str])
@@ -280,9 +302,7 @@ async def run_content_generation(job_id: str, request: ContentRequest, api_valid
         demo_mode = api_validation["demo_mode"]
 
         if demo_mode:
-            await send_console_message(job_id, "🤖 DEMO MODE ENABLED 🤖", "info")
-            if not api_validation["openai_valid"] and not api_validation["anthropic_valid"]:
-                await send_console_message(job_id, "ℹ️ No valid API keys detected - using demo mode", "warning")
+            await send_console_message(job_id, "🤖 Using demo content - No valid API keys found", "warning")
             await run_demo_generation(job_id, request)
         else:
             # Check which API is available
@@ -334,7 +354,7 @@ This is a demonstration of the AI Content Generator system. In actual operation 
 
 ## Key Points
 - Professional content generation using CrewAI multi-agent system
-- Powered by GPT-4o mini (latest, cost-effective OpenAI model)
+- Powered by GPT-4o mini (cost-effective GPT-4-class model)
 - Research → Strategy → Writing workflow
 - Real-time progress tracking via WebSocket
 
