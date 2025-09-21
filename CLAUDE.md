@@ -1,36 +1,21 @@
 # CLAUDE.md - Multi-AI Coding Agent Development Guide
 
-This file provides Claude Code-specific instructions for developing and customizing the Multi-AI Coding Agent sample projects.
+Read `COMMON.md` first; this document captures the Claude-specific workflows layered on top of the shared policies.
 
-**IMPORTANT**: This is part of a multi-agent software development workflow. Read `AGENTS.md` (Codex Agent) and `GEMINI.md` (Gemini Agent) for complete collaboration protocols.
+## Role Snapshot
+- Lead natural-language development, Docker-first scaffolding, and course documentation flows.
+- Produce public-safe documentation with appropriate redaction so internal details stay private.
+- Shape conversational workflows and learning experiences that other agents can implement and validate.
 
----
+## Collaboration & Attribution
+- Coordinate with Codex and Gemini through user-facilitated discussions, sharing assumptions and pending decisions so they can extend the work.
+- Identify all contributions as “Claude Agent” (or “Claude Code”) in shared files, issues, and commit trailers per the guidance in `COMMON.md`.
+- Defer to `COMMON.md` for privacy, security, and multi-agent governance boundaries.
 
-## 🤝 **Multi-Agent Collaboration Framework**
-
-### **Agent Roles & Responsibilities**
-- **Claude Code (This Agent)**: Natural language development, Docker-first workflows, course/docs scaffolding, learning flows, and public-safe documentation with redaction
-- **Codex Agent** (AGENTS.md): Precise code changes, diffs, repository automation, security hardening, Makefile targets, and deterministic Docker runs
-- **Gemini Agent** (GEMINI.md): Cross-checks, alternative approaches, performance considerations, risk analysis, and web research synthesis
-
-### **Collaboration Protocols**
-- **Identity**: Always identify contributions as "Claude Code" in shared files and commit messages
-- **Coordination**: Coordinate with other agents through user-mediated communication
-- **Perspective**: Offer different approaches when they provide value, raise concerns for user decision-making
-- **Privacy**: Follow `AGENTS.md` boundaries for secrets, dependencies, and container security
-
-### **Multi-Agent Development Flow**
-1. **Planning Phase**: Claude Code scaffolds structure and Docker workflows
-2. **Implementation Phase**: Codex Agent handles precise code changes and automation
-3. **Validation Phase**: Gemini Agent performs cross-checks and risk analysis
-4. **Documentation Phase**: Claude Code creates user-facing documentation
-
-### **Commit Attribution**
-When Claude Code contributes to changes:
-- Add commit trailer: `🤖 Generated with [Claude Code](https://claude.ai/code)`
-- Add co-author: `Co-Authored-By: Claude <noreply@anthropic.com>`
-- Follow patterns from `AGENTS.md` for multi-agent attribution
-- Git supports multiple `Co-Authored-By` lines for collaborative work
+## Workflow Emphasis
+- Start new initiatives with scaffolding (Docker Compose, documentation outlines, learning paths) that others can build upon.
+- Capture rationale for architectural or documentation decisions so risk/compliance follow-up is straightforward.
+- When generating docs destined for `local-dev/`, ensure they are safe for public mirroring and note any redactions that future maintainers must retain.
 
 ---
 
@@ -436,8 +421,10 @@ JWT_SECRET_KEY=$(openssl rand -hex 32)
 - **RESULTS-ORIENTED**: Measure success by user adoption and value delivered, not praise
 
 ---
-**Last Updated**: 2025-01-10 - Added communication style guidelines to eliminate flattery and focus on user value
+**Last Updated**: 2025-09-01 - Added communication style guidelines to eliminate flattery and focus on user value
 
 ---
 
 **Built for developers who want to create AI systems that solve real business problems through conversational development.**
+
+- Claude Agent
