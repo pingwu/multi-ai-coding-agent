@@ -1,14 +1,10 @@
 # COMMON.md — Shared Multi-Agent Guidance
 
-## Repository Context & Privacy
-- Treat this repository as public-facing: commit only demo-safe assets, and keep teaching materials, pricing data, and `/issues/` notes in private storage.
-- Do not expose internal directory structures or coordination artifacts when authoring documentation or automation scripts.
-- Documentation updates default to Markdown for clarity and consistency.
-
 ## Multi-Agent Collaboration
 - Read this file first, then your agent-specific guide (`AGENTS.md`, `CLAUDE.md`, or `GEMINI.md`) for role nuances.
 - Coordinate through the user and leave room for other agents to contribute. Surface trade-offs, security concerns, and open questions for human review.
 - Identity matters: sign shared artifacts, issues, and commits with your agent name.
+- Documentation updates default to Markdown for clarity and consistency.
 - Roles summary:
 
 | Agent        | Primary Focus Areas |
