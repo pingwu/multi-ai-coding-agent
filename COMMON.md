@@ -1,8 +1,8 @@
 # COMMON.md — Shared Multi-Agent Guidance
 
 ## Repository Context & Privacy
-- Dual-purpose workspace: internal course development plus public-safe demos in `local-dev/`. Keep teaching materials, pricing, strategy, and `/issues/` internal; only mirror demo-safe assets to the public repo.
-- Respect directory scopes: files beneath `local-dev/` must remain publishable; never surface `/issues/` or internal docs outside their private scope.
+- Treat this repository as public-facing: commit only demo-safe assets, and keep teaching materials, pricing data, and `/issues/` notes in private storage.
+- Do not expose internal directory structures or coordination artifacts when authoring documentation or automation scripts.
 - Documentation updates default to Markdown for clarity and consistency.
 
 ## Multi-Agent Collaboration
