@@ -300,7 +300,7 @@ SERPER_API_KEY=your-serper-api-key      # Get FREE key from https://serper.dev/
 # Optional
 ANTHROPIC_API_KEY=your-anthropic-key    # Alternative AI model
 DEBUG=true                              # Development mode
-CORS_ORIGINS=http://localhost:3000      # Frontend URL
+CORS_ALLOW_ORIGINS=http://localhost:3000 # Comma-separated allow list for CORS
 ```
 
 ---

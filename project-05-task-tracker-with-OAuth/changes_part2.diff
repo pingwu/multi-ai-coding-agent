@@ -1,0 +1,43 @@
+*** frontend/src/services/AuthContext.tsx.orig	2025-02-15
+--- frontend/src/services/AuthContext.tsx	2025-02-15
+***************
+*** 33,63 ****
+      const response = await fetch(`${API_BASE_URL}/auth/status`, {
+          credentials: 'include',
+      });
+      console.log('DEBUG: Auth response status:', response.status);
+      console.log('DEBUG: Auth response ok:', response.ok);
+  
+      if (response.ok) {
+          const data = await response.json();
+          console.log('DEBUG: Auth response data:', data);
+          setIsAuthenticated(data.authenticated);
+      } else {
+          console.log('DEBUG: Auth response not ok, setting to false');
+          setIsAuthenticated(false);
+      }
+  } catch (error) {
+      console.error('Error checking authentication status:', error);
+      setIsAuthenticated(false);
+  }
++     setIsLoading(false);
+  };
+***************
+*** 66,72 ****
+      // Check if we just returned from OAuth (detect by checking if this is root and no auth yet)
+      const checkOAuthReturn = () => {
+          const urlParams = new URLSearchParams(window.location.search);
+          const path = window.location.pathname;
+  
+          // If we're on the root path and it's been more than 100ms since load, re-check auth
+--- 74,81 ----
+  
+          // If we're on the root path and it's been more than 100ms since load, re-check auth
+          if (path === '/' && !isAuthenticated) {
+              setTimeout(() => {
+                  checkAuth();
+              }, 100);
+          }
+      };
+---
+*** End Patch

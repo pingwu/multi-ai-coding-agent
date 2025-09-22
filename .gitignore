@@ -80,11 +80,10 @@ session-summary*.md
 *-INTERNAL/
 
 # Project-specific (keep analyzer out of OSS for now)
-project-03-project-analyzer/
 project-04-rental-analyzer-INTERNAL/
-project-05-task-tracker-with-OAuth/
 project-05-task-tracker-with-OAuth-temp/
 
 # Safety: never commit credentials JSON files in any project
 **/credentials/*.json
 
+project-01-content-generator/.local/

@@ -3,7 +3,6 @@ import { useParams, useHistory } from 'react-router-dom';
 import { JobStatus } from '../App'; // Assuming JobStatus interface is in App.tsx
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import rehypeRaw from 'rehype-raw';
 
 const ReportView: React.FC = () => {
   const { jobId } = useParams<{ jobId: string }>();
@@ -155,9 +154,9 @@ const ReportView: React.FC = () => {
           </div>
 
           <div className="markdown-content">
+            {/* Security: keep markdown sanitized by avoiding raw HTML rendering */}
             <ReactMarkdown 
-              remarkPlugins={[remarkGfm]} 
-              rehypePlugins={[rehypeRaw]}
+              remarkPlugins={[remarkGfm]}
               components={{
                 h1: ({node, ...props}) => <h1 className="content-h1" {...props} />,
                 h2: ({node, ...props}) => <h2 className="content-h2" {...props} />,

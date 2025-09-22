@@ -21,8 +21,8 @@ RUN pip install --no-cache-dir pip setuptools wheel
 # Copy source code
 COPY . .
 
-# Install the package in development mode
-RUN pip install -e .
+# Install the package with dev extras (includes pytest for container tests)
+RUN pip install -e .[dev]
 
 # Create output directories and CrewAI directories with proper structure
 RUN mkdir -p generated_content

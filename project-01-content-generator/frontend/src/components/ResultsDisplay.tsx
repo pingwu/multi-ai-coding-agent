@@ -3,7 +3,6 @@ import { JobStatus } from '../App';
 import { useParams, useHistory } from 'react-router-dom'; // Added useParams, useHistory
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import rehypeRaw from 'rehype-raw';
 
 interface ResultsDisplayProps {
   onBack: () => void;
@@ -206,9 +205,9 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ onBack, onGenerateNew }
               </div>
             </div>
             <div className="content-display html-content">
+              {/* Security: keep markdown sanitized by avoiding raw HTML rendering */}
               <ReactMarkdown 
-                remarkPlugins={[remarkGfm]} 
-                rehypePlugins={[rehypeRaw]}
+                remarkPlugins={[remarkGfm]}
                 components={{
                   h1: ({node, ...props}) => <h1 className="md-h1" {...props} />,
                   h2: ({node, ...props}) => <h2 className="md-h2" {...props} />,

@@ -1,0 +1,78 @@
+# =============================================================================
+# GOOGLE CLOUD RUN - IGNORE FILE
+# =============================================================================
+# Files and directories to exclude from Cloud Run deployment
+# Similar to .gitignore but specifically for gcloud deployments
+
+# Environment files (use Cloud Run environment variables instead)
+.env
+.env.local
+.env.*.local
+
+# Development files
+.git/
+.gitignore
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local development directories
+generated_content/
+.local/
+.config/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Testing and coverage
+coverage/
+.nyc_output/
+.coverage
+htmlcov/
+.pytest_cache/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Documentation that's not needed in production
+README.md
+TROUBLESHOOTING.md
+SESSION-SUMMARY*.md
+docs/
+
+# Frontend build artifacts (if building separately)
+frontend/build/
+frontend/dist/
+
+# Logs
+*.log
+logs/
+
+# Lock files (Cloud Run builds from scratch)
+package-lock.json
+yarn.lock
+poetry.lock
+Pipfile.lock
+
+# Docker files (Cloud Run builds its own containers)
+Dockerfile
+docker-compose.yml
+docker-compose.*.yml
+
+# Makefile (development only)
+Makefile

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import ContentForm from './components/ContentForm';
 import LiveConsole from './components/LiveConsole';
@@ -30,8 +30,33 @@ export interface JobStatus {
   error?: string;
 }
 
+export interface ApiStatus {
+  openai_connected: boolean;
+  anthropic_connected: boolean;
+  demo_mode: boolean;
+  timestamp: string;
+}
+
 const AppContent: React.FC = () => {
   const history = useHistory();
+  const [apiStatus, setApiStatus] = useState<ApiStatus | null>(null);
+
+  useEffect(() => {
+    const fetchApiStatus = async () => {
+      try {
+        const response = await fetch('/api/status');
+        const status = await response.json();
+        setApiStatus(status);
+      } catch (error) {
+        console.error('Error fetching API status:', error);
+      }
+    };
+
+    fetchApiStatus();
+    // Refresh status every 30 seconds
+    const interval = setInterval(fetchApiStatus, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleStartGeneration = async (request: ContentRequest) => {
     try {
@@ -54,11 +79,38 @@ const AppContent: React.FC = () => {
     history.push('/');
   };
 
+  const renderApiStatus = () => {
+    if (!apiStatus) return null;
+
+    return (
+      <div className="api-status">
+        <div className="status-item">
+          <span className={`status-dot ${apiStatus.openai_connected ? 'connected' : 'disconnected'}`}></span>
+          OpenAI: {apiStatus.openai_connected ? 'Connected' : 'Disconnected'}
+        </div>
+        <div className="status-item">
+          <span className={`status-dot ${apiStatus.anthropic_connected ? 'connected' : 'disconnected'}`}></span>
+          Anthropic: {apiStatus.anthropic_connected ? 'Connected' : 'Disconnected'}
+        </div>
+        {apiStatus.demo_mode && (
+          <div className="status-item demo-mode">
+            🤖 Demo Mode Active
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <h1>🤖 AI Content Generator</h1>
-        <p>Multi-Agent Content Creation with CrewAI</p>
+        <div className="header-content">
+          <div className="header-text">
+            <h1>🤖 AI Content Generator</h1>
+            <p>Multi-Agent Content Creation with CrewAI</p>
+          </div>
+          {renderApiStatus()}
+        </div>
       </header>
 
       <main className="App-main">
