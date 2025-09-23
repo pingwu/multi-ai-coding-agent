@@ -14,7 +14,7 @@
 | Gemini Agent | Cross-checks, alternative approaches, performance & risk analysis |
 
 ## Work Management & Issues
-- Use the `/issues/` directory for active tracking. `TODO` is deprecated (2025-07-02).
+- Use the `/issues/` directory for active tracking.
 - Include metadata (project, type, severity, status, visibility) and sign entries as your agent (e.g., “Codex Agent”).
 - Record security, compliance, and governance risks in issues and extract lessons learned to the knowledge graph when they close.
 
@@ -36,6 +36,26 @@
 - Preserve minimal diffs and avoid reformatting unrelated code. Keep files ASCII unless a project already requires Unicode.
 - Prefer `rg`/`rg --files` for repository searches and set explicit working directories when running commands.
 - Plan transparently: share multi-step plans for non-trivial tasks and update progress as steps finish.
+
+## Decision Making Framework
+- **Project Triangle Applied**: Map technical decisions to familiar Scope-Time-Budget framework
+- **Scope**: Functionality requirements + Security/Compliance requirements
+- **Time**: Performance requirements + Delivery timelines
+- **Budget**: Cost efficiency (development, operational, maintenance)
+- **Conflict Resolution**: When trade-offs exist between these dimensions, never assume priorities - always surface options to humans with:
+  - Clear description of the conflict
+  - Impact analysis for each triangle dimension
+  - Recommended approach with rationale
+  - Alternative solutions considered
+- **Human Feedback Required**: For decisions affecting the scope-time-budget balance, present options and wait for human direction
+
+## Documentation Standards
+- **Structure**: Use `docs/` (plural) following open source conventions
+- **Content-First**: Only create subdirectories when there's actual content to populate them
+- **No Empty Scaffolding**: Avoid creating empty folder structures
+- **Standard Subdirectories** (create when needed): `setup/`, `design/`, `api/`, `deployment/`, `troubleshooting/`, `contributing/`
+- **Environment Setup**: Include platform-specific instructions for Windows (WSL2), macOS, and Linux with shell-specific guidance
+- **Production Focus**: Emphasize environment variables over `.env` files for security and cloud deployment compatibility
 
 ## Testing & Validation
 - Add or update targeted tests when behaviour changes; keep them close to the affected service (`backend/tests/`, `frontend/src/__tests__/`).

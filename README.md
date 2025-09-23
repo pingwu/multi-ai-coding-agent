@@ -12,6 +12,19 @@ This repository provides a collection of self-contained, professional-grade AI a
 
 For a complete setup guide, please see the **[Quick Start Guide](./setup/quick-start.md)**.
 
+## 📚 Documentation
+
+Each project includes comprehensive documentation following open source best practices:
+
+- **[docs/setup/](project-01-content-generator/docs/setup/)** - Installation and configuration guides
+- **[docs/design/](project-01-content-generator/docs/design/)** - Architecture and design decisions
+- **[docs/api/](project-01-content-generator/docs/api/)** - API documentation and specifications
+- **[docs/deployment/](project-01-content-generator/docs/deployment/)** - Deployment guides and configurations
+- **[docs/troubleshooting/](project-01-content-generator/docs/troubleshooting/)** - Common issues and solutions
+- **[docs/contributing/](project-01-content-generator/docs/contributing/)** - Development and contribution guidelines
+
+**Production Best Practice**: All projects use environment variables for API keys instead of `.env` files, ensuring security and cloud deployment compatibility.
+
 ## 🎯 Core Objectives
 
 *   **Natural Language AI Development**: Extend and customize AI projects through conversational development.
