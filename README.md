@@ -24,6 +24,42 @@
 
 **Your opportunity:** While others scramble to catch up, you can enter the job market as an AI-augmented developer from day one.
 
+## 🤖 Coding Agents: Your AI Development Partners
+
+The key to AI-augmented development is choosing the right coding agent for your workflow. Each agent has unique strengths and capabilities that can accelerate different aspects of your development process.
+
+### **Popular Coding Agents Comparison**
+
+| Agent Name | Installation/Documentation | Start Command | Key Features |
+|------------|---------------------------|---------------|--------------|
+| **Claude Code** | `npm install -g @anthropic-ai/claude-code` | `claude` | **Anthropic's reasoning-focused coding assistant.** Exceptional at complex problem-solving and code review with strong emphasis on code quality, security, and maintainability. |
+| **Codex CLI** | `npm install -g @openai/codex` | `codex` | **OpenAI's specialized code generation tool.** Focuses on high-quality code generation with excellent understanding of software architecture patterns and best practices. |
+| **Copilot Agent** | `npm install -g @github/copilot` | `copilot` | **GitHub's AI pair programmer.** Provides intelligent code completions and suggestions directly in your IDE with deep integration into the GitHub ecosystem. |
+| **Cursor Agent** | `curl https://cursor.com/install -fsS | bash` | `cursor-agent` | **Intelligent code editor with AI built-in.** Seamlessly integrates AI assistance directly into your coding environment with context-aware suggestions and real-time collaboration. |
+| **Gemini CLI** | `npm install -g @google/gemini-cli` | `gemini` | **Google's multimodal AI coding assistant.** Excels at understanding complex codebases and providing comprehensive analysis with support for multiple programming languages and frameworks. |
+| **Trae AI** | [github.com/bytedance/trae-agent](https://github.com/bytedance/trae-agent) | `trae-cli` | **ByteDance's advanced AI coding platform.** Specializes in large-scale project management and enterprise development workflows with powerful team collaboration features. |
+
+### **Choosing Your Coding Agent**
+
+**For Beginners:** Start with **Cursor Agent** or **Copilot Agent** - they provide the most intuitive learning experience with immediate feedback and suggestions.
+
+**For Advanced Projects:** Use **Claude Code** or **Gemini CLI** - they excel at complex architecture decisions and comprehensive code analysis.
+
+**For Team Development:** Consider **Trae AI** - it offers superior collaboration features and enterprise-grade project management capabilities.
+
+**For Open Source:** **Codex CLI** provides excellent code generation quality and integrates well with popular development workflows.
+
+### **Multi-Agent Workflow**
+
+The most powerful approach is using multiple agents strategically:
+
+1. **Cursor Agent** for real-time coding assistance
+2. **Claude Code** for architecture and code review
+3. **Gemini CLI** for comprehensive project analysis
+4. **Copilot Agent** for GitHub integration and version control
+
+This multi-agent approach leverages each tool's strengths while building a comprehensive AI-augmented development environment.
+
 ## 🛠️ What You'll Build (Your AI-Augmented Portfolio)
 
 Instead of basic CRUD apps, you'll create production-ready systems that showcase AI-augmented development skills:
