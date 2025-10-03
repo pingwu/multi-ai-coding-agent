@@ -72,7 +72,7 @@ This course was developed using **three primary coding agents** in rotation. Cho
 
 **Quick Start (Choose One):**
 - **[Install Claude Code Only](#claude-code-installation)** - Best for beginners, excellent Docker integration
-- **[Install All Three Agents](#professional-setup)** - Professional approach, maximum flexibility
+- **[Install All Coding Agents](#professional-setup)** - Professional approach, maximum flexibility
 
 **The Three-Agent System:**
 - **Claude Code**: Architecture, Docker, complex refactoring ([Install Guide](#claude-code-installation))
@@ -157,6 +157,8 @@ All following session are assume to be running in WSL (Windows Subsystem for Lin
 npm install -g @anthropic-ai/claude-code
 npm install -g @openai/codex
 npm install -g @google/gemini-cli
+npm install -g @github/copilot
+# install cursor-agent visit https://cursor.com/docs/cli/installation 
 ```
 
 **Why Multi-Agent Approach:**
