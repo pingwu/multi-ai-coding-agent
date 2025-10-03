@@ -3,6 +3,12 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Last Commit](https://img.shields.io/github/last-commit/pingwu/multi-ai-coding-agent)](https://github.com/pingwu/multi-ai-coding-agent/commits)
 [![Docker Compose](https://img.shields.io/badge/Docker-Compose-blue?logo=docker)](#)
+[![Made with Claude](https://img.shields.io/badge/Made%20with-Claude-D97757?logo=claude&logoColor=white)](https://claude.ai/code)
+[![OpenAI Codex](https://img.shields.io/badge/OpenAI%20Codex-412991?style=for-the-badge&logo=openai&logoColor=white)](https://openai.com/blog/openai-codex)
+[![GitHub Copilot](https://img.shields.io/badge/GitHub%20Copilot-2e2e2e?style=flat&logo=github-copilot&logoColor=white)](https://github.com/features/copilot)
+[![Cursor Agent](https://img.shields.io/badge/Cursor-Agent-blue)](https://cursor.sh/)
+[![Google Gemini](https://img.shields.io/badge/Google%20Gemini-886FBF?logo=googlegemini&logoColor=fff)](https://github.com/google-gemini/gemini-cli)
+[![Trae AI](https://img.shields.io/badge/Trae%20AI-black?logo=bytedance&logoColor=white)](https://github.com/bytedance/trae-agent)
 
 ## The New Developer Superpower: AI-Augmented Development
 
