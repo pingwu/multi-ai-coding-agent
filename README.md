@@ -30,14 +30,14 @@ The key to AI-augmented development is choosing the right coding agent for your 
 
 ### **Popular Coding Agents Comparison**
 
-| Agent Name | Installation/Documentation | Start Command | Key Features |
-|------------|---------------------------|---------------|--------------|
-| **Claude Code** | `npm install -g @anthropic-ai/claude-code` | `claude` | **Anthropic's reasoning-focused coding assistant.** Exceptional at complex problem-solving and code review with strong emphasis on code quality, security, and maintainability. |
-| **Codex CLI** | `npm install -g @openai/codex` | `codex` | **OpenAI's specialized code generation tool.** Focuses on high-quality code generation with excellent understanding of software architecture patterns and best practices. |
-| **Copilot Agent** | `npm install -g @github/copilot` | `copilot` | **GitHub's AI pair programmer.** Provides intelligent code completions and suggestions directly in your IDE with deep integration into the GitHub ecosystem. |
-| **Cursor Agent** | `curl https://cursor.com/install -fsS | bash` | `cursor-agent` | **Intelligent code editor with AI built-in.** Seamlessly integrates AI assistance directly into your coding environment with context-aware suggestions and real-time collaboration. |
-| **Gemini CLI** | `npm install -g @google/gemini-cli` | `gemini` | **Google's multimodal AI coding assistant.** Excels at understanding complex codebases and providing comprehensive analysis with support for multiple programming languages and frameworks. |
-| **Trae AI** | [github.com/bytedance/trae-agent](https://github.com/bytedance/trae-agent) | `trae-cli` | **ByteDance's advanced AI coding platform.** Specializes in large-scale project management and enterprise development workflows with powerful team collaboration features. |
+| Agent Name        | Installation/Documentation                                                 | Start Command                  | Key Features                                                                                                                                                                                |
+| ----------------- | -------------------------------------------------------------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Claude Code**   | `npm install -g @anthropic-ai/claude-code`                                 | `claude`                       | **Anthropic's reasoning-focused coding assistant.** Exceptional at complex problem-solving and code review with strong emphasis on code quality, security, and maintainability.             |
+| **Codex CLI**     | `npm install -g @openai/codex`                                             | `codex`                        | **OpenAI's specialized code generation tool.** Focuses on high-quality code generation with excellent understanding of software architecture patterns and best practices.                   |
+| **Copilot Agent** | `npm install -g @github/copilot`                                           | `copilot`                      | **GitHub's AI pair programmer.** Provides intelligent code completions and suggestions directly in your IDE with deep integration into the GitHub ecosystem.                                |
+| **Cursor Agent**  | https://cursor.com/docs/cli/installation                                   | `cursor-agent`                 | **Intelligent code editor with AI built-in.** Seamlessly integrates AI assistance directly into your coding environment with context-aware suggestions and real-time collaboration.         |
+| **Gemini CLI**    | `npm install -g @google/gemini-cli`                                        | `gemini`                       | **Google's multimodal AI coding assistant.** Excels at understanding complex codebases and providing comprehensive analysis with support for multiple programming languages and frameworks. |
+| **Trae AI**       | [github.com/bytedance/trae-agent](https://github.com/bytedance/trae-agent) | start from desktop application | **ByteDance's advanced AI coding platform.** Specializes in large-scale project management and enterprise development workflows with powerful team collaboration features.                  |
 
 ### **Choosing Your Coding Agent**
 
