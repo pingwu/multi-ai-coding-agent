@@ -6,6 +6,7 @@
 [![Made with Claude](https://img.shields.io/badge/Made%20with-Claude-D97757?logo=claude&logoColor=white)](https://claude.ai/code)
 [![OpenAI Codex](https://img.shields.io/badge/OpenAI%20Codex-412991?style=for-the-badge&logo=openai&logoColor=white)](https://openai.com/blog/openai-codex)
 [![GitHub Copilot](https://img.shields.io/badge/GitHub%20Copilot-2e2e2e?style=flat&logo=github-copilot&logoColor=white)](https://github.com/features/copilot)
+[![Spec Kit](https://img.shields.io/badge/Spec%20Kit-000000?style=flat&logo=github&logoColor=white)](https://github.com/github/spec-kit)
 [![DeepAgent](https://img.shields.io/badge/DeepAgent-0066CC?style=flat&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgMkw0IDZWMTJDNCAyMCAxMiAyMiAxMiAyMkMxMiAyMiAyMCAyMCAyMCAxMlY2TDEyIDJaIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==&logoColor=white)](https://github.com/abacusai/DeepAgent-Desktop)
 [![Cursor Agent](https://img.shields.io/badge/Cursor-Agent-blue)](https://cursor.sh/)
 [![Google Gemini](https://img.shields.io/badge/Google%20Gemini-886FBF?logo=googlegemini&logoColor=fff)](https://github.com/google-gemini/gemini-cli)
@@ -133,6 +134,7 @@ Instead of basic CRUD apps, you'll create production-ready systems that showcase
 1. **[Install AI Coding Environment](./setup/quick-start.md)** — Get Claude Code, Docker, and development tools
 2. **Run your first project** — Experience AI-augmented development firsthand
 3. **Understand the workflow** — Learn how to communicate effectively with AI coding agents
+4. **[Spec-Driven Development Session](./setup/spec-driven-development-session.md)** — Placeholder overview that links to Spec Kit installation guidance for upcoming spec-driven workflows
 
 **Phase 2: Build & Learn (Weeks 2-8)**
 1. **Clone and customize** each project using natural language instructions to AI agents
