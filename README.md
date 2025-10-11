@@ -1,32 +1,34 @@
-# 🚀 From Aspiring Professional to AI-Augmented Developer
+# 🚀 From Aspiring Professional to AI-Augmented Performer 
 
 **The new professional superpower is not coding; it's orchestrating AI agents to build for you.**
 
-This repository is a launchpad for students, product managers, entrepreneurs, and other non-technical professionals to become **AI-augmented developers**. You will learn to build complete, production-ready applications by guiding teams of AI coding agents, transforming your ideas into reality faster than ever before.
+This repository is a launchpad for students, product managers, entrepreneurs, and other non-technical professionals to become **AI-augmented Performer**. You will learn to build a complete solution and transforming your ideas into reality faster than ever before.
 
 ---
 
-### 🤔 The Chicken or the Egg? Where to Begin Your AI Journey
+### 🤔 The pain points on Your AI Journey
 
 Before diving into tools, many aspiring creators face a dilemma:
 
-1.  *"How do I know what AI can do for me if I don't know what's possible?"*
-2.  *"What do I really want to accomplish, regardless of any specific tool?"*
+1.  *"How do I know what AI tools can do for me if I don't know what's possible?"* (What to do?)
+2.  "How to use those tools for the best result?" (How to do it?)
+3.  *"What do I really want to accomplish, regardless of any specific tool?"* (why I want to do it?)
 
 **Our philosophy is different: Start with your *vibe*.**
 
-This is not about choice of platform, specific tool, or memorize commands. It's about developing a new intuition—a **"vibe" for problem-solving with AI**. It's about learning to express your goals and frustrations in a way that AI agents can understand. You don't need to be a coder or programmer to establish such "coding vocabulary" in order to communicate with AI Agents; you just need to learn to describe the patterns of the problems in your domain. This repository is your toolbox and playground for developing a rich vocabulary in natural language, so you can create the results you want. (hint: Jobs, inventions, application, or any process breakthrough in your own domain)
+This is not about the choice of a platform, a specific tool, or memorizing commands. It's about developing a new intuition—a **"vibe" for problem-solving with AI**. It's about learning to express your goals and frustrations in a way that AI agents can understand. You don't need to be a coder or programmer to establish such "coding vocabulary" in order to communicate with AI Agents; you just need to learn to describe the patterns of the problems in your domain. This repository is your toolbox and playground for developing a rich vocabulary in daily English (or any major written language), so you can create the results you want. (hint: Jobs, inventions, application, or any process breakthrough in your own domain)
 
 ---
 
 ### 🛠️ The DIY Path: Start Building in Minutes
 
 Ready to dive in? For the self-motivated learner, here's how to get your first AI-augmented application running in under two hours.
+This path is designed to answer the first question: 'What can AI tools do for me?'
 
 1.  **Clone the Repository:**
     ```bash
-    git clone https://github.com/pingwu/multi-ai-coding-agent.git
-    cd multi-ai-coding-agent
+    git clone https://github.com/pingwu/maca.git
+    cd maca
     ```
 2.  **Follow the Quick Start Guide:**
     *   **[Quick Start Guide](./setup/quick-start.md)** — Install your complete AI coding environment (Docker, AI Agents, etc.).
@@ -42,6 +44,7 @@ Ready to dive in? For the self-motivated learner, here's how to get your first A
 ### 🎓 The Guided Path: Join a Cohort
 
 While the tools are powerful, the mindset is paramount. A structured, collaborative environment is the fastest way to master the "agentic process."
+This path answers the question of how to best harness AI tools.
 
 In our cohort-based courses, you will:
 *   Receive live, expert instruction.
@@ -60,14 +63,14 @@ This repository and its underlying philosophy are based on the work of Ping Wu. 
 
 His work is centered on the idea that AI can be a partner for achieving ambitious goals with less stress and more creative flow.
 
-**Want to bring this mindset to your organization?**
+**Want to bring this mindset to your organization?** or need a guided session to find your "why?"
 * [Contact me for the engagements](mailto:ping@ping-ai.com)
 
 ---
 
 ### 🧰 The Toolbox: Your AI Agent Team
 
-A successful AI-augmented developer knows how to choose the right agent for the job. This repository gives you a production-ready toolkit of AI coding assistants.
+A successful AI-augmented performer knows how to choose the right agent for the job. This repository gives you a production-ready toolkit of AI coding assistants.
 
 | Agent Name        | Key Strength                               |
 | ----------------- | ------------------------------------------ |
@@ -78,6 +81,7 @@ A successful AI-augmented developer knows how to choose the right agent for the 
 | **Copilot Agent** | GitHub Integration & Version Control       |
 
 *   **[See the Full Agent Comparison and Workflow Guide](./docs/agent-comparison.md)**
+*   Coverage of non-programming tools is in progress. 
 
 ### 🚀 The Portfolio: Your Proof of Work
 
