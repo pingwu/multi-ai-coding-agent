@@ -32,7 +32,6 @@ export interface JobStatus {
 
 export interface ApiStatus {
   openai_connected: boolean;
-  anthropic_connected: boolean;
   demo_mode: boolean;
   timestamp: string;
 }
@@ -87,10 +86,6 @@ const AppContent: React.FC = () => {
         <div className="status-item">
           <span className={`status-dot ${apiStatus.openai_connected ? 'connected' : 'disconnected'}`}></span>
           OpenAI: {apiStatus.openai_connected ? 'Connected' : 'Disconnected'}
-        </div>
-        <div className="status-item">
-          <span className={`status-dot ${apiStatus.anthropic_connected ? 'connected' : 'disconnected'}`}></span>
-          Anthropic: {apiStatus.anthropic_connected ? 'Connected' : 'Disconnected'}
         </div>
         {apiStatus.demo_mode && (
           <div className="status-item demo-mode">

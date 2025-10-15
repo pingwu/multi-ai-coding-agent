@@ -20,7 +20,7 @@ class ContentGeneratorCrew():
     tasks: List[Task]
 
     def get_llm(self):
-        """Get the configured LLM with improved validation and fallback logic"""
+        """Get the configured OpenAI LLM"""
         # Check for demo mode first
         demo_mode = os.environ.get("DEMO_MODE", "false").lower() in ["true", "1"]
 
@@ -37,18 +37,8 @@ class ContentGeneratorCrew():
             except Exception as e:
                 print(f"Warning: OpenAI LLM configuration failed: {e}")
 
-        # Validate and configure Anthropic as fallback
-        anthropic_key = os.environ.get("ANTHROPIC_API_KEY")
-        if anthropic_key and anthropic_key not in ["demo-key", "your-anthropic-api-key-here"]:
-            try:
-                anthropic_model = os.environ.get("ANTHROPIC_MODEL", "claude-3-haiku-20240307")
-                llm = LLM(model=anthropic_model, api_key=anthropic_key)
-                return llm
-            except Exception as e:
-                print(f"Warning: Anthropic LLM configuration failed: {e}")
-
-        # If no valid API keys, return None for demo mode behavior
-        print("Warning: No valid API keys found, using demo mode")
+        # If no valid API key, return None for demo mode behavior
+        print("Warning: No valid OpenAI API key found, using demo mode")
         return None
 
     # Learn more about YAML configuration files here:

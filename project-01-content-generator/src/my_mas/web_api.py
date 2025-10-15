@@ -74,10 +74,9 @@ jobs: Dict[str, Dict] = {}
 active_connections: Dict[str, WebSocket] = {}
 
 async def validate_api_keys() -> Dict[str, bool]:
-    """Validate available API keys and return their status"""
+    """Validate OpenAI API key and return status"""
     validation_results = {
         "openai_valid": False,
-        "anthropic_valid": False,
         "demo_mode": False,
     }
 
@@ -101,35 +100,13 @@ async def validate_api_keys() -> Dict[str, bool]:
     else:
         print(f"DEBUG: OpenAI API key not provided or invalid format")
 
-    # Check Anthropic API key
-    anthropic_key = os.environ.get("ANTHROPIC_API_KEY")
-    if anthropic_key and anthropic_key not in {"demo-key", "your-anthropic-api-key-here"}:
-        try:
-            async with httpx.AsyncClient(timeout=10.0) as client:
-                response = await client.post(
-                    "https://api.anthropic.com/v1/messages",
-                    headers={
-                        "Authorization": f"Bearer {anthropic_key}",
-                        "Content-Type": "application/json",
-                        "anthropic-version": "2023-06-01"
-                    },
-                    json={
-                        "model": "claude-3-haiku-20240307",
-                        "max_tokens": 1,
-                        "messages": [{"role": "user", "content": "test"}]
-                    }
-                )
-                validation_results["anthropic_valid"] = response.status_code in [200, 400]  # 400 is expected for this test
-        except Exception:
-            validation_results["anthropic_valid"] = False
-
-    # Simple demo mode logic: Use demo content only when no valid API keys exist
-    validation_results["demo_mode"] = not (validation_results["openai_valid"] or validation_results["anthropic_valid"])
+    # Simple demo mode logic: Use demo content only when no valid OpenAI API key exists
+    validation_results["demo_mode"] = not validation_results["openai_valid"]
 
     if validation_results["demo_mode"]:
-        print(f"DEBUG: Using demo content - No valid API keys found (OpenAI: {validation_results['openai_valid']}, Anthropic: {validation_results['anthropic_valid']})")
+        print(f"DEBUG: Using demo content - No valid OpenAI API key found")
     else:
-        print(f"DEBUG: Using live AI - Valid API keys found (OpenAI: {validation_results['openai_valid']}, Anthropic: {validation_results['anthropic_valid']})")
+        print(f"DEBUG: Using live AI - Valid OpenAI API key found")
 
     return validation_results
 
@@ -162,7 +139,6 @@ async def api_status():
     validation = await validate_api_keys()
     return {
         "openai_connected": validation["openai_valid"],
-        "anthropic_connected": validation["anthropic_valid"],
         "demo_mode": validation["demo_mode"],
         "timestamp": datetime.now().isoformat()
     }
@@ -305,12 +281,8 @@ async def run_content_generation(job_id: str, request: ContentRequest, api_valid
             await send_console_message(job_id, "🤖 Using demo content - No valid API keys found", "warning")
             await run_demo_generation(job_id, request)
         else:
-            # Check which API is available
-            if api_validation["openai_valid"]:
-                await send_console_message(job_id, "✅ OpenAI API key validated - using GPT-4o mini", "info")
-            elif api_validation["anthropic_valid"]:
-                await send_console_message(job_id, "✅ Anthropic API key validated - using Claude", "info")
-
+            # OpenAI API is available
+            await send_console_message(job_id, "✅ OpenAI API key validated - using GPT-4o mini", "info")
             await run_real_generation(job_id, request)
 
     except Exception as e:
@@ -361,9 +333,8 @@ This is a demonstration of the AI Content Generator system. In actual operation 
 ## Next Steps
 To enable full functionality:
 1. Add valid OpenAI API key to .env file
-2. Or add valid Anthropic API key for Claude integration
-3. Restart the application
-4. Generate real AI-powered content!
+2. Restart the application
+3. Generate real AI-powered content!
 
 ---
 *Generated in Demo Mode - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}*"""
