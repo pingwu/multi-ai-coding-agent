@@ -104,8 +104,9 @@ class GoogleSheetsWriterTool(BaseTool):
     description: str = "Adds new tasks to a Google Sheet with structured data."
 
 
-    def _run(self, 
+    def _run(self,
              title: str,
+             description: str = "",
              status: str = "NOT_STARTED",
              category: str = "GENERAL",
              priority: str = "MEDIUM",
@@ -115,12 +116,14 @@ class GoogleSheetsWriterTool(BaseTool):
              motivation_type: str = "MIXED",
              parent_item_id: str = "",
              last_update_message: str = "",
+             user_email: str = "",
              sheet_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Add a new task to the Google Sheet.
-        
+
         Args:
-            title (str): Task title/description
+            title (str): Task title
+            description (str): Detailed task description
             status (str): Task status (NOT_STARTED, IN_PROGRESS, COMPLETED, BLOCKED)
             category (str): Task category (DEVELOPMENT, MEETING, DOCUMENTATION, etc.)
             priority (str): Task priority (LOW, MEDIUM, HIGH, CRITICAL)
@@ -130,8 +133,9 @@ class GoogleSheetsWriterTool(BaseTool):
             motivation_type (str): The user's motivation for the task (INTRINSIC, EXTRINSIC, MIXED)
             parent_item_id (str): The ID of the parent task (optional)
             last_update_message (str): A brief message about the last update
+            user_email (str): Email address of the user who created this task
             sheet_id (str): Google Sheet ID (optional, uses env var if not provided)
-            
+
         Returns:
             dict: Result of the operation with task_id and success status.
         """
@@ -181,24 +185,26 @@ class GoogleSheetsWriterTool(BaseTool):
                 timestamped_action = f"[{current_time}] Task created"
             
             # Prepare row data matching the schema:
-            # A: task_id, B: title, C: status, D: category, E: priority, 
-            # F: created_date, G: updated_date, H: due_date, I: notes, J: last_update_action,
-            # K: motivation_type, L: parent_item_id, M: last_updated_date, N: last_update_message
+            # A: task_id, B: title, C: description, D: status, E: category, F: priority,
+            # G: created_date, H: updated_date, I: due_date, J: notes, K: last_update_action,
+            # L: motivation_type, M: parent_item_id, N: last_updated_date, O: last_update_message, P: user_email
             row_data = [
                 task_id,
                 title,
+                description,
                 status,
                 category,
                 priority,
                 current_time,  # created_date
-                current_time,  # updated_date  
+                current_time,  # updated_date
                 due_date,
                 notes,
                 timestamped_action,  # last_update_action with timestamp
                 motivation_type,
                 parent_item_id,
                 current_time,
-                last_update_message
+                last_update_message,
+                user_email  # user who created the task
             ]
 
             # Append the new row
@@ -224,7 +230,7 @@ class GoogleSheetsUpdaterTool(BaseTool):
     description: str = "Updates existing task status, notes, or other fields in a Google Sheet."
 
 
-    def _run(self, 
+    def _run(self,
              task_identifier: str,
              status: Optional[str] = None,
              notes: Optional[str] = None,
@@ -234,10 +240,11 @@ class GoogleSheetsUpdaterTool(BaseTool):
              motivation_type: Optional[str] = None,
              parent_item_id: Optional[str] = None,
              last_update_message: Optional[str] = None,
+             user_email: Optional[str] = None,
              sheet_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Update an existing task in the Google Sheet.
-        
+
         Args:
             task_identifier (str): Task ID or title to find and update
             status (str): New status (optional)
@@ -248,8 +255,9 @@ class GoogleSheetsUpdaterTool(BaseTool):
             motivation_type (str): The user's motivation for the task (INTRINSIC, EXTRINSIC, MIXED)
             parent_item_id (str): The ID of the parent task (optional)
             last_update_message (str): A brief message about the last update
+            user_email (str): Email address of the user who updated this task
             sheet_id (str): Google Sheet ID (optional)
-            
+
         Returns:
             dict: Result of the update operation.
         """
@@ -286,12 +294,12 @@ class GoogleSheetsUpdaterTool(BaseTool):
             worksheet = spreadsheet.sheet1
 
             # Define expected headers to handle duplicate/empty header issues
-            # Based on the writer tool schema (A through N columns)
+            # Based on the writer tool schema (A through P columns)
             expected_headers = [
-                'task_id', 'title', 'status', 'category', 'priority', 
+                'task_id', 'title', 'description', 'status', 'category', 'priority',
                 'created_date', 'updated_date', 'due_date', 'notes',
                 'last_update_action', 'motivation_type', 'parent_item_id',
-                'last_updated_date', 'last_update_message'
+                'last_updated_date', 'last_update_message', 'user_email'
             ]
             
             # Get all data to find the task
@@ -317,45 +325,50 @@ class GoogleSheetsUpdaterTool(BaseTool):
             # Update fields if provided
             updates = {}
             if status:
-                worksheet.update_cell(row_number, 3, status)  # Column C: status
+                worksheet.update_cell(row_number, 4, status)  # Column D: status
                 updates['status'] = status
-                
+
             if notes:
-                worksheet.update_cell(row_number, 9, notes)  # Column I: notes
+                worksheet.update_cell(row_number, 10, notes)  # Column J: notes
                 updates['notes'] = notes
-                
+
             if due_date:
-                worksheet.update_cell(row_number, 8, due_date)  # Column H: due_date
+                worksheet.update_cell(row_number, 9, due_date)  # Column I: due_date
                 updates['due_date'] = due_date
-                
+
             if priority:
-                worksheet.update_cell(row_number, 5, priority)  # Column E: priority
+                worksheet.update_cell(row_number, 6, priority)  # Column F: priority
                 updates['priority'] = priority
 
             if motivation_type:
-                worksheet.update_cell(row_number, 11, motivation_type) # Column K: motivation_type
+                worksheet.update_cell(row_number, 12, motivation_type) # Column L: motivation_type
                 updates['motivation_type'] = motivation_type
 
             if parent_item_id:
-                worksheet.update_cell(row_number, 12, parent_item_id) # Column L: parent_item_id
+                worksheet.update_cell(row_number, 13, parent_item_id) # Column M: parent_item_id
                 updates['parent_item_id'] = parent_item_id
 
             if last_update_message:
-                worksheet.update_cell(row_number, 14, last_update_message) # Column N: last_update_message
+                worksheet.update_cell(row_number, 15, last_update_message) # Column O: last_update_message
                 updates['last_update_message'] = last_update_message
 
             # Always update the timestamp
             current_time = datetime.now().isoformat()
-            worksheet.update_cell(row_number, 7, current_time)  # Column G: updated_date
-            worksheet.update_cell(row_number, 13, current_time) # Column M: last_updated_date
+            worksheet.update_cell(row_number, 8, current_time)  # Column H: updated_date
+            worksheet.update_cell(row_number, 14, current_time) # Column N: last_updated_date
             updates['updated_date'] = current_time
             updates['last_updated_date'] = current_time
-            
+
             # Update last_update_action if provided
             if update_action:
                 timestamped_action = f"[{current_time}] {update_action}"
-                worksheet.update_cell(row_number, 10, timestamped_action)  # Column J: last_update_action
+                worksheet.update_cell(row_number, 11, timestamped_action)  # Column K: last_update_action
                 updates['last_update_action'] = timestamped_action
+
+            # Update user_email if provided (track who made the update)
+            if user_email:
+                worksheet.update_cell(row_number, 16, user_email)  # Column P: user_email
+                updates['user_email'] = user_email
 
             return {
                 "success": True,
@@ -425,12 +438,12 @@ class GoogleSheetsTaskFinderTool(BaseTool):
             worksheet = spreadsheet.sheet1
 
             # Define expected headers to handle duplicate/empty header issues
-            # Based on the writer tool schema (A through N columns)
+            # Based on the writer tool schema (A through P columns)
             expected_headers = [
-                'task_id', 'title', 'status', 'category', 'priority', 
+                'task_id', 'title', 'description', 'status', 'category', 'priority',
                 'created_date', 'updated_date', 'due_date', 'notes',
                 'last_update_action', 'motivation_type', 'parent_item_id',
-                'last_updated_date', 'last_update_message'
+                'last_updated_date', 'last_update_message', 'user_email'
             ]
             
             # Get all task records

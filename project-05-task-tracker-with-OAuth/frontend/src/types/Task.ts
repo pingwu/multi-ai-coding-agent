@@ -3,6 +3,7 @@
 export interface Task {
   task_id: string;
   title: string;
+  description?: string;  // Added: detailed task description
   status: TaskStatus;
   category: TaskCategory;
   priority: TaskPriority;
@@ -11,10 +12,12 @@ export interface Task {
   due_date?: string;
   notes?: string;
   raw_input?: string;
+  last_update_action?: string;  // Added: activity history with timestamp
   motivation_type: MotivationType;
   parent_item_id?: string;
   last_updated_date: string;
   last_update_message?: string;
+  user_email?: string;  // Added: email of user who created/updated task
 }
 
 export type TaskStatus = 

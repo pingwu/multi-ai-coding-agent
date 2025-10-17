@@ -3,7 +3,7 @@ FastAPI API Gateway Service
 Simple HTTP gateway that forwards requests to crew-service for AI processing
 """
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Dict, Any, List, Optional
@@ -12,6 +12,7 @@ from datetime import datetime
 import httpx
 import logging
 from src.utils.privacy import should_redact, redact_text
+from src.routes.auth import _decode_session
 
 # Configure logging (env-driven)
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
@@ -22,6 +23,7 @@ logger = logging.getLogger(__name__)
 class TaskInputRequest(BaseModel):
     input: str
     sheet_id: Optional[str] = None
+    user_email: Optional[str] = None  # Will be populated from session
 
 
 class TaskInputResponse(BaseModel):
@@ -44,6 +46,7 @@ class SimpleReportResponse(BaseModel):
 
 
 from src.routes import auth as auth_router
+from src.routes import config as config_router
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -53,6 +56,7 @@ app = FastAPI(
 )
 
 app.include_router(auth_router.router)
+app.include_router(config_router.router)
 
 
 # Configure logging level and redaction
@@ -146,22 +150,30 @@ async def health_check():
 
 
 @app.post("/api/tasks", response_model=TaskInputResponse)
-async def process_task_input(request: TaskInputRequest):
+async def process_task_input(request: TaskInputRequest, http_request: Request):
     """
     Process natural language input via crew service.
     """
     try:
+        # Extract user email from JWT session
+        session = _decode_session(http_request)
+        user_email = session.get("email", "") if session else ""
+
         if REDACT_INPUTS:
             logger.info("Processing task input (content redacted)")
         else:
             preview = request.input[:100] if request and request.input else ""
-            logger.debug(f"Processing task input preview: {preview}...")
+            logger.debug(f"Processing task input preview: {preview}... by user: {user_email}")
+
+        # Add user_email to request data
+        request_data = request.dict()
+        request_data["user_email"] = user_email
 
         # Forward request to crew service
         async with httpx.AsyncClient() as client:
             crew_response = await client.post(
                 f"{CREW_SERVICE_URL}/process",
-                json=request.dict(),
+                json=request_data,
                 timeout=60.0  # AI processing can take time
             )
 

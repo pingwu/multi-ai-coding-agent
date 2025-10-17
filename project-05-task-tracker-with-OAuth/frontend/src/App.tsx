@@ -11,6 +11,7 @@ import { AuthProvider, useAuth } from './services/AuthContext';
 import { TaskInputResponse, TaskBreakdownResponse } from './types/Task';
 
 const MainApp: React.FC = () => {
+  const { user } = useAuth();
   const [lastResponse, setLastResponse] = useState<TaskInputResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [dashboardRefresh, setDashboardRefresh] = useState(0);
@@ -36,15 +37,50 @@ const MainApp: React.FC = () => {
     console.log('Task breakdown completed:', result);
   };
 
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
+      });
+
+      if (response.ok) {
+        // Reload the page to clear auth state and redirect to login
+        window.location.href = '/login';
+      }
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="container mx-auto px-4 py-6">
         <header className="text-center mb-6">
+          {/* User info bar */}
+          <div className="flex justify-end items-center mb-4 space-x-3">
+            {user && (
+              <div className="flex items-center space-x-3 bg-white rounded-lg px-4 py-2 shadow">
+                <div className="text-sm text-right">
+                  <p className="font-semibold text-gray-800">{user.name}</p>
+                  <p className="text-xs text-gray-500">{user.email}</p>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="px-4 py-2 bg-red-500 text-white text-sm rounded-md hover:bg-red-600 transition-colors"
+                  title="Sign out"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+
           <h1 className="text-3xl font-bold text-gray-800 mb-2">📊 Project Analyzer Team Edition</h1>
           <p className="text-gray-600 mb-4">
             AI-powered project intelligence: from natural language to structured analysis
           </p>
-          
+
           <div className="flex justify-center space-x-1 bg-white rounded-lg p-1 inline-flex">
             <button
               onClick={() => setCurrentView('breakdown')}
