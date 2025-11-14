@@ -111,4 +111,4 @@ This is an open-source project. Contributions are welcome! Please see our [**Con
 
 ### 📄 License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](node_modules/bl/LICENSE.md) file for details.
