@@ -93,6 +93,73 @@ By the end of this guide, you'll be able to:
 
 ---
 
+## 📑 Table of Contents
+
+**Quick Navigation:**
+
+- [🚀 Quick Setup for Experienced Users](#-quick-setup-for-experienced-users)
+- [Introduction](#introduction)
+- [📖 Glossary: Terms You'll See](#-glossary-terms-youll-see)
+- [Prerequisites](#prerequisites)
+  - [System Requirements](#system-requirements)
+  - [What to Expect](#what-to-expect)
+
+**Installation Instructions:**
+
+- [Installation Guide](#installation-guide)
+- [Windows 11 Installation](#windows-11-installation)
+  - [Step 1: Download VS Code](#step-1-download-vs-code)
+  - [Step 2: Run the Installer](#step-2-run-the-installer)
+  - [Step 3: Installation Options](#step-3-installation-options-important)
+  - [Step 4: Verify 'code' Command Works](#step-4-verify-code-command-works)
+  - [Step 5: Set VS Code as Default Editor](#step-5-set-vs-code-as-default-editor-system-level)
+  - [Step 6: Configure Git to Use VS Code](#step-6-configure-git-to-use-vs-code)
+  - [Step 7: Set Environment Variables for Claude Code](#step-7-set-environment-variables-for-claude-code)
+- [macOS Installation](#macos-installation)
+  - [Step 1: Download VS Code](#step-1-download-vs-code-1)
+  - [Step 2: Install VS Code](#step-2-install-vs-code)
+  - [Step 3: Enable 'code' Command in Terminal](#step-3-enable-code-command-in-terminal)
+  - [Step 4: Verify 'code' Command Works](#step-4-verify-code-command-works-1)
+  - [Step 5: Set VS Code as Default Editor](#step-5-set-vs-code-as-default-editor-system-level-1)
+  - [Step 6: Configure Git to Use VS Code](#step-6-configure-git-to-use-vs-code-1)
+  - [Step 7: Set Environment Variables for Claude Code](#step-7-set-environment-variables-for-claude-code-1)
+
+**Verification & Testing:**
+
+- [Claude Code Integration Verification](#claude-code-integration-verification)
+  - [Testing Ctrl+G Integration](#testing-ctrlg-integration)
+  - [Manual Testing](#manual-testing)
+- [Final Verification Checklist](#final-verification-checklist)
+
+**Help & Support:**
+
+- [Troubleshooting](#troubleshooting)
+  - [Troubleshooting Windows](#troubleshooting-windows)
+    - ["Code is not recognized" Error](#code-is-not-recognized-as-an-internal-or-external-command)
+    - [Ctrl+G Doesn't Open VS Code](#ctrlg-doesnt-open-vs-code-in-claude-code)
+    - [Antivirus Blocking Installation](#antivirus-blocking-installation)
+  - [Troubleshooting macOS](#troubleshooting-macos)
+    - ["Code: command not found" Error](#code-command-not-found)
+    - [Cmd+G Doesn't Open VS Code](#cmdg-doesnt-open-vs-code-in-claude-code)
+    - [Apple Silicon Specific Issues](#apple-silicon-m1m2m3-specific-issues)
+    - [Gatekeeper Warnings](#gatekeeper-warnings)
+  - [Troubleshooting Claude Code Integration](#troubleshooting-claude-code-integration)
+- [Common Pitfalls Reference](#common-pitfalls-reference)
+
+**Additional Information:**
+
+- [You Did It!](#you-did-it)
+  - [What You Can Do Now](#what-you-can-do-now)
+  - [Verify Your Success](#verify-your-success)
+  - [Next Steps: Learning VS Code](#next-steps-learning-vs-code)
+- [Additional Resources](#additional-resources)
+  - [Official Documentation Links](#official-documentation-links)
+  - [Community Support](#community-support)
+  - [Alternative Editors](#alternative-editors)
+- [Version History](#version-history)
+
+---
+
 ## 📖 Glossary: Terms You'll See
 
 Before we begin, let's clarify some terms you'll encounter:
