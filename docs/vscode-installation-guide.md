@@ -95,6 +95,9 @@ By the end of this guide, you'll be able to:
 
 ## 📑 Table of Contents
 
+<details>
+<summary><strong>Click to expand Table of Contents</strong></summary>
+
 **Quick Navigation:**
 
 - [🚀 Quick Setup for Experienced Users](#-quick-setup-for-experienced-users)
@@ -145,6 +148,7 @@ By the end of this guide, you'll be able to:
     - [Gatekeeper Warnings](#gatekeeper-warnings)
   - [Troubleshooting Claude Code Integration](#troubleshooting-claude-code-integration)
 - [Common Pitfalls Reference](#common-pitfalls-reference)
+- [Still Stuck? How to Get AI Help](#still-stuck-how-to-get-ai-help)
 
 **Additional Information:**
 
@@ -158,9 +162,14 @@ By the end of this guide, you'll be able to:
   - [Alternative Editors](#alternative-editors)
 - [Version History](#version-history)
 
+</details>
+
 ---
 
 ## 📖 Glossary: Terms You'll See
+
+<details>
+<summary><strong>Click to expand Glossary</strong></summary>
 
 Before we begin, let's clarify some terms you'll encounter:
 
@@ -175,9 +184,14 @@ Before we begin, let's clarify some terms you'll encounter:
 
 📝 **Note**: Don't worry if these terms are confusing now—you'll understand them better as we go through the installation!
 
+</details>
+
 ---
 
 ## Prerequisites
+
+<details>
+<summary><strong>Click to expand Prerequisites</strong></summary>
 
 ### System Requirements
 
@@ -201,6 +215,8 @@ Before we begin, let's clarify some terms you'll encounter:
 - **Additional setup**: 5-10 minutes
 - **Restarts needed**: None
 
+</details>
+
 ---
 
 ## Installation Guide
@@ -213,6 +229,9 @@ Choose your operating system below:
 ---
 
 ## Windows 11 Installation
+
+<details open>
+<summary><strong>Click to expand Windows 11 Installation (7 Steps)</strong></summary>
 
 📚 **Official Windows Guide**: https://code.visualstudio.com/docs/setup/windows
 
@@ -423,9 +442,14 @@ This is the critical step for Claude Code integration:
 
 🎯 **Quick Check**: After setting these variables and restarting Claude Code, pressing Ctrl+G should open VS Code with your prompt.
 
+</details>
+
 ---
 
 ## macOS Installation
+
+<details open>
+<summary><strong>Click to expand macOS Installation (7 Steps)</strong></summary>
 
 📚 **Official macOS Guide**: https://code.visualstudio.com/docs/setup/mac
 
@@ -673,9 +697,14 @@ You'll see either:
 
 🎯 **Quick Check**: After setting these variables and restarting Claude Code, pressing Ctrl+G should open VS Code with your prompt.
 
+</details>
+
 ---
 
 ## Claude Code Integration Verification
+
+<details>
+<summary><strong>Click to expand Claude Code Integration Testing</strong></summary>
 
 Now let's test that everything works with Claude Code!
 
@@ -720,9 +749,14 @@ $env:EDITOR = "code --wait"; code temp.txt
 
 If VS Code opens `temp.txt` and your terminal waits until you close VS Code, it's working correctly!
 
+</details>
+
 ---
 
 ## Final Verification Checklist
+
+<details>
+<summary><strong>Click to expand Verification Checklist</strong></summary>
 
 Let's make sure everything is working:
 
@@ -753,9 +787,14 @@ Let's make sure everything is working:
 
 ❌ **Something not working?** Check the troubleshooting section below.
 
+</details>
+
 ---
 
 ## Troubleshooting
+
+<details>
+<summary><strong>Click to expand Troubleshooting Guide (Windows & macOS)</strong></summary>
 
 ### Troubleshooting Windows
 
@@ -1027,9 +1066,180 @@ echo 'export EDITOR="code --wait"' >> ~/.bash_profile
 source ~/.zshrc  # or source ~/.bash_profile
 ```
 
+</details>
+
+---
+
+## Still Stuck? How to Get AI Help
+
+<details>
+<summary><strong>Click to expand AI Prompting Tips</strong></summary>
+
+If you've tried everything in the troubleshooting guide and you're still stuck, here's how to get help from AI assistants like Claude Code, ChatGPT, or Gemini:
+
+### 🎯 How to Ask for Help Effectively
+
+**1. Describe Your Exact Situation**
+
+Instead of: *"VS Code doesn't work"*
+
+Try: *"I'm on Windows 11. I installed VS Code successfully, but when I type 'code --version' in PowerShell, I get 'command not found' error. I checked the PATH variable and saw C:\Program Files\Microsoft VS Code\bin is listed. I've restarted PowerShell three times."*
+
+**2. Include What You've Already Tried**
+
+*"I've already tried:*
+- *Reinstalling VS Code with 'Add to PATH' checked*
+- *Restarting PowerShell completely*
+- *Checking environment variables with 'echo $env:PATH'*
+- *The PATH shows the VS Code directory, but the command still doesn't work"*
+
+**3. Share Error Messages Word-for-Word**
+
+Copy and paste the exact error message:
+```
+PS C:\Users\YourName> code --version
+code : The term 'code' is not recognized as the name of a cmdlet, function, script file, or operable program.
+```
+
+**4. Mention Your Operating System and Version**
+
+- Windows 11 (Build 22000 or later)
+- macOS Sonoma 14.2 (Intel chip or Apple Silicon M1/M2/M3)
+- Specify if you're using PowerShell, Command Prompt, Terminal, zsh, or bash
+
+### 📝 Example Prompts That Work Well
+
+**For Installation Issues:**
+```
+"I'm installing VS Code on Windows 11. I'm at Step 3 where it asks about
+installation options. I don't see the 'Add to PATH' checkbox that the guide
+mentions. Instead I see options for 'User Installer' vs 'System Installer'.
+Which one should I choose and where is the PATH option?"
+```
+
+**For Environment Variable Problems:**
+```
+"I'm on macOS Ventura with zsh shell. I ran 'echo 'export EDITOR="code --wait"'
+>> ~/.zshrc' and then 'source ~/.zshrc'. When I run 'echo $EDITOR' it shows
+'code --wait' correctly. But when I press Ctrl+G in Claude Code, nothing happens.
+I've completely quit and restarted Claude Code. What else should I check?"
+```
+
+**For Troubleshooting Beyond the Guide:**
+```
+"I followed the entire VS Code installation guide for Windows 11. All the
+verification steps pass EXCEPT Ctrl+G integration with Claude Code. VS Code
+opens fine from the Start Menu and 'code --version' works. My EDITOR variable
+is set correctly (verified with 'echo %EDITOR%' showing 'code --wait').
+I've restarted Claude Code. What specific logs or settings should I check
+in Claude Code itself?"
+```
+
+### 🔍 Information to Gather Before Asking
+
+Run these commands and include the output in your question:
+
+**Windows:**
+```powershell
+# Check VS Code version
+code --version
+
+# Check environment variables
+echo $env:EDITOR
+echo $env:VISUAL
+echo $env:PATH | Select-String "VS Code"
+
+# Check PowerShell version
+$PSVersionTable.PSVersion
+```
+
+**macOS:**
+```bash
+# Check VS Code version
+code --version
+
+# Check environment variables
+echo $EDITOR
+echo $VISUAL
+echo $PATH | grep -i "visual studio code"
+
+# Check shell
+echo $SHELL
+
+# Check if code symlink exists
+ls -la /usr/local/bin/code
+```
+
+### 💡 Template for Getting Help
+
+Copy this template and fill in your details:
+
+```
+**Operating System:** [Windows 11 / macOS Sonoma 14.2 / etc.]
+**Chip Architecture:** [Intel / Apple Silicon M1/M2 / AMD]
+**Shell/Terminal:** [PowerShell / Command Prompt / zsh / bash]
+
+**Problem Description:**
+[Describe exactly what's not working]
+
+**What I've Tried:**
+1. [First thing you tried]
+2. [Second thing you tried]
+3. [Third thing you tried]
+
+**Error Messages:**
+```
+[Paste exact error messages here]
+```
+
+**Command Outputs:**
+```
+[Paste output from diagnostic commands above]
+```
+
+**Expected Behavior:**
+[What should happen]
+
+**Actual Behavior:**
+[What actually happens]
+```
+
+### 🤖 Where to Get AI Help
+
+- **Claude Code**: Use Ctrl+G and paste your detailed question
+- **ChatGPT**: https://chat.openai.com - paste the template above
+- **Google Gemini**: https://gemini.google.com - paste your question
+- **Stack Overflow**: Search first, then ask with the [visual-studio-code] tag
+- **VS Code GitHub**: https://github.com/microsoft/vscode/issues (for bugs)
+
+### 🚨 Common Mistakes When Asking for Help
+
+❌ **"It doesn't work"** - Too vague
+✅ **"When I press Ctrl+G in Claude Code on Windows 11, VS Code doesn't open, but 'code .' works fine in PowerShell"**
+
+❌ **"I get an error"** - Need details
+✅ **"I get 'code: command not found' when running 'code --version' after installing VS Code 1.85 on macOS Sonoma"**
+
+❌ **"Help please!"** - No context
+✅ **"I'm following Step 7 of the Windows installation guide (setting environment variables). I ran 'setx EDITOR "code --wait"' and it said SUCCESS, but 'echo %EDITOR%' shows nothing. Do I need to restart Windows?"**
+
+### 💪 You've Got This!
+
+Remember:
+- AI assistants can help with technical issues you haven't seen before
+- The more specific your question, the better the answer
+- Include what you've already tried - it saves time
+- Error messages are valuable - always include them
+- It's okay to ask follow-up questions if the first answer doesn't work
+
+</details>
+
 ---
 
 ## You Did It!
+
+<details>
+<summary><strong>Click to expand Success Guide & Next Steps</strong></summary>
 
 🎉 Congratulations! You've successfully installed VS Code and integrated it with Claude Code!
 
@@ -1095,9 +1305,14 @@ Now that VS Code is installed, here are great resources to learn more:
 - Search for extensions by name
 - Click Install
 
+</details>
+
 ---
 
 ## Common Pitfalls Reference
+
+<details>
+<summary><strong>Click to expand Common Pitfalls Quick Reference</strong></summary>
 
 Quick reference for the most common issues:
 
@@ -1110,9 +1325,14 @@ Quick reference for the most common issues:
 | **"Don't see 'Add to PATH' option"** | You might have User Installer—download System Installer instead |
 | **"VS Code opens but hangs"** | Make sure you used `code --wait` (with --wait) |
 
+</details>
+
 ---
 
 ## Additional Resources
+
+<details>
+<summary><strong>Click to expand Additional Resources</strong></summary>
 
 ### Official Documentation Links
 
@@ -1145,13 +1365,16 @@ If VS Code doesn't work for you, Claude Code also supports:
 - **Sublime Text**: Set `EDITOR=subl --wait`
 - **Any text editor that supports waiting mode**
 
+</details>
+
 ---
 
 ## Version History
 
 | Version | Date | Changes |
 |---------|------|---------|
-| 1.0 | 2025-01-13 | Initial comprehensive guide created |
+| 1.1 | 2025-01-14 | Made all major sections collapsible; Added "Still Stuck? How to Get AI Help" section with prompting tips |
+| 1.0 | 2025-01-13 | Initial comprehensive guide created with TOC |
 
 ---
 

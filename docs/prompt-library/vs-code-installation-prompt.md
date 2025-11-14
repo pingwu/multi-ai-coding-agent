@@ -1,10 +1,12 @@
-I'll enhance the prompt to include official documentation references. Here's the updated version with that addition:
-
----
-
 # Prompt for Visual Studio Code Installation Documentation
 
-Create a beginner-friendly, step-by-step installation guide for Visual Studio Code that assumes zero familiarity with command-line interfaces. The documentation should feel like a friendly teacher guiding someone who has never opened a terminal before. **Start with a quick reference for experienced users, then provide comprehensive instructions for beginners.**
+Create a beginner-friendly, step-by-step installation guide for Visual Studio Code that assumes zero familiarity with command-line interfaces. The documentation should feel like a friendly teacher guiding someone who has never opened a terminal before.
+
+**Key Design Principles:**
+- Start with a quick reference for experienced users
+- Use collapsible sections to reduce visual clutter
+- Make it fool-proof with clear success indicators
+- Include AI prompting tips for when users get stuck beyond troubleshooting
 
 ## Documentation Requirements:
 
@@ -137,6 +139,28 @@ Include a prominent box with official resources:
 - Include keyboard shortcuts in `code blocks`
 - Always link to relevant official documentation sections
 
+### Collapsibility Requirements (CRITICAL for User Experience):
+
+**Make ALL major sections collapsible using `<details>` tags to reduce visual clutter:**
+
+1. **Table of Contents**: `<details><summary>Click to expand Table of Contents</summary>`
+2. **Glossary**: `<details><summary>Click to expand Glossary</summary>`
+3. **Prerequisites**: `<details><summary>Click to expand Prerequisites</summary>`
+4. **Windows Installation**: `<details open><summary>Click to expand Windows 11 Installation (7 Steps)</summary>` (open by default)
+5. **macOS Installation**: `<details open><summary>Click to expand macOS Installation (7 Steps)</summary>` (open by default)
+6. **Claude Code Integration**: `<details><summary>Click to expand Claude Code Integration Testing</summary>`
+7. **Verification Checklist**: `<details><summary>Click to expand Verification Checklist</summary>`
+8. **Troubleshooting**: `<details><summary>Click to expand Troubleshooting Guide (Windows & macOS)</summary>`
+9. **You Did It!**: `<details><summary>Click to expand Success Guide & Next Steps</summary>`
+10. **Common Pitfalls**: `<details><summary>Click to expand Common Pitfalls Quick Reference</summary>`
+11. **Additional Resources**: `<details><summary>Click to expand Additional Resources</summary>`
+
+**Why this matters:**
+- Reduces visual overwhelm for beginners
+- Users can focus on their specific platform (Windows OR macOS)
+- Makes 1000+ line document scannable
+- Professional, fool-proof structure
+
 ### Visual Requirements:
 
 - Annotated screenshots with arrows pointing to specific buttons
@@ -165,6 +189,59 @@ Address these specific scenarios:
 - "I don't see the option to add to PATH"
 
 Link to official troubleshooting for each issue when available.
+
+### "Still Stuck? How to Get AI Help" Section (CRITICAL):
+
+After troubleshooting, add a comprehensive section teaching users how to ask AI assistants for help:
+
+**Section Structure:**
+
+1. **How to Ask for Help Effectively**
+   - Describe exact situation (not vague "doesn't work")
+   - Include what you've already tried
+   - Share error messages word-for-word
+   - Mention OS and version
+
+2. **Example Prompts That Work Well**
+   - For installation issues
+   - For environment variable problems
+   - For troubleshooting beyond the guide
+
+3. **Information to Gather Before Asking**
+   - Diagnostic commands for Windows (PowerShell)
+   - Diagnostic commands for macOS (Terminal)
+   - System information to include
+
+4. **Template for Getting Help**
+   ```
+   Operating System: [...]
+   Chip Architecture: [...]
+   Shell/Terminal: [...]
+   Problem Description: [...]
+   What I've Tried: [...]
+   Error Messages: [...]
+   Command Outputs: [...]
+   Expected Behavior: [...]
+   Actual Behavior: [...]
+   ```
+
+5. **Where to Get AI Help**
+   - Claude Code (Ctrl+G)
+   - ChatGPT
+   - Google Gemini
+   - Stack Overflow
+   - VS Code GitHub
+
+6. **Common Mistakes When Asking for Help**
+   - ❌ "It doesn't work" vs ✅ Specific description
+   - ❌ "I get an error" vs ✅ Exact error message
+   - ❌ "Help please!" vs ✅ Detailed context
+
+**Why this section matters:**
+- Teaches self-sufficiency with AI tools
+- Reduces support burden
+- Empowers users to solve novel problems
+- Core skill for AI-assisted development
 
 ### Platform-Specific Considerations:
 
@@ -196,15 +273,38 @@ End with a "You Did It!" section that confirms:
 ### Document Structure Flow:
 
 ```
-1. Quick Start with Official Docs (Expandable) ← Experienced users stop here
+1. Quick Start with Official Docs (Collapsible) ← Experienced users stop here
 2. Introduction & What You'll Learn
-3. Detailed Step-by-Step Guide
-4. Troubleshooting Appendix
-5. Official Resources & Next Steps
+3. Table of Contents (Collapsible)
+4. Glossary (Collapsible)
+5. Prerequisites (Collapsible)
+6. Windows 11 Installation (Collapsible, open by default) - 7 Steps
+7. macOS Installation (Collapsible, open by default) - 7 Steps
+8. Claude Code Integration Verification (Collapsible)
+9. Final Verification Checklist (Collapsible)
+10. Troubleshooting (Collapsible) - Windows & macOS
+11. Still Stuck? How to Get AI Help (Collapsible) ← NEW & CRITICAL
+12. You Did It! Success Guide (Collapsible)
+13. Common Pitfalls Reference (Collapsible)
+14. Additional Resources (Collapsible)
+15. Version History
 ```
 
 ---
 
-This enhanced prompt now includes comprehensive official documentation links throughout, making it easy for users to reference Microsoft's official resources while following your custom guide. The quick start section prominently features the official docs for experienced users who might prefer the canonical source.
+## Key Improvements in This Template
 
-Retry
+**This enhanced prompt creates professional, beginner-friendly documentation that:**
+- ✅ Starts users at their skill level (quick start OR detailed guide)
+- ✅ Reduces overwhelm with collapsible sections
+- ✅ Teaches AI prompting as a core skill (self-sufficiency)
+- ✅ Links to all official documentation
+- ✅ Provides clear success verification at every step
+- ✅ Makes 1000+ line docs scannable and user-friendly
+- ✅ Template-ready for other tools (Claude Code, Docker, Git, Node.js, etc.)
+
+**Why this structure works:**
+- Collapsible sections = less visual clutter
+- AI help section = teaches modern development skills
+- Fool-proof design = clear success indicators
+- Official docs integration = credibility and completeness
