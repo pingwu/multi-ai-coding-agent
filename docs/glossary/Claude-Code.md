@@ -72,5 +72,5 @@ This glossary entry is referenced by:
 - [[../claude-code-installation-guide]] - Complete installation and setup guide
 - [[coding-agents]] - Detailed comparison of AI coding agents
 
-**Knowledge Graph Hub**: [[../glossary/README|Glossary Hub]]
+**Knowledge Graph Hub**: [[../glossary-README|Glossary Hub]]
 

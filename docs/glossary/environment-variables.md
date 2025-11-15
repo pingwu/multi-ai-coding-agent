@@ -157,5 +157,5 @@ This glossary entry is referenced by:
 - [[../vscode-installation-guide]] - Setting up the EDITOR environment variable
 - [[api-key]] - Related concept: storing API keys securely
 
-**Knowledge Graph Hub**: [[../glossary/README|Glossary Hub]]
+**Knowledge Graph Hub**: [[../glossary-README|Glossary Hub]]
 

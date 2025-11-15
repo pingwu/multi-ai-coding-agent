@@ -116,5 +116,5 @@ This glossary entry is referenced by:
 - [[../claude-code-installation-guide]] - Authentication setup section
 - [[environment-variables]] - Related concept: how to store API keys
 
-**Knowledge Graph Hub**: [[../glossary/README|Glossary Hub]]
+**Knowledge Graph Hub**: [[../glossary-README|Glossary Hub]]
 

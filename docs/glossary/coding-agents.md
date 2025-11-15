@@ -454,5 +454,5 @@ This glossary entry is referenced by:
 - [[../claude-code-installation-guide]] - Installation guide references this comparison
 - [[../setup/quick-start]] - Quick start guide
 
-**Knowledge Graph Hub**: [[../glossary/README|Glossary Hub]]
+**Knowledge Graph Hub**: [[../glossary-README|Glossary Hub]]
 
