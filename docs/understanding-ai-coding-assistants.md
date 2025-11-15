@@ -53,7 +53,7 @@ Confused about "Claude Code" vs "Claude Desktop" vs "Claude"? You're not alone. 
 
 ## The AI Coding Assistant Landscape
 
-**See the complete comparison:** [[coding-agents|Coding Agents Comparison]]
+**See the complete comparison:** [[glossary/coding-agents|Coding Agents Comparison]]
 
 **Quick categories:**
 
@@ -260,7 +260,7 @@ Are you writing code daily?
 **Recommended path:**
 
 1. ✅ **You are here:** Understanding AI coding assistants
-2. → **Compare tools:** [[coding-agents|Coding Agents Comparison Guide]]
+2. → **Compare tools:** [[glossary/coding-agents|Coding Agents Comparison Guide]]
 3. → **Install Claude Code:** [[claude-code-installation-guide|Installation Guide]]
 4. → **Set up VS Code:** [[vscode-installation-guide|VS Code Setup]]
 5. → **Learn workflows:** Claude Code tips (coming soon)
@@ -283,7 +283,7 @@ Are you writing code daily?
 
 ---
 
-**Ready to begin?** Read the [[coding-agents|Coding Agents Comparison Guide]] next.
+**Ready to begin?** Read the [[glossary/coding-agents|Coding Agents Comparison Guide]] next.
 
 ---
 

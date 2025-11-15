@@ -106,3 +106,15 @@ The only secure way to handle API keys is to keep them out of your code and load
 - **Use a Secret Manager**: For production applications, use a dedicated secret management service like Google Secret Manager, AWS Secrets Manager, or Azure Key Vault.
 
 </details>
+
+---
+
+## 🔗 Referenced By
+
+This glossary entry is referenced by:
+- [[../SECRET_MANAGEMENT_GUIDELINE]] - Security best practices for secret management
+- [[../claude-code-installation-guide]] - Authentication setup section
+- [[environment-variables]] - Related concept: how to store API keys
+
+**Knowledge Graph Hub**: [[../glossary/README|Glossary Hub]]
+

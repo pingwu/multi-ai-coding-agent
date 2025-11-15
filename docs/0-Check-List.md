@@ -1,0 +1,17 @@
+# Development setup check list
+- [ ] Git — version control
+- [ ] Node.js — JavaScript runtime
+- [ ] npm/Yarn — package manager
+- [ ] Docker — containerization
+- [ ] Docker Desktop — run containers locally
+- [ ] [[[vscode-installation-guide]]] — code editor / workspace
+- [ ] `.vscode` workspace — workspace settings & recommended extensions
+- [ ] GitHub account — repo access & Copilot
+- [ ] SSH key — Git authentication
+- [ ] GitHub Copilot — AI coding assistant
+- [ ] Gemin Code — AI coding assistant
+- [ ] [[[Install Claude Code]]] — AI coding assistant
+- [ ] Settings Sync — sync VS Code settings
+- [ ] ESLint — linting
+- [ ] Prettier — code formatting
+- [ ] README.md — repo documentation entry point

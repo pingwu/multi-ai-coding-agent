@@ -57,7 +57,7 @@ In our cohort-based courses, you will:
 *   Collaborate with a community of fellow AI-augmented developers.
 
 **Interested in a structured, hands-on learning experience?**
-* [Contact me for the workshops](mailto:ping@ping-ai.com) or
+* Contact me for the workshops [mailto:ping@ping-ai.com?subject:AI Coding Agent Cohort Inquiry](mailto:ping@ping-ai.com?subject=AI%20Coding%20Agent%20Cohort%20Inquiry) or
 * [Subscribe to my newsletter](https://ping-ai.com/contact) 
 
 ---

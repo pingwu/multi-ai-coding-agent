@@ -9,7 +9,7 @@ platforms:
 difficulty: beginner
 time_estimate: 10 minutes
 prerequisites:
-  - [[what-is-an-api-key]]
+  - [[api-key]]
   - [[secure-secret-management]]
 version: 1.0.0
 last_updated: 2025-11-14
@@ -146,3 +146,16 @@ You should see your API key printed to the screen.
 🎯 **Quick Check**: If you're all set, you'll see your key! If not, try opening a brand new terminal window. If it's still not there, carefully repeat the steps, ensuring you've edited and saved the correct file.
 
 </details>
+
+---
+
+## 🔗 Referenced By
+
+This glossary entry is referenced by:
+- [[../SECRET_MANAGEMENT_GUIDELINE]] - Best practices for using environment variables
+- [[../claude-code-installation-guide]] - Editor integration with EDITOR variable
+- [[../vscode-installation-guide]] - Setting up the EDITOR environment variable
+- [[api-key]] - Related concept: storing API keys securely
+
+**Knowledge Graph Hub**: [[../glossary/README|Glossary Hub]]
+

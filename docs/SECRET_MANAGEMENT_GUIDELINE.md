@@ -27,7 +27,7 @@ implementations:
 > **ESSENCE**: This document outlines the official policy for managing secrets like API keys (`OPENAI_API_KEY`, etc.) within the MACA-Course projects. The core principle is to **never store secrets in code or configuration files**. Instead, we will use operating system (OS) environment variables or cloud-provider secret management services.
 >
 > **KNOWLEDGE GRAPH CONTEXT**:
-> - **Prerequisite Understanding**: [[what-is-an-api-key]], [[understanding-environment-variables]]
+> - **Prerequisite Understanding**: [[glossary/api-key]], [[understanding-environment-variables]]
 > - **Practical Implementations**: [[setting-up-environment-variables]]
 > - **Competing Approaches**: [[why-we-dont-use-dotenv-files]]
 
@@ -131,7 +131,7 @@ platforms:
 difficulty: beginner
 time_estimate: 10 minutes
 prerequisites:
-  - [[what-is-an-api-key]]
+  - [[glossary/api-key]]
 version: 1.0.0
 last_updated: 2025-11-14
 tags:

@@ -81,16 +81,16 @@ Think of an AI coding agent as a **smart assistant that helps you write, edit, a
 
 ## Complete Agent Comparison Table
 
-| Agent Name | Best For | Installation | Start Command | Key Strength |
-|------------|----------|--------------|---------------|--------------|
-| **Claude Code** | Complex reasoning, multi-file projects | `npm install -g @anthropic-ai/claude-code`<br>or `irm https://claude.ai/install.ps1 \| iex` (Windows) | `claude` | **Best reasoning and code quality.** Reads entire project, suggests thoughtful refactorings, excellent for architecture decisions. |
-| **Gemini CLI** | Multimodal tasks, large codebases | `npm install -g @google/gemini-cli`<br>See [GitHub](https://github.com/google-gemini/gemini-cli) | `gemini` | **Largest context window.** Can handle massive codebases, processes images/diagrams, multimodal understanding. |
-| **GitHub Copilot** | Real-time autocomplete in IDE | VS Code extension<br>See [GitHub Copilot](https://github.com/features/copilot) | (In your editor) | **Best real-time suggestions.** Autocomplete while you type, learns from millions of public repos. |
-| **Cursor** | Integrated AI editor | Download from [cursor.com](https://cursor.com) | `cursor` | **Complete AI-powered editor.** VS Code fork with AI built-in, best for all-in-one experience. |
-| **Aider** | Git-aware development | `pip install aider-chat`<br>See [aider.chat](https://aider.chat) | `aider` | **Open source, Git-integrated.** Automatically commits changes, works with any LLM, free. |
-| **Codex CLI** | OpenAI integration | `npm install -g @openai/codex`<br>See [OpenAI Codex](https://platform.openai.com/docs/guides/code) | `codex` | **OpenAI's specialized tool.** Good for quick code generation, integrates with ChatGPT ecosystem. |
-| **Tabnine** | Privacy-focused completion | IDE extension<br>See [tabnine.com](https://www.tabnine.com) | (In your editor) | **On-premise options available.** Code stays private, good for enterprise compliance. |
-| **Amazon CodeWhisperer** | AWS integration | IDE extension<br>See [AWS CodeWhisperer](https://aws.amazon.com/codewhisperer/) | (In your editor) | **Best for AWS development.** Trained on AWS APIs, free tier available. |
+| Agent Name               | Best For                               | Installation                                                                                          | Start Command    | Key Strength                                                                                                                       |
+| ------------------------ | -------------------------------------- | ----------------------------------------------------------------------------------------------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| **[[Claude-Code]]**      | Complex reasoning, multi-file projects | `npm install -g @anthropic-ai/claude-code`<br>or `irm https://claude.ai/install.ps1 \| iex` (Windows) | `claude`         | **Best reasoning and code quality.** Reads entire project, suggests thoughtful refactorings, excellent for architecture decisions. |
+| **Gemini CLI**           | Multimodal tasks, large codebases      | `npm install -g @google/gemini-cli`<br>See [GitHub](https://github.com/google-gemini/gemini-cli)      | `gemini`         | **Largest context window.** Can handle massive codebases, processes images/diagrams, multimodal understanding.                     |
+| **GitHub Copilot**       | Real-time autocomplete in IDE          | VS Code extension<br>See [GitHub Copilot](https://github.com/features/copilot)                        | (In your editor) | **Best real-time suggestions.** Autocomplete while you type, learns from millions of public repos.                                 |
+| **Cursor**               | Integrated AI editor                   | Download from [cursor.com](https://cursor.com)                                                        | `cursor`         | **Complete AI-powered editor.** VS Code fork with AI built-in, best for all-in-one experience.                                     |
+| **Aider**                | Git-aware development                  | `pip install aider-chat`<br>See [aider.chat](https://aider.chat)                                      | `aider`          | **Open source, Git-integrated.** Automatically commits changes, works with any LLM, free.                                          |
+| **Codex CLI**            | OpenAI integration                     | `npm install -g @openai/codex`<br>See [OpenAI Codex](https://platform.openai.com/docs/guides/code)    | `codex`          | **OpenAI's specialized tool.** Good for quick code generation, integrates with ChatGPT ecosystem.                                  |
+| **Tabnine**              | Privacy-focused completion             | IDE extension<br>See [tabnine.com](https://www.tabnine.com)                                           | (In your editor) | **On-premise options available.** Code stays private, good for enterprise compliance.                                              |
+| **Amazon CodeWhisperer** | AWS integration                        | IDE extension<br>See [AWS CodeWhisperer](https://aws.amazon.com/codewhisperer/)                       | (In your editor) | **Best for AWS development.** Trained on AWS APIs, free tier available.                                                            |
 
 ---
 
@@ -444,3 +444,15 @@ We focus on **Claude Code** because:
 **Built for MACA Course**
 
 *Understanding AI coding agents is the first step toward AI fluency - essential for developers, writers, managers, and everyone building the future.*
+
+---
+
+## 🔗 Referenced By
+
+This glossary entry is referenced by:
+- [[../understanding-ai-coding-assistants]] - Overview of the AI coding landscape
+- [[../claude-code-installation-guide]] - Installation guide references this comparison
+- [[../setup/quick-start]] - Quick start guide
+
+**Knowledge Graph Hub**: [[../glossary/README|Glossary Hub]]
+
