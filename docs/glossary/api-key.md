@@ -17,8 +17,11 @@ aliases:
 related_concepts:
   - [[authentication-vs-authorization]]
   - [[secure-secret-management]]
+  - [[../environment-variable]]
+  - [[system-administrator]]
 implementations:
   - [[how-to-use-an-api-key]]
+  - [[../wsl-setup-guide]]
 ---
 
 # What Is an API Key?
@@ -102,8 +105,9 @@ While an API key itself is more for identification, it is the first step in the 
 
 The only secure way to handle API keys is to keep them out of your code and load them from a secure location at runtime.
 
-- **Use Environment Variables**: For local development, store your API keys in environment variables. See [[setting-up-environment-variables]] for a step-by-step guide.
-- **Use a Secret Manager**: For production applications, use a dedicated secret management service like Google Secret Manager, AWS Secrets Manager, or Azure Key Vault.
+- **Use Environment Variables**: For local development, store your API keys in [[../environment-variable|environment variables]]. Requires [[system-administrator|administrator privileges]] for system-wide variables.
+- **Use a Secret Manager**: For production applications, use a dedicated secret management service like Google Secret Manager, AWS Secrets Manager, or Azure Key Vault. See [[../environment-variable#cloud-provider-secret-management|Cloud Secret Management]] for details.
+- **WSL Development**: See [[../wsl-setup-guide#environment-variables-in-wsl-context|WSL Environment Variables]] for cross-platform setup.
 
 </details>
 
@@ -114,7 +118,9 @@ The only secure way to handle API keys is to keep them out of your code and load
 This glossary entry is referenced by:
 - [[../SECRET_MANAGEMENT_GUIDELINE]] - Security best practices for secret management
 - [[../claude-code-installation-guide]] - Authentication setup section
-- [[environment-variables]] - Related concept: how to store API keys
+- [[../environment-variable]] - How to securely store API keys using environment variables
+- [[system-administrator]] - Administrator privileges required for system-wide API key configuration
+- [[../wsl-setup-guide]] - Setting up API keys in WSL development environment
 
 **Knowledge Graph Hub**: [[../glossary-README|Glossary Hub]]
 

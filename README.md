@@ -1,13 +1,10 @@
-# 🚀 Amplify Your Capability or Unlock Your Aspirations
+# 🚀 Amplify Your Capability and Unlock Your Aspirations
 
   **The new professional superpower is not coding; it's orchestrating AI agents to build for you.**
 
-  Whether you're an experienced developer looking to **amplify your capability** 10x through AI-assisted workflows, or someone with domain expertise ready
-   to **unlock your aspirations** by transforming ideas into working solutions—this repository provides production-ready project examples for mastering
-  AI-augmented development.
+  Whether you're an experienced developer looking to **amplify your capability** 10x through AI-assisted workflows, or someone with domain expertise ready to **unlock your aspirations** by transforming ideas into working solutions—this repository provides production-ready project examples for mastering AI-augmented development.
 
-  **Used in California Science and Technology University's ETTP program** as supplemental lab materials, these projects teach you to build complete,
-  deployable applications by orchestrating AI agents as your development partners.
+  **Used in California Science and Technology University's ETTP program AI-Assisted Software Development** as supplemental lab materials, study guide, and knowledge graph, these projects teach you to build complete, deployable applications by "instructions in plan English" (that is deeper than "Vibe") to orchestrate AI agents as your development partners.
   
 ---
 
@@ -85,7 +82,8 @@ A successful AI-augmented performer knows how to choose the right agent for the 
 | **Gemini CLI**    | Comprehensive Codebase Analysis            |
 | **Copilot Agent** | GitHub Integration & Version Control       |
 
-*   **[See the Full Agent Comparison and Workflow Guide](./docs/agent-comparison.md)**
+*   **[See the Full Agent Comparison and Workflow Guide](./docs/glossary/coding-agents.md)**
+*   **[Understanding AI Coding Assistants](./docs/understanding-ai-coding-assistants.md)** - Conceptual overview
 *   Coverage of non-programming tools is in progress. 
 
 ### 🚀 The Portfolio: Your Proof of Work
@@ -102,11 +100,23 @@ This repository contains a series of projects designed to build your portfolio. 
 
 ---
 
-### 📚 Additional Resources
+### 📚 Documentation & Resources
 
+#### Getting Started Guides
+*   **[Glossary Hub](./docs/glossary-README.md)** - Knowledge graph of core concepts and definitions
+*   **[WSL Setup Guide](./docs/wsl-setup-guide.md)** - Windows development environment configuration
+*   **[Environment Variables](./docs/environment-variable.md)** - Secure configuration management across platforms
+*   **[Understanding AI Coding Assistants](./docs/understanding-ai-coding-assistants.md)** - AI tools landscape
+*   **[Claude Code Installation](./docs/claude-code-installation-guide.md)** - AI coding assistant setup
+
+#### Core Concepts
+*   **[System Administrator Privileges](./docs/glossary/system-administrator.md)** - Cross-platform admin access explained
+*   **[API Keys](./docs/glossary/api-key.md)** - What they are and how to use them securely
+*   **[AI Coding Agents Comparison](./docs/glossary/coding-agents.md)** - Complete tool comparison guide
+
+#### Learning Paths
 *   **[The Full 12-Week Learning Path](./docs/learning-path.md)**
 *   **[Career Outcomes & Professional Benefits](./docs/career-outcomes.md)**
-*   **[What is a Context Engineer?](./docs/context-engineer.md)**
 
 ---
 
