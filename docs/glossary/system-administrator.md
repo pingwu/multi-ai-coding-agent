@@ -13,6 +13,8 @@ related_concepts:
   - environment-variables
   - security
   - user-accounts
+  - kernel
+  - abstraction-layer
 difficulty: beginner
 version: 1.0.0
 last_updated: 2025-11-17
@@ -65,9 +67,10 @@ last_updated: 2025-11-17
 - ✅ Install software for all users
 - ✅ Modify system files and registry (Windows)
 - ✅ Configure system-wide [[environment-variable|environment variables]]
-- ✅ Install hardware drivers
+- ✅ Install hardware drivers ([[glossary/kernel|kernel-mode drivers]])
 - ✅ Modify security settings
 - ✅ Manage other user accounts
+- ✅ Enable [[glossary/kernel|kernel]]-level features (virtualization, WSL 2)
 
 **Analogy**: Think of administrator access like a master key that can open any door in a building, while standard users have keys only to their own rooms.
 
@@ -197,7 +200,8 @@ net user %username% | findstr /B /C:"Local Group Memberships"
 - Modifying Windows Registry (`HKEY_LOCAL_MACHINE`)
 - Changing system-wide [[environment-variable|environment variables]]
 - Enabling Windows features (Control Panel → Programs → Turn Windows features on or off)
-- Installing device drivers
+- Installing [[glossary/kernel|kernel-mode]] device drivers
+- Enabling virtualization features that require [[glossary/kernel|kernel]] driver changes
 
 **File System Access**:
 - Modifying files in `C:\Windows\`
@@ -875,8 +879,10 @@ sudo usermod -aG wheel username
 
 ## Related Concepts
 
+- **[[glossary/abstraction-layer]]** - Privilege levels as abstraction boundaries between user and kernel space
+- **[[glossary/kernel]]** - Understanding kernel-level operations requiring administrator privileges
 - **[[environment-variable]]** - User vs System environment variables explained
-- **[[wsl-setup-guide]]** - Example requiring administrator access to enable Windows features
+- **[[wsl-setup-guide]]** - Example requiring administrator access to enable Windows features and kernel drivers
 - **[[glossary/api-key]]** - Securing credentials with proper permissions
 - **[[SECRET_MANAGEMENT_GUIDELINE]]** - Production security best practices
 - **User Access Control (UAC)** - Windows security architecture

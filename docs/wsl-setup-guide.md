@@ -37,13 +37,13 @@ Windows Subsystem for Linux (WSL) enables you to run a Linux environment directl
 
 ### What is WSL?
 
-**Windows Subsystem for Linux (WSL)** is a compatibility layer that allows you to run Linux binaries natively on Windows. WSL2, the current version, runs a real Linux kernel using lightweight utility VM technology.
+**Windows Subsystem for Linux (WSL)** is a compatibility layer that allows you to run Linux binaries natively on Windows. WSL2, the current version, runs a real Linux [[glossary/kernel|kernel]] using lightweight utility VM technology.
 
 **Key Differences**:
 
 | Feature | WSL 1 | WSL 2 (Current) |
 |---------|-------|-----------------|
-| **Architecture** | Translation layer | Actual Linux kernel in lightweight VM |
+| **Architecture** | Translation layer | Actual Linux [[glossary/kernel\|kernel]] in lightweight VM |
 | **Performance** | Slower I/O | Near-native performance |
 | **System Calls** | Partial compatibility | 100% compatibility |
 | **Docker Support** | Limited | Full support (recommended) |
@@ -179,9 +179,10 @@ shutdown /r /t 300
 ```
 
 **Why Restart is Mandatory**:
-- Windows kernel must reload with new virtualization drivers
+- Windows [[glossary/kernel|kernel]] must reload with new virtualization drivers
 - Hypervisor components initialize during boot process
 - Features do NOT activate until system restart
+- See [[glossary/kernel#why-restart-is-required-for-kernel-changes|Kernel: Why Restart is Required]] for technical explanation
 
 ---
 
@@ -245,6 +246,27 @@ Get-WindowsOptionalFeature -Online -FeatureName HypervisorPlatform
 
 ## WSL Installation Step-by-Step
 
+### ⚠️ CRITICAL: Did You Restart After Enabling Features?
+
+**STOP**: Before proceeding with the steps below, verify you completed a **FULL SYSTEM RESTART** after enabling Windows features in the previous section.
+
+**How to Verify Restart is Complete**:
+```powershell
+# PowerShell - Check if restart is still needed
+Get-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform
+
+# Look for this line in output:
+# RestartRequired  : Possible  ← BAD: You MUST restart
+# RestartRequired  : No        ← GOOD: Features are active
+```
+
+**If you see `RestartRequired : Possible`**:
+1. **Save all work and restart Windows NOW**
+2. **Do NOT proceed** until after restart
+3. The steps below will **hang or fail** without restart
+
+---
+
 ### Phase 1: Set WSL2 as Default Version
 
 **After restart**, open PowerShell as Administrator:
@@ -260,7 +282,21 @@ For information on key differences with WSL 2 please visit https://aka.ms/wsl2
 The operation completed successfully.
 ```
 
-**If you see an error about kernel update**:
+**Common Issues**:
+
+**⏳ Command Hangs/Does Nothing**:
+- **Cause**: You didn't restart after enabling features
+- **Solution**: Restart Windows completely and try again
+
+**❌ "Class not registered" Error**:
+- **Cause**: WSL components not fully initialized
+- **Solution**:
+  1. Restart Windows
+  2. Run `wsl --update` after restart
+  3. Try `wsl --set-default-version 2` again
+
+**❌ "WSL 2 requires an update to its kernel component"**:
+- The WSL 2 [[glossary/kernel|kernel]] needs to be updated
 - Proceed to "WSL Kernel Update" section below
 
 ---
@@ -431,7 +467,45 @@ wsl
 
 ## Troubleshooting Common Issues
 
-### Issue 1: "Please enable Virtual Machine Platform"
+### Issue 1: `wsl --set-default-version 2` Hangs Forever
+
+**Symptom**: Command runs as administrator but nothing happens, just hangs
+
+**Diagnosis**:
+```powershell
+# Check if restart is needed
+Get-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform
+
+# If you see this, you MUST restart:
+# RestartRequired  : Possible
+```
+
+**Solution**:
+1. **Restart Windows completely** - this is non-negotiable
+2. After restart, verify no restart required:
+   ```powershell
+   Get-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform
+   # Should show: RestartRequired  : No
+   ```
+3. Update WSL kernel:
+   ```powershell
+   wsl --update
+   ```
+4. Try again:
+   ```powershell
+   wsl --set-default-version 2
+   ```
+
+**Why This Happens**:
+- Windows features show as "Enabled" immediately in registry
+- But [[glossary/kernel|kernel drivers]] only load during boot
+- WSL 2 needs these [[glossary/kernel|kernel]] drivers running
+- Without restart, system is in half-enabled state
+- See [[glossary/kernel#why-restart-is-required-for-kernel-changes|Why Restart is Required for Kernel Changes]] for technical details
+
+---
+
+### Issue 2: "Please enable Virtual Machine Platform"
 
 **Symptom**: Error when running `wsl --set-default-version 2`
 
@@ -448,7 +522,7 @@ Get-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform
 
 ---
 
-### Issue 2: "WSL 2 requires an update to its kernel component"
+### Issue 3: "WSL 2 requires an update to its kernel component"
 
 **Symptom**: Error message with link to kernel update
 
@@ -473,7 +547,7 @@ wsl --update
 
 ---
 
-### Issue 3: "WslRegisterDistribution failed with error: 0x80370102"
+### Issue 4: "WslRegisterDistribution failed with error: 0x80370102"
 
 **Symptom**: Error during distribution installation
 
@@ -510,7 +584,7 @@ Restart-Computer
 
 ---
 
-### Issue 4: WSL Distribution Won't Start
+### Issue 5: WSL Distribution Won't Start
 
 **Symptom**: Distribution terminates immediately or shows error
 
@@ -538,7 +612,7 @@ wsl --install -d Ubuntu
 
 ---
 
-### Issue 5: "Element not found" Error
+### Issue 6: "Element not found" Error
 
 **Symptom**: Error when trying to start WSL
 
@@ -553,7 +627,7 @@ wsl --version
 
 ---
 
-### Issue 6: Slow Performance or High Memory Usage
+### Issue 7: Slow Performance or High Memory Usage
 
 **Symptom**: WSL2 using excessive RAM or CPU
 
@@ -600,9 +674,9 @@ Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linu
 **In WSL (Linux)**:
 
 ```bash
-# 1. Check kernel version
+# 1. Check kernel version (see [[glossary/kernel#checking-your-kernel-version|Checking Your Kernel Version]])
 uname -r
-# Expected: 5.15.0+ (WSL2 kernel)
+# Expected: 5.15.0+ (WSL2 [[glossary/kernel|kernel]])
 
 # 2. Check distribution version
 lsb_release -a
@@ -907,6 +981,8 @@ wsl --list --verbose      # Installed distributions
 
 ## Related Concepts
 
+- **[[glossary/abstraction-layer]]** - WSL as abstraction layer hiding virtualization complexity
+- **[[glossary/kernel]]** - Understanding kernel drivers and why restart is required
 - **[[glossary/system-administrator]]** - Understanding administrator privileges across platforms
 - **[[environment-variable]]** - Configuration management in Windows and Linux
 - **[[docker-desktop-installation-guide]]** - Docker Desktop WSL2 backend configuration
