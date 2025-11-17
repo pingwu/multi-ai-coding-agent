@@ -650,6 +650,76 @@ wsl
 
 ---
 
+### Issue 8: WSL Corruption Error After `wsl --set-default-version 2` Hangs
+
+**Symptom**: `wsl --set-default-version 2` command hangs for several minutes, and after running `wsl --update`, you get error: "WSL installation appears to be corrupted error code: Wsl/CallMsi/Install/REGDB_E_CLASSNOTREG"
+
+**What Happened**:
+- WSL features were enabled but system entered an inconsistent state
+- Multiple reboots and disable/re-enable attempts didn't resolve the issue
+- Windows installer registry entries became corrupted
+
+**Solution: WSL Automatic Repair**
+
+When you see this error message:
+```
+WSL installation appears to be corrupted
+error code: Wsl/CallMsi/Install/REGDB_E_CLASSNOTREG
+
+Press any key to repair WSL.....
+```
+
+**Steps**:
+1. **Press any key** as prompted to start automatic repair
+2. **Wait for repair to complete** (may take 1-2 minutes)
+3. **Restart Windows** after repair completes
+4. **Retry the command**:
+   ```powershell
+   wsl --set-default-version 2
+   ```
+
+**Why This Happens**:
+- WSL installer components can become corrupted during feature enablement
+- Registry entries for Windows installer may be incomplete or damaged
+- This is more common when Windows features are enabled/disabled multiple times
+- The corruption specifically affects the MSI (Microsoft Installer) integration
+
+**Prevention**:
+- **Complete full restart** after enabling WSL features (don't skip this!)
+- **Avoid rapid enable/disable cycles** of WSL features
+- If encountering hanging commands, try `wsl --update` first before multiple reboots
+
+**Alternative Manual Repair** (if automatic repair doesn't work):
+
+```powershell
+# 1. Completely uninstall WSL components
+wsl --unregister Ubuntu  # Remove all distributions first
+
+# 2. Disable WSL features
+dism.exe /online /disable-feature /featurename:Microsoft-Windows-Subsystem-Linux /norestart
+dism.exe /online /disable-feature /featurename:VirtualMachinePlatform /norestart
+
+# 3. Restart Windows
+Restart-Computer
+
+# 4. Re-enable features
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+
+# 5. Restart Windows again
+Restart-Computer
+
+# 6. Update WSL
+wsl --update
+
+# 7. Set default version
+wsl --set-default-version 2
+```
+
+**Expected Recovery Time**: 5-10 minutes including restarts
+
+---
+
 ## Verifying Your Installation
 
 ### Complete Verification Checklist
