@@ -205,6 +205,452 @@ Before we begin, let's clarify some terms you'll encounter:
 
 ---
 
+## 🔧 Understanding Environment Variables & PATH
+
+<details>
+<summary><strong>Click to expand Environment Variables Guide (IMPORTANT for Beginners)</strong></summary>
+
+This section explains critical concepts you'll need to understand **before** installing Claude Code. These concepts are essential for Python, Data Science, and any command-line development work.
+
+### What Are Environment Variables?
+
+**Simple Explanation**: Environment variables are like sticky notes for your computer programs. They're named settings that tell programs where to find things and how to behave.
+
+**Real-World Analogy**: Think of a cookie recipe that says "use SUGAR_TYPE" instead of specifying "white sugar." The SUGAR_TYPE is an environment variable—you can change it to brown sugar or honey without rewriting the recipe.
+
+**Example**:
+Instead of hardcoding in your Python script:
+```python
+api_key = "sk-ant-api03-xyz123abc456..."  # BAD - exposed in code
+```
+
+You use an environment variable:
+```python
+import os
+api_key = os.getenv("ANTHROPIC_API_KEY")  # GOOD - secure
+```
+
+---
+
+### Why Environment Variables Matter for You
+
+As a Python coder or Data Science student, environment variables help you:
+
+1. **Keep Secrets Safe**: Store API keys outside your code (never commit keys to GitHub!)
+2. **Work Anywhere**: Same code works on your laptop, desktop, and cloud servers
+3. **Collaborate Safely**: Share code without sharing your personal API keys
+4. **Switch Easily**: Use different settings for development vs production
+
+**Common Variables You'll Use**:
+
+| Variable Name | What It Does | Example Value |
+|--------------|--------------|---------------|
+| `ANTHROPIC_API_KEY` | Your Claude API key | `sk-ant-api03-...` |
+| `OPENAI_API_KEY` | OpenAI API key for GPT | `sk-proj-...` |
+| `PATH` | Where to find programs | `C:\Python311;C:\Users\you\.local\bin` |
+| `PYTHONPATH` | Where Python finds modules | `C:\MyPythonLibs` |
+| `HOME` | Your user home directory | `C:\Users\yourname` |
+
+---
+
+### User vs System Environment Variables (Windows)
+
+Windows has **two types** of environment variables:
+
+#### User Environment Variables (Recommended for You)
+- **Who sees them**: Only YOUR user account
+- **Permissions needed**: None (you can set these yourself)
+- **Safety**: Can't break system-wide programs
+- **Best for**: Installing tools just for yourself, API keys, personal settings
+
+#### System Environment Variables
+- **Who sees them**: ALL users on the computer
+- **Permissions needed**: Administrator rights
+- **Safety**: Could affect other users or system programs
+- **Best for**: System-wide applications (avoid as a beginner)
+
+**Important**: The PATH variable combines both—System PATH is searched first, then your User PATH is appended.
+
+---
+
+### How to View Environment Variables
+
+#### Method 1: GUI (Easiest for Beginners)
+
+**Step-by-step**:
+1. Press `Windows key + R` to open Run dialog
+2. Type `sysdm.cpl` and press Enter
+3. Click the **Advanced** tab
+4. Click **Environment Variables** button
+5. You'll see two sections:
+   - **Top**: User variables for your account ← Start here
+   - **Bottom**: System variables (for all users)
+
+![Environment Variables Window]
+
+**Alternative way**:
+1. Press Windows key
+2. Type "environment"
+3. Click "Edit the system environment variables"
+4. Click **Environment Variables** button
+
+#### Method 2: PowerShell (Quick Check)
+
+```powershell
+# View ALL environment variables
+Get-ChildItem Env:
+
+# View a specific variable
+$env:PATH
+$env:ANTHROPIC_API_KEY
+
+# View PATH entries one per line (easier to read)
+$env:PATH -split ";"
+
+# Check if something is in your PATH
+$env:PATH -split ";" | Select-String "Python"
+```
+
+#### Method 3: Git Bash (After you install it)
+
+```bash
+# View all environment variables
+env
+
+# View specific variable
+echo $PATH
+echo $ANTHROPIC_API_KEY
+
+# View PATH entries one per line
+echo $PATH | tr ';' '\n'
+```
+
+---
+
+### How to Set Environment Variables
+
+#### Method 1: GUI (Permanent - Best for Beginners)
+
+**To create a new User environment variable** (like for API keys):
+
+1. Open Environment Variables window (see "How to View" above)
+2. In the **User variables** section (top half), click **New...**
+3. **Variable name**: Type the name (e.g., `ANTHROPIC_API_KEY`)
+4. **Variable value**: Paste your value (e.g., your API key)
+5. Click **OK** on all windows
+6. **CRITICAL**: Close and reopen ALL terminal windows
+
+**To add a directory to your PATH**:
+
+1. Open Environment Variables window
+2. In **User variables**, select the **Path** variable
+3. Click **Edit...**
+4. Click **New**
+5. Type or paste the directory path (e.g., `C:\Users\yourname\.local\bin`)
+6. Click **OK** on all windows
+7. **CRITICAL**: Close and reopen ALL terminals
+
+#### Method 2: PowerShell (Permanent)
+
+```powershell
+# Set a new user environment variable
+[Environment]::SetEnvironmentVariable("ANTHROPIC_API_KEY", "your-api-key-here", [EnvironmentVariableTarget]::User)
+
+# Add a directory to your user PATH
+[Environment]::SetEnvironmentVariable("PATH", "$env:PATH;C:\Users\yourname\.local\bin", [EnvironmentVariableTarget]::User)
+
+# ⚠️ Remember to close and reopen terminals after this!
+```
+
+#### Method 3: PowerShell (Temporary - Current Session Only)
+
+```powershell
+# Set for this PowerShell window only (lost when you close it)
+$env:ANTHROPIC_API_KEY = "your-api-key-here"
+$env:PATH = "$env:PATH;C:\new\directory"
+```
+
+**When to use temporary**: Testing, one-time tasks, or when you don't want permanent changes.
+
+---
+
+### Understanding the PATH Variable
+
+**What is PATH?** The most important environment variable you'll use.
+
+**Simple Explanation**: PATH is a list of folders where Windows looks for executable programs when you type a command.
+
+**Analogy**: Imagine PATH as a list of rooms where you keep tools. When you ask for a "hammer," Windows checks each room on the PATH list until it finds one.
+
+#### How PATH Works: Step-by-Step
+
+When you type a command like `python` or `claude`:
+
+1. **Check Current Folder**: Windows first looks in your current directory
+2. **Check PATH Folders**: If not found, Windows checks each directory in PATH (left to right)
+3. **Run First Match**: When found, Windows runs that program
+4. **Error if Not Found**: If not in any PATH folder, you get "command not recognized"
+
+**Example**:
+
+Your PATH is:
+```
+C:\Windows\System32;C:\Python311;C:\Users\you\.local\bin
+```
+
+You type `python`:
+1. Check current folder → not found
+2. Check `C:\Windows\System32` → not found
+3. Check `C:\Python311` → **FOUND** `python.exe` ✓
+4. Run it!
+
+#### Viewing Your PATH
+
+**PowerShell (shows all directories in PATH)**:
+```powershell
+# Hard to read (one long line)
+$env:PATH
+
+# Easy to read (one directory per line)
+$env:PATH -split ";"
+```
+
+**Git Bash**:
+```bash
+# Easy to read
+echo $PATH | tr ';' '\n'
+```
+
+#### Why PATH Matters for Claude Code
+
+After installing Claude Code, the installer adds its location to your PATH so you can type `claude` from anywhere:
+
+**Before PATH is updated**:
+```powershell
+PS C:\Users\you\Documents> claude --version
+# Error: 'claude' is not recognized as a command
+```
+
+**After PATH is updated**:
+```powershell
+PS C:\Users\you\Documents> claude --version
+# claude version 1.2.3 ✓
+```
+
+---
+
+### Environment Variables for API Keys (Security!)
+
+**⚠️ NEVER DO THIS** (Hardcoded API Key - BAD):
+```python
+# DON'T DO THIS - Anyone who sees this code gets your API key!
+api_key = "sk-ant-api03-xyz123abc456..."
+client = anthropic.Client(api_key=api_key)
+```
+
+**✅ DO THIS** (Environment Variable - GOOD):
+```python
+# DO THIS - API key stored safely outside your code
+import os
+api_key = os.getenv("ANTHROPIC_API_KEY")
+client = anthropic.Client(api_key=api_key)
+```
+
+#### Why This Matters (Real Risks)
+
+**If you hardcode API keys**:
+- ❌ Push to GitHub → Your key is public forever (even if you delete it later)
+- ❌ Share code → Everyone gets your key
+- ❌ Screenshot → Key is visible
+- ❌ Someone uses your key → You get charged for their usage
+
+**If you use environment variables**:
+- ✅ Code can be shared safely
+- ✅ Different keys on different computers
+- ✅ Easy to rotate/change keys
+- ✅ Keys not in version control
+
+#### Best Practices for API Keys
+
+1. **Never hardcode** API keys in source code
+2. **Use environment variables** (Windows) or `.env` files (projects)
+3. **Add `.env` to `.gitignore`** (never commit it to Git)
+4. **Rotate keys regularly** (change them periodically)
+5. **Limit permissions** when creating API keys
+6. **Monitor usage** to detect unauthorized access
+
+#### Using .env Files for Projects
+
+For project-specific API keys, use `.env` files:
+
+**Step 1**: Install python-dotenv
+```bash
+pip install python-dotenv
+```
+
+**Step 2**: Create `.env` file in your project
+```
+# .env
+ANTHROPIC_API_KEY=sk-ant-api03-your-key-here
+OPENAI_API_KEY=sk-proj-your-other-key-here
+```
+
+**Step 3**: Add `.env` to `.gitignore`
+```
+# .gitignore
+.env
+*.env
+```
+
+**Step 4**: Use in your Python code
+```python
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Access them
+api_key = os.getenv("ANTHROPIC_API_KEY")
+print(f"API key loaded: {api_key[:10]}...")  # Print first 10 chars only
+```
+
+---
+
+### Common Issues for Beginners
+
+#### Issue 1: "Changes don't take effect"
+
+**Problem**: You set an environment variable but programs don't see it.
+
+**Cause**: Existing terminal windows don't automatically reload environment variables.
+
+**Solution**:
+- Close ALL terminal windows (PowerShell, Git Bash, VS Code terminals)
+- Open a brand new terminal
+- Check again: `$env:VARNAME` (PowerShell) or `echo $VARNAME` (Git Bash)
+
+#### Issue 2: "Command not found" after installation
+
+**Problem**: You installed a program (like Python or Claude Code) but Windows says it's not recognized.
+
+**Diagnosis**:
+```powershell
+# Check if the directory is in your PATH
+$env:PATH -split ";" | Select-String "Python"
+$env:PATH -split ";" | Select-String "local"
+```
+
+**Solutions**:
+1. Verify the program actually installed (find the `.exe` file)
+2. Add that directory to your PATH (see "How to Set" above)
+3. Close and reopen terminals
+4. If still not working, restart your computer
+
+#### Issue 3: "PATH is too long"
+
+**Problem**: Windows has limits on PATH length (though increased in Windows 10+).
+
+**Solution**:
+- Remove unused directories from PATH
+- Keep only what you actually use
+- Use shorter directory names when possible
+
+#### Issue 4: "Which Python/program is running?"
+
+**Problem**: You have multiple versions installed and don't know which one is being used.
+
+**Check which one**:
+```powershell
+# PowerShell
+Get-Command python | Select-Object Source
+Get-Command claude | Select-Object Source
+
+# Shows full path to the executable being used
+```
+
+```bash
+# Git Bash
+which python
+which claude
+```
+
+---
+
+### Quick Reference for Beginners
+
+#### View Environment Variable
+```powershell
+# PowerShell
+$env:VARIABLE_NAME
+
+# Git Bash
+echo $VARIABLE_NAME
+```
+
+#### Set Temporarily (Current Session)
+```powershell
+# PowerShell
+$env:VARIABLE_NAME = "value"
+
+# Git Bash
+export VARIABLE_NAME="value"
+```
+
+#### Set Permanently
+1. Press `Windows + R`
+2. Type `sysdm.cpl` and press Enter
+3. Advanced → Environment Variables
+4. Add or edit in User variables section
+5. **Close and reopen all terminals**
+
+#### Check PATH
+```powershell
+# PowerShell - one directory per line
+$env:PATH -split ";"
+
+# Git Bash
+echo $PATH | tr ';' '\n'
+```
+
+#### Check if directory is in PATH
+```powershell
+# PowerShell
+$env:PATH -split ";" | Select-String "directory-name"
+
+# Git Bash
+echo $PATH | grep "directory-name"
+```
+
+---
+
+### Key Takeaways
+
+✅ **You should now understand**:
+- Environment variables are settings that programs use
+- User variables are safer for beginners than System variables
+- PATH tells Windows where to find programs
+- API keys should NEVER be hardcoded in code
+- Changes require closing and reopening terminals
+- `.env` files are good for project-specific settings
+
+✅ **You should be able to**:
+- View environment variables using GUI or command line
+- Set User environment variables using the GUI
+- Add a directory to your PATH
+- Understand why `claude` works after installation
+- Store API keys securely
+
+📝 **Remember**:
+- Always close and reopen terminals after changing environment variables
+- Use User variables (not System) as a beginner
+- Never commit API keys to Git
+- PATH contains directories, not file paths
+
+</details>
+
+---
+
 ## Prerequisites
 
 <details>
@@ -213,9 +659,18 @@ Before we begin, let's clarify some terms you'll encounter:
 ### System Requirements
 
 **Windows 11:**
-- Windows 11 (64-bit)
+- Windows 11 (64-bit) or Windows 10
 - PowerShell 5.1 or later (included by default)
 - Internet connection for authentication
+- **Git for Windows (REQUIRED)** - Includes Git Bash terminal
+  - Download from: https://git-scm.com/download/win
+  - Why required: Claude Code needs Unix-like shell environment (Git Bash provides this)
+  - Alternative: WSL (Windows Subsystem for Linux) if you prefer Linux environment
+- **GitHub CLI (Optional but Recommended)** - Makes GitHub operations easier
+  - Download from: https://cli.github.com/
+  - What it does: Create PRs, issues, and manage repositories from command line
+  - When to install: If you frequently work with GitHub repositories
+  - Not required for: Basic Claude Code functionality
 - Optional: Node.js 16+ (only if using npm installation method)
 
 **macOS:**
@@ -274,6 +729,24 @@ Choose your operating system below:
 <summary><strong>Click to expand Windows 11 Installation</strong></summary>
 
 📚 **Official Windows Guide**: https://docs.anthropic.com/en/docs/claude-code/setup/windows
+
+⚠️ **IMPORTANT: Install Git Bash First!**
+
+Before installing Claude Code, you **MUST** install Git for Windows (which includes Git Bash):
+
+1. **Download**: https://git-scm.com/download/win
+2. **Install**: Run the installer and accept all defaults
+3. **Verify**: Open Git Bash and type `git --version`
+
+**Why Git Bash is required**:
+- Claude Code needs a Unix-like shell environment on Windows
+- Git Bash provides Linux/Unix commands that Claude Code relies on
+- Most tutorials assume Unix-style commands
+- Alternative: Use WSL (Windows Subsystem for Linux) instead
+
+**Can I skip Git Bash?** No, Claude Code will not work properly on Windows without either Git Bash or WSL.
+
+---
 
 ### Choosing an Installation Method
 
@@ -348,6 +821,100 @@ You have two options for installing Claude Code on Windows:
    - Open a NEW PowerShell window
    - Try `claude --version` again
    - Still not working? See [Troubleshooting Windows](#troubleshooting-windows) below
+
+---
+
+#### Understanding Where Claude Code Gets Installed
+
+**For beginners**: Let's understand what just happened and where Claude Code lives on your computer.
+
+**Installation Location**:
+```
+C:\Users\<YourUsername>\.local\bin\claude.exe
+```
+
+**Example** (if your username is "student"):
+```
+C:\Users\student\.local\bin\claude.exe
+```
+
+**What is the `.local` folder?**
+- The dot (`.`) makes it a hidden folder (won't show in normal file explorer)
+- It's a standard location for user-specific programs on Windows
+- Similar to how Linux/Mac users store personal programs
+
+**Installation Scope: User-Level vs System-Level**
+
+Claude Code installs at the **User level**, which means:
+
+✅ **User-Level Installation (What Claude Code Does)**:
+- Installed only for YOUR user account
+- No administrator rights needed
+- Doesn't affect other users on the computer
+- Located in: `C:\Users\<YourUsername>\...`
+- Added to your User PATH (not System PATH)
+
+❌ **System-Level Installation (What Claude Code Does NOT Do)**:
+- NOT installed for all users
+- NOT in `C:\Program Files\`
+- NOT in System PATH
+
+**Why This Matters for You**:
+
+1. **No Admin Rights Needed**: You can install Claude Code even on school/work computers where you're not an administrator
+2. **Personal Configuration**: Your API keys and settings are private to your account
+3. **Easy Removal**: If you want to uninstall, just delete the `.local` folder
+4. **Won't Break Other Users**: Your installation doesn't affect other people using the same computer
+
+**How the PATH Got Updated**:
+
+The PowerShell installer did this:
+1. Created the folder: `C:\Users\<YourUsername>\.local\bin\`
+2. Downloaded `claude.exe` into that folder
+3. Added that folder to your **User PATH** environment variable
+4. Now Windows knows where to find `claude` when you type it
+
+**Verifying the Installation Location**:
+
+**PowerShell**:
+```powershell
+# See where claude.exe actually is
+Get-Command claude | Select-Object Source
+
+# Output will be:
+# C:\Users\<YourUsername>\.local\bin\claude.exe
+```
+
+**Git Bash** (after you install Git):
+```bash
+# See where claude is located
+which claude
+
+# Output will be:
+# /c/Users/<YourUsername>/.local/bin/claude.exe
+```
+
+**Checking Your PATH Was Updated**:
+
+```powershell
+# View your User PATH (one directory per line)
+$env:PATH -split ";" | Select-String "\.local"
+
+# You should see:
+# C:\Users\<YourUsername>\.local\bin
+```
+
+**What If I Want to See the Actual Files?**
+
+1. Open File Explorer
+2. In the address bar, type: `%USERPROFILE%\.local\bin` and press Enter
+3. You'll see `claude.exe` and related files
+
+Or use PowerShell:
+```powershell
+# List files in the installation directory
+Get-ChildItem "$env:USERPROFILE\.local\bin"
+```
 
 ---
 
