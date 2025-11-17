@@ -114,7 +114,7 @@ Windows has **two types** of environment variables:
 
 ### System Environment Variables
 - **Who sees them**: ALL users on the computer
-- **Permissions needed**: Administrator rights
+- **Permissions needed**: [[glossary/system-administrator|Administrator rights]]
 - **Safety**: Could affect other users or system programs
 - **Best for**: System-wide applications (avoid as a beginner)
 
@@ -1326,8 +1326,92 @@ deploy:
 
 ---
 
+---
+
+## WSL (Windows Subsystem for Linux) Environment Variables
+
+**Context**: When using [[wsl-setup-guide|WSL]] on Windows, you work with both Windows and Linux environment variables.
+
+### Environment Variable Separation
+
+**Windows Environment** (PowerShell):
+```powershell
+# Windows environment variables
+$env:ANTHROPIC_API_KEY
+$env:PATH  # Uses ; (semicolon) as separator
+```
+
+**WSL Environment** (Linux):
+```bash
+# Linux environment variables (separate from Windows)
+echo $ANTHROPIC_API_KEY
+echo $PATH  # Uses : (colon) as separator
+```
+
+### Windows PATH Integration in WSL
+
+**WSL automatically appends Windows PATH**:
+```bash
+# Inside WSL - see both Linux and Windows paths
+echo $PATH
+# /usr/local/bin:/usr/bin:/bin:/mnt/c/Windows/System32:...
+#                             ↑ Windows paths appended
+```
+
+**Running Windows executables from WSL**:
+```bash
+# These work because Windows PATH is included
+code.exe .         # Launch VS Code (Windows)
+explorer.exe .     # Open File Explorer (Windows)
+```
+
+### Setting Environment Variables in WSL
+
+**User-Level** (no [[glossary/system-administrator#linux-sudo|sudo]] required):
+```bash
+# Edit your shell profile
+nano ~/.bashrc
+
+# Add environment variables
+export ANTHROPIC_API_KEY="sk-ant-api03-..."
+export OPENAI_API_KEY="sk-proj-..."
+
+# Apply changes
+source ~/.bashrc
+```
+
+**System-Level** (requires [[glossary/system-administrator#linux-sudo|sudo]]):
+```bash
+# For all users (rarely needed)
+sudo nano /etc/environment
+# Add: VARIABLE_NAME="value"
+```
+
+### Cross-Environment Best Practices
+
+**For Development**:
+- Set API keys in **WSL environment** (`~/.bashrc`) for Linux tools
+- Set API keys in **Windows environment** for Windows tools
+- Both environments can have same variable names with different values
+
+**File System Performance**:
+```bash
+# BEST: Store projects in WSL filesystem
+~/projects/my-app
+
+# SLOWER: Access Windows filesystem from WSL
+/mnt/c/Users/YourUsername/projects/my-app
+```
+
+**Related**: See [[wsl-setup-guide#environment-variables-in-wsl-context|WSL Setup Guide - Environment Variables]]
+
+---
+
 ### Related Concepts
 
+- [[glossary/system-administrator]] - Understanding administrator privileges for system vs user environment variables
+- [[wsl-setup-guide]] - Complete WSL setup with environment variable configuration
+- [[glossary/api-key]] - Secure API key storage using environment variables
 - [[twelve-factor-app]] - Configuration best practices for cloud-native applications
 - [[zero-trust-architecture]] - Network security and secret access patterns
 - [[infrastructure-as-code]] - Terraform/Pulumi secret management

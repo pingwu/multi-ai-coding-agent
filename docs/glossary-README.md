@@ -66,7 +66,14 @@ glossary-README (you are here)
 - What environment variables are and why they matter
 - Platform-specific setup (Windows, macOS, Linux)
 - Security implications for secret management
-- **Related**: [[SECRET_MANAGEMENT_GUIDELINE]], [[glossary/api-key]]
+- **Related**: [[SECRET_MANAGEMENT_GUIDELINE]], [[glossary/api-key]], [[glossary/system-administrator]]
+
+**[[glossary/system-administrator]]** - Understanding elevated privileges across platforms
+- Administrator vs standard user accounts
+- Windows UAC (User Account Control) and Linux/macOS sudo
+- Cross-platform permission comparison
+- When administrator access is required
+- **Related**: [[environment-variable]], [[wsl-setup-guide]], [[glossary/api-key]]
 
 ---
 
@@ -130,7 +137,17 @@ glossary-README
 glossary-README
     → [[glossary/api-key]]
     → [[glossary/environment-variables]]
+    → [[glossary/system-administrator]]
     → [[SECRET_MANAGEMENT_GUIDELINE]]
+```
+
+### Path 4: Windows Development Setup
+```
+glossary-README
+    → [[glossary/system-administrator]]
+    → [[wsl-setup-guide]]
+    → [[docker-desktop-installation-guide]]
+    → [[glossary/environment-variables]]
 ```
 
 ---
@@ -179,6 +196,7 @@ glossary-README
 - **[[understanding-ai-coding-assistants]]** - Quick intro to AI coding landscape
 - **[[claude-code-installation-guide]]** - Complete setup guide
 - **[[vscode-installation-guide]]** - Editor integration
+- **[[wsl-setup-guide]]** - Windows Subsystem for Linux configuration
 
 ### Reference Documents
 - **[[LINK-AUDIT-REPORT]]** - Knowledge graph integrity audit
@@ -188,14 +206,15 @@ glossary-README
 
 ## 📊 Glossary Statistics
 
-**Current Entries**: 4 core concepts
+**Current Entries**: 5 core concepts
 - Tools & Platforms: 2
-- Security & Configuration: 2
+- Security & Configuration: 3
 
 **Coverage Areas**:
 - ✅ AI Coding Agents
 - ✅ Security & Secrets Management
 - ✅ Environment Configuration
+- ✅ System Administration & Permissions
 - 🔄 Development Methodologies (coming soon)
 - 🔄 Docker & Containerization (coming soon)
 - 🔄 Git & Version Control (coming soon)
@@ -208,6 +227,7 @@ glossary-README
 |---------|------|------------|------------------------|
 | [[glossary/api-key]] | Security | Beginner | [[claude-code-installation-guide#authentication]] |
 | [[glossary/environment-variables]] | Configuration | Beginner | [[SECRET_MANAGEMENT_GUIDELINE]] |
+| [[glossary/system-administrator]] | Security | Beginner | [[wsl-setup-guide]] |
 | [[glossary/Claude-Code]] | Tool | Intermediate | [[claude-code-installation-guide]] |
 | [[glossary/coding-agents]] | Comparison | Beginner | [[understanding-ai-coding-assistants]] |
 
@@ -215,12 +235,16 @@ glossary-README
 
 ## 🔄 Maintenance
 
-**Last Updated**: 2025-11-14
+**Last Updated**: 2025-11-17
 **Maintained By**: MACA Course Team
 **Review Frequency**: Monthly or when new concepts added
 **Link Audit**: See [[LINK-AUDIT-REPORT]] for integrity checks
 
-**Next Review**: 2025-12-14
+**Recent Updates**:
+- 2025-11-17: Added [[glossary/system-administrator]] and [[wsl-setup-guide]]
+- 2025-11-14: Initial glossary hub structure
+
+**Next Review**: 2025-12-17
 
 ---
 
